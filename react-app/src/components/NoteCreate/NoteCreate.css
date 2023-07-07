@@ -1,0 +1,76 @@
+.note-create-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    min-height: 30%;
+    height: auto;
+    background-color: #F8F8FF;
+    border-radius: 5px;
+    padding: 1%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .note-create-h4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: #F8F8FF;
+    margin: 0;
+    padding: 1%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  .note-create-textarea {
+    width: 35vw;
+    min-height: 20vh;
+    max-height: 100vh;
+    border-radius: 5px;
+    resize: vertical;
+    padding: 1%;
+    font-size: 16px;
+    margin-top: 1%;
+    box-sizing: border-box;
+  }
+  
+  .note-create-input {
+    width: 35vw;
+    margin-top: 1%;
+    padding: 1%;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .note-create-form-element {
+    width: 100%;
+    margin-bottom: 1%;
+  }
+  
+  .note-create-form-element > label {
+    margin-bottom: 0.5%;
+    font-weight: bold;
+  }
+  
+  .note-create-form-element > input,
+  .note-create-form-element > textarea {
+    border: 1px solid #eaeaea;
+  }
+  
+  /* button[type="submit"] {
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 1% 2%;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #1f5bbf;
+  } */
+  

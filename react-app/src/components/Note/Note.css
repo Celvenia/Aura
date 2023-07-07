@@ -1,0 +1,77 @@
+.note-page {
+  color: #1A1A1A;
+  background-color: #F8F8FF;
+  /* width: 47vw;
+  max-width: 47vw; */
+  width: 40%;
+  height: 40%;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.note-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F8F8FF;
+  width: 47vw;
+  height: auto;
+  padding: 2%;
+  margin-top: 2%;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.note-textarea {
+  width: 100%;
+  min-height: 22.5vh;
+  height: 18vh;
+  padding: 1%;
+  font-size: 16px;
+  margin-top: 2%;
+  border: 1px solid #eaeaea;
+  border-radius: 5px;
+}
+
+.svg-inline--fa.fa-pen {
+  cursor: pointer;
+  color: #3e86ef;
+}
+
+.note-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  margin-top: 2%;
+}
+
+.note-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #F8F8FF;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1%;
+  border-radius: 5px;
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2%;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}

@@ -1,0 +1,48 @@
+.reminder-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2%;
+  padding: 2%;
+  width: 40vw;
+  color: #1A1A1A;
+  background: transparent;
+  opacity: 100%;
+}
+
+.form-label {
+  margin-bottom: 10px;
+  color: #1A1A1A;
+  font-weight: 700;
+  margin: 1%;
+}
+
+.form-input {
+  padding: 5px;
+  background-color: #FFF;
+}
+
+
+#description {
+  min-width: 38vw;
+  resize: vertical;
+  min-height: 20vh;
+  max-height: 30vh;
+  background-color: #FFF;
+  border: 1px solid #D1D5DB;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+
+.reminder-form > button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1%;
+  padding: 2%;
+  width: 100%;
+  background-color: #F8F8FF;
+  border: 1px solid #D1D5DB;
+  box-sizing: border-box;
+}

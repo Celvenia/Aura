@@ -1,0 +1,67 @@
+.aura-login {
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.aura-login h1 {
+  color: white;
+  text-align: center;
+}
+
+.aura-login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aura-login ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.aura-login li {
+  color: white;
+}
+
+.aura-login .form-elements {
+  margin-bottom: 10px;
+}
+
+.aura-login label {
+  color: white;
+}
+
+.aura-login input[type="text"],
+.aura-login input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: transparent;
+  border: 1px solid #D1D5DB;
+}
+
+.aura-login input[type="text"]:focus,
+.aura-login input[type="password"]:focus {
+  border: 1px solid #7397CC;
+}
+
+.aura-login button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: transparent;
+  color: #000000;
+  cursor: pointer;
+  border: 1px solid #D1D5DB;
+  color: #D1D5DB;
+}
+
+.aura-login button:hover {
+  border: 1px solid #7397CC;
+  color: #7397CC;
+}

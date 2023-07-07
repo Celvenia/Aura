@@ -1,0 +1,53 @@
+.reminder-item {
+  margin-bottom: 1%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #F8F8FF;
+  border-bottom: 1px solid #D1D5DB;
+}
+
+.reminder-info {
+  background-color: #1a1a1a;
+  border-radius: 5px;
+  padding: 1%;
+}
+
+.no-reminders {
+  font-style: italic;
+  color: #D1D5DB;
+}
+
+.reminders-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reminders-title {
+  font-size: 20px;
+  margin-bottom: 1%;
+  display: flex;
+  color: #FFF;
+  justify-content: center;
+  background-color: #565a75;
+}
+
+.reminder-button-container > * {
+  padding: 5%;
+  cursor: pointer;
+}
+
+.reminder-button-container > *:hover {
+  color: #FFA500;
+}
+
+.reminders-heading {
+  font-size: 20px;
+  margin-bottom: 1%;
+  display: flex;
+  color: #FFF;
+  justify-content: center;
+  background-color: #FFF;
+  color: #1A1A1A;
+}

@@ -1,0 +1,65 @@
+
+/* 
+
+.shadow-banner-true {
+        background-image: url('../../assets/BannerActive.gif');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 12vh;
+}
+
+.shadow-banner-false {
+    background-image: url('../../assets/BannerInactive.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 12vh;
+
+}
+
+#shadow-button-true {
+    position: relative;
+    background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-top: 2%;
+    overflow: hidden;
+    box-shadow: 0 0 10px 5px #FFA500;
+    cursor: pointer;
+  }
+
+#shadow-button-false {
+    position: relative;
+    background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-top: 2%;
+    overflow: hidden;
+    box-shadow: 0 0 10px 5px #fff;
+    cursor: pointer;
+  }
+  
+
+#voice-select {
+    position: absolute;
+    top: 8%;
+    width: 20px;
+    height: 1%;
+    margin: 1%;
+    cursor: pointer;
+}
+
+#diagnostic {
+    color: #FFA500;
+    font-weight: bolder;
+    cursor: pointer;
+} */
