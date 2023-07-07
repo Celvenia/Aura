@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
 import "./SignupForm.css";
 
 function SignupFormModal() {
@@ -30,64 +32,85 @@ function SignupFormModal() {
   };
 
   return (
-    <div className="hollow-login">
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <div className="form-elements">
-          <label>
-            Email
+    <div className="signup-container">
+      <div className="signup-content">
+        <h2>Sign Up</h2>
+        <form onSubmit={handleSubmit}>
+          <ul className="errors">
+            {errors.map((error, idx) => (
+              <li key={idx} onClick={() => setErrors([])}>
+                {error}
+              </li>
+            ))}
+          </ul>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-          </label>
-        </div>
-        <div className="form-elements">
-          <label>
-            Username
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
             <input
               type="text"
+              id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-          </label>
-        </div>
-        <div className="form-elements">
-          <label>
-            Password
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </label>
-        </div>
-        <div className="form-elements">
-          <label>
-            Confirm Password
+          </div>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
             <input
               type="password"
+              id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-          </label>
-        </div>
-        <div className="form-elements flex-column-center">
-          <button type="submit">Sign Up</button>
-        </div>
-      </form>
+          </div>
+          <button className="form-button" type="submit">
+            Sign Up
+          </button>
+        </form>
+        <p className="check-account">
+          Already have an account?{" "}
+          <OpenModalButton
+            buttonText="Log In"
+            modalComponent={<LoginFormModal />}
+          />
+        </p>
+      </div>
     </div>
   );
 }
 
 export default SignupFormModal;
+
+{
+  /* <OpenModalButton
+buttonText="Log In"
+onItemClick={closeMenu}
+modalComponent={<LoginFormModal />}
+/>
+
+<OpenModalButton
+buttonText="Sign Up"
+onItemClick={closeMenu}
+modalComponent={<SignupFormModal />}
+/> */
+}

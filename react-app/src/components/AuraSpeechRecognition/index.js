@@ -5,14 +5,13 @@ import { postMessage } from "../../store/message";
 import { getConversations } from "../../store/conversation";
 import "./AuraSpeechRecognition.css";
 
+
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function AuraSpeechRecognition() {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const SpeechGrammarList =
     window.SpeechGrammarList || window.webkitSpeechGrammarList;
-  // const SpeechRecognitionEvent =
-  //   window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
   const [message, setMessage] = useState("");
   const history = useHistory();
@@ -23,39 +22,48 @@ export default function AuraSpeechRecognition() {
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [active, setActive] = useState(false);
 
-  // init SpeechSynth api
   const synth = window.speechSynthesis;
 
   const handleVoiceChange = (value) => {
-    voices.forEach((voice) => {
-      if (voice.name === value) {
-        setSelectedVoice(voice);
-      }
-    });
+    const selected = voices.find((voice) => voice.name === value);
+    setSelectedVoice(selected);
   };
 
   useEffect(() => {
-    const availableVoices = synth.getVoices();
-    setVoices(availableVoices);
-    const defaultVoice = availableVoices.find(
-      (voice) => voice.name === "Google UK English Male"
-    );
-    setSelectedVoice(defaultVoice);
+    const populateVoices = () => {
+      const availableVoices = synth.getVoices();
+      setVoices(availableVoices);
+      const defaultVoice = availableVoices.find(
+        (voice) => voice.name === "Google UK English Male"
+      );
+      setSelectedVoice(defaultVoice);
+    };
+
+    // Add event listener to update voices when they change
+    synth.addEventListener("voiceschanged", populateVoices);
+
+    // Populate voices on component mount
+    populateVoices();
+
+    // Clean up event listener on component unmount
+    return () => {
+      synth.removeEventListener("voiceschanged", populateVoices);
+    };
   }, []);
 
   useEffect(() => {
     getConversations();
   }, [dispatch]);
 
-  const shadowStart = async (e) => {
+  const auraStart = async (e) => {
     e.preventDefault();
 
     // create new SpeechRecognition and SpeechGrammarList instances
-    const shadow = new SpeechRecognition();
+    const aura = new SpeechRecognition();
     const speechRecognitionList = new SpeechGrammarList();
     setActive(true);
 
-    const keyWords = ["stop listening", "Shadow"];
+    const keyWords = ["stop listening", "aura", "Aura"];
 
     // Grammar - separated by semi-colons
     // 1: states the format and version used. This always needs to be included first. i.e #JSGF V1.0;
@@ -72,11 +80,11 @@ export default function AuraSpeechRecognition() {
     speechRecognitionList.addFromString(grammar, 1);
 
     // Methods available to SpeechRecognition class
-    shadow.grammars = speechRecognitionList;
-    shadow.continuous = true;
-    shadow.lang = "en-US";
-    shadow.interimResults = false;
-    shadow.maxAlternatives = 1;
+    aura.grammars = speechRecognitionList;
+    aura.continuous = true;
+    aura.lang = "en-US";
+    aura.interimResults = false;
+    aura.maxAlternatives = 1;
 
     // let test = navigator.geolocation
     // console.log(test)
@@ -95,7 +103,7 @@ export default function AuraSpeechRecognition() {
     // let currentLocation = Geolocation.getCurrentPosition()
     // console.log(currentLocation)
 
-    shadow.start();
+    aura.start();
     setMessage("started listening");
     // results event returns SpeechRecognitionResultList object containing SpeechRecognitionResult objects
     // it has a getter enabling list/array access
@@ -104,7 +112,7 @@ export default function AuraSpeechRecognition() {
 
     // const result = event.results;
     // Receiving and Handling Results
-    shadow.onresult = (event) => {
+    aura.onresult = (event) => {
       let timeout;
 
       const tabs = [
@@ -136,39 +144,37 @@ export default function AuraSpeechRecognition() {
         );
       }
 
-      const displayText = (text) => {
-        const delay = 50;
+      function displayText(text) {
         let index = 0;
-        let counter = 0;
-        // const sentence = text.split(" ");
-        const letters = text.split("");
-        aiSpeaking.innerText = "";
-        const interval = setInterval(() => {
-          if (index < letters.length) {
-            if (counter === 50) {
-              counter = 0;
+        let delay = 50;
+        aiSpeaking.textContent = "";
+        function typeNextCharacter() {
+          if (index < text.length) {
+            const currentCharacter = text.charAt(index);
+            if (currentCharacter === " ") {
+              // innerText wasn't adding whitespace as intended, resolved with textContent
+              aiSpeaking.textContent += " ";
             } else {
-              counter += 1;
+              aiSpeaking.textContent += currentCharacter;
             }
-            aiSpeaking.innerText += `${letters[index]} `;
             index++;
-          } else {
-            clearInterval(interval);
+            setTimeout(typeNextCharacter, delay);
           }
-        }, delay);
-      };
+        }
+        typeNextCharacter();
+      }
 
       const speak = (spoken) => {
         // was preventing ai_response
-        // if (synth.speaking) {
-        //   return;
-        // }
+        if (synth.speaking) {
+          return;
+        }
 
         // speak text
         if (!currentUser) {
           const speakText = new SpeechSynthesisUtterance(spoken);
           speakText.voice = selectedVoice;
-          shadow.abort();
+          aura.abort();
         }
 
         if (spoken !== "") {
@@ -207,16 +213,22 @@ export default function AuraSpeechRecognition() {
           aiSpeaking.innerText = "";
         }, 15000);
         if (!currentUser) {
-          speak(
-            "Greetings weary traveler! I am shadow, the guardian of this realm. To embark on your journey, seek passage by logging in"
-          );
+          speak("Please log in so that I can assist you");
+          displayText("Please log in so that I can assist you");
+        } else if (spoken.includes("Hello")) {
+          speak("Hello! How can I assist you today?");
+          displayText("Hello! How can I assist you today?");
         } else if (spoken.includes("stop listening")) {
-          speak("farewell");
-          displayText("farewell");
-          shadow.stop();
+          speak("Goodbye");
+          displayText("Goodbye");
+          aura.stop();
         } else if (spoken.includes("ignore")) {
           clearTimeout(timeout);
           spoken = "";
+        } else if (spoken.includes("What can you do?")) {
+          speak(
+            "I can help you with various tasks such as providing information, answering questions, setting reminders, giving recommendations, and more. Feel free to ask me anything!"
+          );
         } else if (spoken.includes("the current time")) {
           speak(`the current time is ${new Date().toLocaleTimeString()}`);
         } else if (spoken.includes("the current date")) {
@@ -231,7 +243,7 @@ export default function AuraSpeechRecognition() {
           // alarmTime.value = "05:06";
           // console.log(alarmTime.value);
           // } else if (queries.some((query) => spoken.includes(query))) {
-        } else if (spoken.includes("Shadow")) {
+        } else if (spoken.includes("aura")) {
           if (!conversationId) {
             speak(
               "Please choose a conversation you wish to store our interaction"
@@ -240,7 +252,7 @@ export default function AuraSpeechRecognition() {
               "Please choose a conversation you wish to store our interaction"
             );
           } else if (conversationId) {
-            let spokenAfter = spoken.split("Shadow")[1];
+            let spokenAfter = spoken.split("aura")[1];
             conversation.message = spokenAfter.toString();
             dispatch(postMessage(conversation)).then((result) => {
               if (result) {
@@ -281,8 +293,8 @@ export default function AuraSpeechRecognition() {
 
     // We also use the speechend event to stop the speech recognition service from running
     // (using SpeechRecognition.stop()) after delay and it has finished being spoken:
-    shadow.onspeechend = () => {
-      shadow.stop();
+    aura.onspeechend = () => {
+      aura.stop();
       setActive(false);
       let speaking = document.getElementById("user-display-text");
       if (speaking) {
@@ -295,60 +307,60 @@ export default function AuraSpeechRecognition() {
       return;
     };
 
-    shadow.onnomatch = (event) => {
+    aura.onnomatch = (event) => {
       setDiagnosticText("I didn't recognize that.");
       setActive(false);
       return () => {
-        shadow.abort();
+        aura.abort();
       };
     };
 
-    shadow.onerror = (event) => {
+    aura.onerror = (event) => {
       setDiagnosticText(`Error occurred in recognition: ${event.error}`);
       setActive(false);
       return () => {
-        shadow.abort();
+        aura.abort();
       };
     };
 
     return () => {
-      shadow.abort();
+      aura.abort();
     };
   };
 
   useEffect(() => {}, [dispatch]);
 
   return (
-    <div className={`shadow-banner-${active}`}>
-      <div className="flex-column-center">
-        <button
-          disabled={active}
-          title="start shadow"
-          id={`shadow-button-${active}`}
-          onClick={shadowStart}
-        >
-          .
-        </button>
-        <select
-          id="voice-select"
-          title="choose voice"
-          onChange={(e) => handleVoiceChange(e.target.value)}
-        >
-          {voices.map((voice, index) => (
-            <option key={index} value={voice.name}>
-              {voice.name} / {voice.lang}
-            </option>
-          ))}
-        </select>
+    currentUser && (
+      <div className={`aura-banner-${active}`}>
+        <div className="flex-column-center">
+          <button
+            disabled={active}
+            title="start aura"
+            id={`aura-button-${active}`}
+            onClick={auraStart}
+          ></button>
+          <select
+            id="voice-select"
+            title="choose voice"
+            onChange={(e) => handleVoiceChange(e.target.value)}
+          >
+            {voices.map((voice, index) => (
+              <option key={index} value={voice.name}>
+                {voice.name} / {voice.lang}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex-row-center">
+          <p
+            id="diagnostic"
+            onClick={(e) => setDiagnosticText((e.target.value = ""))}
+          >
+            {diagnosticText}
+          </p>
+        </div>
       </div>
-      <div className="flex-row">
-        <p
-          id="diagnostic"
-          onClick={(e) => setDiagnosticText((e.target.value = ""))}
-        >
-          {diagnosticText}
-        </p>
-      </div>
-    </div>
+    )
   );
 }

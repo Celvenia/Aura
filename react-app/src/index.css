@@ -5,12 +5,16 @@
 }
 
 .glass-container {
-  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.18);
-  box-shadow: 0 8px 32px 0 rgba(255,255,255,0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.37);
 }
 
 .flex-column-center {
@@ -21,13 +25,14 @@
 }
 
 button {
-  color: #7397CC;
+  color: #7397cc;
   cursor: pointer;
-  background-color: #F8F8FF;
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: none;
   font-weight: 700;
+  padding: 1% 5%;
 }
 
 button:hover {
@@ -45,36 +50,31 @@ a {
 }
 
 a:hover {
-  color: #7397CC;
+  color: #7397cc;
 }
 
-
-input, textarea {
+input,
+textarea {
   padding: 5px;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
-  caret-color: #7397CC;
-  border: 1px solid #7397CC;
+  caret-color: #7397cc;
+  border: 1px solid #7397cc;
+}
+
+.errors {
+  color: red;
+  margin-bottom: 1%;
 }
 
 .app-container {
   display: grid;
-  grid-template-columns: 7% 93%;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100vh;
-  background-color: #D1D5DB;;
-}
-
-.sidebar img {
-  height: 100px;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+  height: 100%;
 }
 
 .main-content {
@@ -92,19 +92,18 @@ input:focus, textarea:focus {
 
 .grid-item-double {
   grid-column: span 2;
-  background-color: #F8F8FF;
-  border: 1px solid #D1D5DB;
+  background-color: #f8f8ff;
+  border: 1px solid #d1d5db;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-height: 44vh;
   overflow: auto;
 }
 
-
 .grid-item {
   padding: 20px;
-  background-color: #F8F8FF;
-  border: 1px solid #D1D5DB;
+  background-color: #f8f8ff;
+  border: 1px solid #d1d5db;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 44vh;

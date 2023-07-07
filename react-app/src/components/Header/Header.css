@@ -1,4 +1,3 @@
-
 .profile-dropdown {
   position: absolute;
   right: 1rem;
@@ -14,7 +13,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #D1D5DB;
   padding: 1%;
   height: 10vh;
   z-index: 10;
@@ -28,7 +26,7 @@
 }
 
 .header-icon:hover {
-  filter:brightness(50%)
+  filter: brightness(50%);
 }
 
 .header-links {
@@ -51,7 +49,6 @@
 .header-display-text {
   display: flex;
   flex-direction: column;
-  
 }
 
 #user-display-text {
@@ -59,7 +56,7 @@
 }
 
 #ai-display-text {
-  color:#565a75;
+  color: #565a75;
 }
 
 .user-profile-img {

@@ -1,0 +1,40 @@
+#google-map {
+  width: 100%;
+  height: 400px;
+  position: relative;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+}
+
+.search-container {
+  margin: 10px 0;
+}
+
+.search-container input {
+  color: black; /* Set the text color to black */
+}
+
+.restaurant-list {
+  margin-top: 20px;
+}
+
+.restaurant-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.restaurant-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.restaurant-list li {
+  margin-bottom: 10px;
+}
+
+.restaurant-list p {
+  margin: 0;
+}

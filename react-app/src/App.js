@@ -8,13 +8,13 @@ import Conversation from "./components/Conversation";
 import Calendar from "./components/Calendar";
 import Notes from "./components/Notes";
 import Clock from "./components/Clock";
-// import GoogleMap from "./components/GoogleMap";
-import AuraSlogan from "./assets/AuraSlogan.png"
+import GoogleMaps from "./components/GoogleMaps";
+import LandingPage from "./components/LandingPage";
 
 const App = () => {
   const [selectedComponent, setSelectedComponent] = useState("conversation");
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.session.user)
+  const currentUser = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -26,29 +26,26 @@ const App = () => {
     calendar: <Calendar />,
     notes: <Notes />,
     clock: <Clock />,
-    // googleMap: <GoogleMap />,
+    googleMap: <GoogleMaps />,
   };
 
   return (
-    <Router>
-      <div className="app-container">
-        <div className="sidebar">
-          {/* Sidebar content */}
-          <img src={AuraSlogan} />
-        </div>
-        <div className="main-content">
-        <Header isLoaded={isLoaded}
-          />
+    <div className="app-container">
+      <div className="main-content">
+        <Header isLoaded={isLoaded} />
+        {currentUser ? (
           <div className="grid-container">
             <div className="grid-item-double">{componentMap.conversation}</div>
             <div className="grid-item">{componentMap.calendar}</div>
             <div className="grid-item">{componentMap.notes}</div>
             <div className="grid-item">{componentMap.clock}</div>
-            <div className="grid-item">{/* Empty grid item */}</div>
+            <div className="grid-item">{componentMap.googleMap}</div>
           </div>
-        </div>
+        ) : (
+          <LandingPage />
+        )}
       </div>
-    </Router>
+    </div>
   );
 };
 

@@ -21,7 +21,7 @@ import {
   faArrowUp,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import AuraIcon from "../../assets/AuraIcon.png";
+
 
 export default function Conversation() {
   const conversationsObj = useSelector((state) => state.conversationReducer);
@@ -242,7 +242,7 @@ export default function Conversation() {
             placeholder="Write a question here, then hit send..."
             ref={bottomOfConversation}
           ></textarea>
- {!displaySpeaking && <img className="aura-icon" src={AuraIcon} onClick={handleSendQueryClick}></img>}
+ 
       </div>
     </div>
   );

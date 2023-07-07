@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
-import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import AuraSlogan from "../../assets/AuraSlogan.png";
+import "./Header.css";
 
-function Header ({ isLoaded }) {
+function Header({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
   const [show, setShow] = useState(false);
   const dropdownRef = useRef(null);
@@ -34,6 +35,7 @@ function Header ({ isLoaded }) {
 
   return (
     <ul className="header-container">
+      <img src={AuraSlogan} />
       <FontAwesomeIcon
         icon={faBars}
         className="header-icon"
@@ -47,11 +49,6 @@ function Header ({ isLoaded }) {
               Home
             </NavLink>
           </div>
-          {/* <div>
-            <NavLink exact to="/messages">
-              Messages
-            </NavLink>
-          </div> */}
           <div>
             <NavLink exact to="/notes">
               Notes
@@ -62,24 +59,10 @@ function Header ({ isLoaded }) {
               Reminders
             </NavLink>
           </div>
-          {/* <div>
-            <NavLink exact to="/alarms">
-              Alarms
-            </NavLink>
-          </div>
-          <div>
-            <NavLink exact to="/testing">
-              Testing
-            </NavLink>
-          </div> */}
         </ul>
       ) : (
         ""
       )}
-      {/* <div className="nav-display-text">
-        <div id="ai-display-text"></div>
-        <div id="user-display-text"></div>
-      </div> */}
       {isLoaded && (
         <div>
           <ProfileButton user={sessionUser} />
