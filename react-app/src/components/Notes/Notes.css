@@ -1,10 +1,11 @@
 .notes-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background-color: #fff;
+  background-color: #f8f8ff;
   padding: 2%;
-  border-radius: 5px;
+  border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -16,23 +17,32 @@
   position: relative;
   width: 100%;
   border-radius: 5px;
-  background-color: #fff;
+  background: transparent;
   padding: 1%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 5vh;
+}
+
+.note-dropdown-container button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5vh;
 }
 
 .note-dropdown-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1%;
-  background-color: #f3f3f3;
+  padding: 0 5%;
+  background-color: #7397cc;
+  color: #fff;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .note-dropdown-header:hover {
-  filter: brightness(95%);
+  background-color: #3e86ef;
 }
 
 .dropdown-notes {
@@ -42,8 +52,8 @@
   width: 20vw;
   padding: 0;
   list-style-type: none;
-  background-color: #fff;
-  border: 1px solid #eaeaea;
+  background-color: #f8f8ff;
+  border: 1px solid #d1d5db;
   z-index: 3;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -69,7 +79,7 @@
 }
 
 .note-content {
-  background-color: #fff;
+  background-color: #f8f8ff;
   color: #212121;
   width: 100%;
   border-radius: 5px;
@@ -82,7 +92,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fff;
+  background-color: #f8f8ff;
   width: 100%;
   height: auto;
   padding: 2%;
@@ -110,7 +120,7 @@
   padding: 1%;
   font-size: 16px;
   margin-top: 2%;
-  border: 1px solid #eaeaea;
+  border: 1px solid #d1d5db;
   border-radius: 5px;
 }
 
@@ -130,7 +140,7 @@
 }
 
 .note-edit-button:hover {
-  background-color: #1f5bbf;
+  background-color: #3e86ef;
 }
 
 .note-delete-button {
@@ -145,4 +155,18 @@
 
 .note-delete-button:hover {
   background-color: #d32f2f;
+}
+
+.create-note-button {
+  background-color: #7397cc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 1% 2%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.create-note-button:hover {
+  background-color: #3e86ef;
 }

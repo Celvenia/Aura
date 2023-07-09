@@ -1,40 +1,62 @@
 #google-map {
   width: 100%;
-  height: 400px;
-  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .map-container {
-  width: 100%;
+  flex: 1;
   height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .search-container {
-  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }
 
-.search-container input {
-  color: black; /* Set the text color to black */
+.search-container input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-container button {
+  padding: 8px 16px;
+  margin-left: 10px;
+  background-color: #7397cc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-container button:hover {
+  background-color: #3e86ef;
 }
 
 .restaurant-list {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .restaurant-list h2 {
-  font-size: 1.5rem;
   margin-bottom: 10px;
+  font-size: 18px;
 }
 
 .restaurant-list ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
 }
 
 .restaurant-list li {
   margin-bottom: 10px;
-}
-
-.restaurant-list p {
-  margin: 0;
+  font-size: 14px;
 }

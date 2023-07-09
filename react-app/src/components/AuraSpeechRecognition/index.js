@@ -5,7 +5,6 @@ import { postMessage } from "../../store/message";
 import { getConversations } from "../../store/conversation";
 import "./AuraSpeechRecognition.css";
 
-
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function AuraSpeechRecognition() {
   const SpeechRecognition =
@@ -34,7 +33,7 @@ export default function AuraSpeechRecognition() {
       const availableVoices = synth.getVoices();
       setVoices(availableVoices);
       const defaultVoice = availableVoices.find(
-        (voice) => voice.name === "Google UK English Male"
+        (voice) => voice.name === "Google UK English Female"
       );
       setSelectedVoice(defaultVoice);
     };
@@ -197,6 +196,7 @@ export default function AuraSpeechRecognition() {
 
           // speak
           synth.speak(speakText);
+          displayText(spoken);
         }
       };
 
@@ -213,19 +213,17 @@ export default function AuraSpeechRecognition() {
           aiSpeaking.innerText = "";
         }, 15000);
         if (!currentUser) {
-          speak("Please log in so that I can assist you");
-          displayText("Please log in so that I can assist you");
-        } else if (spoken.includes("Hello")) {
-          speak("Hello! How can I assist you today?");
-          displayText("Hello! How can I assist you today?");
+          speak("Please log in to get started");
+        } else if (spoken.includes("hello")) {
+          speak("Hi! How can I assist you?");
         } else if (spoken.includes("stop listening")) {
           speak("Goodbye");
-          displayText("Goodbye");
           aura.stop();
         } else if (spoken.includes("ignore")) {
           clearTimeout(timeout);
+          speak("Ignored");
           spoken = "";
-        } else if (spoken.includes("What can you do?")) {
+        } else if (spoken.includes("what can you do")) {
           speak(
             "I can help you with various tasks such as providing information, answering questions, setting reminders, giving recommendations, and more. Feel free to ask me anything!"
           );
@@ -245,12 +243,8 @@ export default function AuraSpeechRecognition() {
           // } else if (queries.some((query) => spoken.includes(query))) {
         } else if (spoken.includes("aura")) {
           if (!conversationId) {
-            speak(
-              "Please choose a conversation you wish to store our interaction"
-            );
-            displayText(
-              "Please choose a conversation you wish to store our interaction"
-            );
+            speak("Please choose a conversation to send a message");
+            displayText("Please choose a conversation to send a message");
           } else if (conversationId) {
             let spokenAfter = spoken.split("aura")[1];
             conversation.message = spokenAfter.toString();
@@ -332,34 +326,38 @@ export default function AuraSpeechRecognition() {
 
   return (
     currentUser && (
-      <div className={`aura-banner-${active}`}>
-        <div className="flex-column-center">
-          <button
-            disabled={active}
-            title="start aura"
-            id={`aura-button-${active}`}
-            onClick={auraStart}
-          ></button>
-          <select
-            id="voice-select"
-            title="choose voice"
-            onChange={(e) => handleVoiceChange(e.target.value)}
-          >
-            {voices.map((voice, index) => (
-              <option key={index} value={voice.name}>
-                {voice.name} / {voice.lang}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex-row-center">
-          <p
-            id="diagnostic"
-            onClick={(e) => setDiagnosticText((e.target.value = ""))}
-          >
-            {diagnosticText}
-          </p>
-        </div>
+      <div className="aura-container">
+        <button
+          disabled={active}
+          title="start aura"
+          className="conversation-button"
+          id={`aura-button-${active}`}
+          onClick={auraStart}
+        >
+          Voice
+        </button>
+
+        <select
+          id="voice-select"
+          title="choose voice"
+          className="conversation-button"
+          onChange={(e) => handleVoiceChange(e.target.value)}
+        >
+          <option value="default">Select Voice</option>
+          {voices.map((voice, index) => (
+            <option key={index} value={voice.name}>
+              {voice.name} / {voice.lang}
+            </option>
+          ))}
+        </select>
+
+        <p
+          id="diagnostic"
+          className="diagnostic-text"
+          onClick={(e) => setDiagnosticText((e.target.value = ""))}
+        >
+          {diagnosticText}
+        </p>
       </div>
     )
   );

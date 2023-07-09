@@ -8,8 +8,6 @@ function LandingPage() {
     let lpSubtitle = document.getElementsByClassName("lp-subtitle")[0];
     let index = 0;
     let delay = 50;
-    lpTitle.textContent = "";
-    lpSubtitle.textContent = "";
 
     function typeNextCharacter() {
       const currentCharacter = text.charAt(index);
@@ -30,7 +28,7 @@ function LandingPage() {
   useLayoutEffect(() => {
     setTimeout(() => {
       displayText(
-        "Welcome To Aura Leveraging The Power Of AI To Effortlessly Manage Your Time"
+        "Welcome To Aura Utilizing The Power Of AI To Effortlessly Manage Your Time"
       );
     }, 2000);
   }, []);

@@ -20,8 +20,9 @@ import {
   faArrowDown,
   faArrowUp,
   faTrash,
+  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
-
+import AuraSpeechRecognition from "../AuraSpeechRecognition";
 
 export default function Conversation() {
   const conversationsObj = useSelector((state) => state.conversationReducer);
@@ -73,6 +74,7 @@ export default function Conversation() {
   const handleDeleteConversationClick = () => {
     if (id) {
       dispatch(deleteConversation(id));
+      setId(null);
       dispatch(getConversations());
     }
   };
@@ -93,11 +95,14 @@ export default function Conversation() {
     setMessageToPost(e.target.value);
   };
 
-  const handleCreateConversation = () => {
+  const handleCreateConversation = async () => {
     const newConversation = {
       title: "New Conversation",
     };
-    dispatch(postConversation(newConversation));
+    let data = await dispatch(postConversation(newConversation));
+    if (data) {
+      setId(data.id);
+    }
   };
 
   const handleScrollToBottom = () => {
@@ -159,243 +164,92 @@ export default function Conversation() {
 
   return (
     <div className="conversation-container">
-      
       <div className="conversation-button-container">
-          {show ? <button
-              onClick={handleConversationShowClick}
-              title="hide ai speech"
-            >
-              <FontAwesomeIcon icon={faEyeSlash} />
-            </button> :
-             <button onClick={handleConversationShowClick} >
-                         <FontAwesomeIcon icon={faEye} title="display ai speech"/>
-                       </button>
-            
-          }
-              <button onClick={handleIconClick} title="choose conversation">
-              <FontAwesomeIcon icon={faComments}/>
-            </button>
+        <div className="button-container">
+          <button onClick={handleIconClick} title="choose conversation">
+            <FontAwesomeIcon icon={faComments} />
+          </button>
+          <button
+            onClick={handleCreateConversation}
+            title="create conversation"
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+          {id && (
             <button
-              onClick={handleCreateConversation}
-              title="create conversation"
+              onClick={handleDeleteConversationClick}
+              title="delete conversation"
             >
-              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon icon={faTrash} />
             </button>
-{!displaySpeaking &&   <button onClick={handleDeleteConversationClick} title="delete conversation">
-<FontAwesomeIcon icon={faTrash} />
-            </button>}
-            {!displaySpeaking && conversation && (
-              <div >
-          <FontAwesomeIcon  ref={topOfConversation} onClick={handleScrollToBottom} title="scroll down" icon={faArrowDown} />
-                </div>
-        )}
+          )}
+        </div>
+
+        <AuraSpeechRecognition />
       </div>
 
       <div className="conversation-content">
-  {showDropdown && conversationsArr && (
-    <div className="conversations-dropdown" ref={dropdownRef}>
-      {conversationsArr.map((conversation) => {
-        return (
-          <div
-            key={`conversation ${conversation.id}`}
-            className="conversation-title"
-            onClick={(e) => handleSetConversationClick(conversation)}
-          >
-            {conversation && conversation.title}
-          </div>
-        );
-      })}
-    </div>
-  )}
-
-<div className="messages-container"  ref={topOfConversation} >
-        {/* {displaySpeaking && (
-        "something"
-        )} */}
-
-        {!displaySpeaking && id && (
-          <div className="message-textarea-container">
-            <div>
-            {messages &&
-              conversation &&
-              messages.map((message) => (
-                <div key={message.id} className="message-container">
-                  <div className="user-message">{message.message}</div>
-                  <div className="ai-message">{message.ai_response}</div>
+        <div id="user-display-text"></div>
+        <div id="ai-display-text"></div>
+        {showDropdown && conversationsArr && (
+          <div className="conversations-dropdown" ref={dropdownRef}>
+            {conversationsArr.map((conversation) => {
+              return (
+                <div
+                  key={`conversation ${conversation.id}`}
+                  className="conversation-title"
+                  onClick={(e) => handleSetConversationClick(conversation)}
+                >
+                  {conversation && conversation.title}
                 </div>
-              ))}
-            {!displaySpeaking && conversation && (
-              <div className="scroll-top-button">
-                <FontAwesomeIcon onClick={handleScrollToTop} ref={bottomOfConversation} title="scroll up" icon={faArrowUp} />
-              </div>
-            )}
-          </div>
-          
+              );
+            })}
           </div>
         )}
-      </div>
+        {id && editMode ? (
+          <input
+            type="text"
+            value={newTitle}
+            onChange={handleTitleChange}
+            onBlur={handleTitleBlur}
+            autoFocus
+          />
+        ) : (
+          id && (
+            <div className="note-title">
+              <h4>{title}</h4>
+              <FontAwesomeIcon icon={faPen} onClick={handleEditClick} />
+            </div>
+          )
+        )}
+        <div className="messages-container" ref={topOfConversation}>
+          {id && (
+            <div className="message-textarea-container">
+              <div>
+                {messages &&
+                  conversation &&
+                  messages.map((message) => (
+                    <div key={message.id} className="message-container">
+                      <div className="user-message">{message.message}</div>
+                      <div className="ai-message">{message.ai_response}</div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       <div className="conversation-input-container">
-      <textarea
-            id="message-textarea"
-            onChange={handleMessageToPost}
-            placeholder="Write a question here, then hit send..."
-            ref={bottomOfConversation}
-          ></textarea>
- 
+        <textarea
+          id="message-textarea"
+          onChange={handleMessageToPost}
+          placeholder="Send a message"
+          ref={bottomOfConversation}
+        ></textarea>
+        <button>
+          <FontAwesomeIcon icon={faArrowRight} />
+        </button>
       </div>
     </div>
   );
-
-  // return (
-  //   <div className="conversation-container">
-  //     <div
-  //       className="conversation-button-container"
-  //     >
-  //       {!displaySpeaking && conversation && (
-  //         <button title="scroll down" onClick={handleScrollToBottom}>⇩</button>
-  //       )}
-  //       {show ? (
-  //         <>
-  //           <button
-  //             onClick={handleConversationShowClick}
-  //             title="displaySpeaking conversation messages"
-  //           >
-  //             <FontAwesomeIcon icon={faEyeSlash} />
-  //           </button>
-  //           <button onClick={handleIconClick} title="choose conversation">
-  //             <FontAwesomeIcon icon={faComments}/>
-  //           </button>
-  //           {!showDropdown ? (
-  //             ""
-  //           ) : conversationsArr ? (
-  //             <div className="conversations-dropdown" ref={dropdownRef}>
-  //               {conversationsArr.map((conversation) => {
-  //                 return (
-  //                   <div
-  //                     key={`conversation ${conversation.id}`}
-  //                     className="conversation-title"
-  //                     onClick={(e) => handleSetConversationClick(conversation)}
-  //                   >
-  //                     {conversation && conversation.title}
-  //                   </div>
-  //                 );
-  //               })}
-  //             </div>
-  //           ) : (
-  //             ""
-  //           )}
-  //           <button
-  //             onClick={handleCreateConversation}
-  //             title="create conversation"
-  //           >
-  //             <FontAwesomeIcon icon={faPlus} />
-  //           </button>
-  //           <button onClick={handleDeleteConversationClick} title="delete conversation">
-  //             Delete Conversation
-  //           </button>
-  //         </>
-  //       ) : (
-  //         <>
-  //           <button onClick={handleConversationShowClick} title="hide conversation messages">
-  //             <FontAwesomeIcon icon={faEye} />
-  //           </button>
-  //           <button onClick={handleIconClick}>
-  //             <FontAwesomeIcon icon={faComments}/>
-  //           </button>
-  //           <button onClick={handleCreateConversation} title="create conversation">
-  //             <FontAwesomeIcon icon={faPlus} />
-  //           </button>
-  //           {!showDropdown ? (
-  //             ""
-  //           ) : conversationsArr ? (
-  //             <div className="conversations-dropdown" ref={dropdownRef}>
-  //               {conversationsArr &&
-  //                 conversationsArr.map((conversation) => {
-  //                   return (
-  //                     <div
-  //                       key={`conversation ${conversation.id}`}
-  //                       className="conversation-title"
-  //                       onClick={(e) =>
-  //                         handleSetConversationClick(conversation)
-  //                       }
-  //                     >
-  //                       {conversation && conversation.title}
-  //                     </div>
-  //                   );
-  //                 })}
-  //             </div>
-  //           ) : (
-  //             ""
-  //           )}
-  //         </>
-  //       )}
-  //       {!displaySpeaking && <button onClick={handleSendQueryClick}>Send Query</button>}
-  //     </div>
-
-
-  //     {editMode ? (
-  //       <div className="title-active-edit">
-  //         <input
-  //           type="text"
-  //           maxLength="40"
-  //           value={newTitle}
-  //           onBlur={handleTitleBlur}
-  //           onChange={handleTitleChange}
-  //           autoFocus
-  //         />
-  //       </div>
-  //     ) : id ? (
-  //       <div className="title-inactive-edit">
-  //         <span title="conversation title">
-  //           {conversation && (
-  //             <h4 id="set-conversation" data-conversation-id={conversation.id}>
-  //               {title}
-  //             </h4>
-  //           )}
-  //         </span>
-  //         <FontAwesomeIcon
-  //           icon={faPen}
-  //           onClick={handleEditClick}
-  //           className="edit-icon"
-  //         />
-  //       </div>
-  //     ) : (
-  //       <div>Create/Choose Conversation</div>
-  //     )}
-
-  //     <div className="messages-container" ref={topOfConversation} >
-  //       {/* {displaySpeaking && (
-  //       "something"
-  //       )} */}
-
-  //       {!displaySpeaking && id && (
-  //         <div className="message-textarea-container">
-  //           <div>
-  //           {messages &&
-  //             conversation &&
-  //             messages.map((message) => (
-  //               <div key={message.id} className="message-container">
-  //                 <div className="user-message">{message.message}</div>
-  //                 <div className="ai-message">{message.ai_response}</div>
-  //               </div>
-  //             ))}
-  //           {/* {!displaySpeaking && conversation && (
-  //             <div className="scroll-top-button">
-  //               <button onClick={handleScrollToTop} ref={bottomOfConversation} title="scroll up">
-  //                 ⇧
-  //               </button>
-  //             </div>
-  //           )} */}
-  //         </div>
-  //         <textarea
-  //           id="message-textarea"
-  //           onChange={handleMessageToPost}
-  //           placeholder="Write a question here, then hit send..."
-  //         ></textarea>
-  //         </div>
-  //       )}
-  //     </div>
-  //   </div>
-  // );
 }

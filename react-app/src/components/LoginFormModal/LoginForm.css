@@ -29,12 +29,12 @@ label {
   margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
+.form-group > [type="text"],
+.form-group > input[type="password"],
+.form-group > input[type="email"] {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd;   */
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.3);
   color: #fff;

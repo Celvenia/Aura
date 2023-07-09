@@ -4,7 +4,8 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
@@ -40,21 +41,20 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      {/* <button className="hidden"onClick={openMenu}> */}
-        {/* <i className="fas fa-user-circle" /> */}
-        <img  onClick={openMenu} className="user-profile-img" src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361333/Personal%20Assistant/image_1_ymijjp.png"></img>
-      {/* </button> */}
+      <FontAwesomeIcon
+        icon={faUser}
+        onClick={openMenu}
+        className="user-profile-img"
+      />
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="user-info">
             <li>{user.username}</li>
             <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
+            <button onClick={handleLogout}>Log Out</button>
           </div>
         ) : (
-          <div className="flex-row">
+          <div className="user-info">
             <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}

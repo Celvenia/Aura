@@ -14,7 +14,6 @@ function Header({ isLoaded }) {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // if DOM element rendered && event.target(click) is not contained in DOM element setShow(false)
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShow(false);
       }
@@ -28,47 +27,41 @@ function Header({ isLoaded }) {
   }, []);
 
   const handleIconClick = (e) => {
-    // click event was propagating to document, preventing dropdown from opening
     e.stopPropagation();
     setShow(!show);
   };
 
   return (
-    <ul className="header-container">
-      <img src={AuraSlogan} />
-      <FontAwesomeIcon
-        icon={faBars}
-        className="header-icon"
+    <div className="header-container">
+      <img
+        src={AuraSlogan}
+        alt="Aura Slogan"
         onClick={handleIconClick}
+        className="header-logo"
       />
 
-      {show ? (
+      {show && (
         <ul className="header-links" ref={dropdownRef}>
-          <div>
-            <NavLink exact to="/">
-              Home
-            </NavLink>
-          </div>
-          <div>
-            <NavLink exact to="/notes">
-              Notes
-            </NavLink>
-          </div>
-          <div>
-            <NavLink exact to="/reminders">
-              Reminders
-            </NavLink>
-          </div>
+          <NavLink exact to="/" onClick={() => setShow(false)}>
+            Home
+          </NavLink>
+
+          <NavLink exact to="/notes" onClick={() => setShow(false)}>
+            Notes
+          </NavLink>
+
+          <NavLink exact to="/reminders" onClick={() => setShow(false)}>
+            Reminders
+          </NavLink>
         </ul>
-      ) : (
-        ""
       )}
+
       {isLoaded && (
         <div>
           <ProfileButton user={sessionUser} />
         </div>
       )}
-    </ul>
+    </div>
   );
 }
 

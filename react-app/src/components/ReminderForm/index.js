@@ -3,28 +3,28 @@ import { checkAndUpdateReminders, postReminder } from "../../store/reminder";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./ReminderForm.css";
-import dayjs from 'dayjs'
-// date default input - yyyy-mm-dd
-// time default input - HH:mm
-export default function ReminderForm({selectedDate}) {
+import dayjs from "dayjs";
+
+export default function ReminderForm({ selectedDate }) {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
-
+  const [date, setDate] = useState(
+    dayjs(selectedDate).format("YYYY-MM-DDTHH:mm")
+  );
 
   const handleAddReminder = async (e) => {
     e.preventDefault();
     setErrors([]);
-    const { date, title, description, location, recurring } = e.target.elements;
+    const { title, description, location, recurring } = e.target.elements;
 
-    // let inputDate = new Date(date.value);
-    if (dayjs().format('YYYY-MM-DD HH:mm:ss') > selectedDate) {
+    if (dayjs().isAfter(date)) {
       setErrors(["Cannot set reminder in the past"]);
       return;
     }
 
     const newReminder = {
-      date_time: date.value,
+      date_time: dayjs(date).format("YYYY-MM-DD HH:mm:ss"),
       title: title.value,
       description: description.value,
       location: location.value || "undefined",
@@ -54,14 +54,13 @@ export default function ReminderForm({selectedDate}) {
         <h1 className="reminders-heading">Set Reminder</h1>
         <label className="form-label">Date:</label>
         <input
-          type="datetime"
+          type="datetime-local"
           id="date"
           className="form-input"
           required
-          placeholder="YYYY-MM-DD HH:MM:SS"
-          title="datetime"
-          min={new Date().toISOString().slice(0, 10)}
-          defaultValue={selectedDate}
+          placeholder="YYYY-MM-DD HH:MM"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
 
         <label className="form-label">Title:</label>

@@ -1,65 +1,45 @@
-
-/* 
-
-.shadow-banner-true {
-        background-image: url('../../assets/BannerActive.gif');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        height: 12vh;
+.aura-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
-.shadow-banner-false {
-    background-image: url('../../assets/BannerInactive.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    height: 12vh;
-
+.aura-container button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #7397cc;
+  box-sizing: border-box;
+  height: 100%;
 }
 
-#shadow-button-true {
-    position: relative;
-    background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    margin-top: 2%;
-    overflow: hidden;
-    box-shadow: 0 0 10px 5px #FFA500;
-    cursor: pointer;
-  }
-
-#shadow-button-false {
-    position: relative;
-    background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    margin-top: 2%;
-    overflow: hidden;
-    box-shadow: 0 0 10px 5px #fff;
-    cursor: pointer;
-  }
-  
-
-#voice-select {
-    position: absolute;
-    top: 8%;
-    width: 20px;
-    height: 1%;
-    margin: 1%;
-    cursor: pointer;
+.aura-container button:hover {
+  background-color: #3e86ef;
 }
 
-#diagnostic {
-    color: #FFA500;
-    font-weight: bolder;
-    cursor: pointer;
-} */
+.aura-container button:disabled {
+  background-color: #7397cc;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.aura-container select {
+  border-radius: 7px;
+  border: 1px solid #d1d5db;
+  background-color: #7397cc;
+  color: #fff;
+  max-width: 150px;
+}
+.aura-container select > option {
+  color: #7397cc;
+  background-color: #fafbf6;
+}
+.diagnostic-text {
+  color: #565a75;
+  cursor: pointer;
+}
+
+.diagnostic-text:hover {
+  font-weight: bold;
+}

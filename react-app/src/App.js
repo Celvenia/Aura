@@ -41,8 +41,10 @@ const App = () => {
             <div className="grid-item">{componentMap.clock}</div>
             <div className="grid-item">{componentMap.googleMap}</div>
           </div>
-        ) : (
+        ) : isLoaded ? (
           <LandingPage />
+        ) : (
+          <h1>Loading...</h1>
         )}
       </div>
     </div>

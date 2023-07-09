@@ -59,7 +59,9 @@ export default function Notes() {
             {notes.map((note) => (
               <li
                 key={note.id}
-                className={`Note ${selectedNote?.id === note?.id ? "selected" : ""}`}
+                className={`Note ${
+                  selectedNote?.id === note?.id ? "selected" : ""
+                }`}
                 onClick={() => handleNoteSelect(note)}
               >
                 {notesObj[note.id].title}
@@ -67,12 +69,12 @@ export default function Notes() {
             ))}
           </ul>
         )}
-                <button
+        <button
           className="create-note-button"
           title="Create new note"
           onClick={(e) => setSelectedNote(null)}
         >
-          Create Note Form
+          New Note Form
         </button>
       </div>
       {selectedNote ? <Note note={selectedNote} /> : <NoteCreate />}

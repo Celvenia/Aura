@@ -1,32 +1,24 @@
-/* 
-#F8F8FF;
-#D1D5DB; 
-#FFF;
-#f3f3f3;
- */
-
 .calendar-container {
   width: 100%;
   height: 100%;
-  margin: auto;
   text-align: center;
-  background-color: #F8F8FF;
+  background-color: #f8f8ff;
   border-radius: 20px;
-  padding: 1%;
+  padding: 2%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-header {
-  background-color: #FFF;
-  padding: 1%;
+  background-color: #7397cc;
+  color: #fff;
+  padding: 2%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .calendar-selected {
   font-size: 125%;
-  font-weight: bolder;
-}
-
-#calendar {
-  margin-top: 1%;
+  font-weight: bold;
 }
 
 .week {
@@ -43,11 +35,35 @@
   height: 5vh;
   flex: 1;
   box-sizing: border-box;
-  border: 1px solid #D1D5DB;
-  background-color: #FFF;
+  border: 1px solid #d1d5db;
+  background-color: #f8f8ff;
 }
 
-.current-day > button {
+.weekday {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3vh;
+  flex: 1;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  background-color: #f8f8ff;
+}
+
+.not-current-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
+  flex: 1;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  background-color: #d5e1ef;
+  color: #000;
+}
+
+.current-day > button,
+.not-current-day > button {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -57,42 +73,33 @@
   height: 100%;
   width: 100%;
   padding: 1%;
-  box-shadow:none;
+  box-shadow: none;
 }
 
 .current-day:hover {
-  background-color: #EDEDED;
+  background-color: #ededed;
 }
 
 .calendar-directions {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  background-color: #FFF;
-  margin: 1%;
-  border: none;
+  background-color: #f8f8ff;
+  margin: 2%;
+  background-color: #7397cc;
 }
 
 .svg-inline--fa.fa-arrow-right,
 .svg-inline--fa.fa-arrow-left {
   cursor: pointer;
-  background-color: #f3f3f3;
-  color:  #7397cc;
+  background-color: #7397cc;
+  color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding-left: 3%;
-  padding-right: 3%;
+  padding: 2%;
 }
 
 .svg-inline--fa.fa-bell {
-  color: #D1D5DB;
+  color: #d1d5db;
+  cursor: pointer;
 }
-
-/* 
-#FFF;
-#F0F0F0;
-#7397cc;
-#D1D5DB;
-#F8F8FF;
-#f3f3f3;
- */

@@ -65,7 +65,6 @@ export default function Clock() {
     }, 60000);
   };
 
-
   return (
     <div className="clock flex-column-center">
       {isAlarmSet && (
@@ -81,10 +80,8 @@ export default function Clock() {
           value={alarmTime}
           onChange={handleAlarmChange}
         />
-        {!isAlarmSet && <button onClick={setAlarm}>Set Alarm</button>}
-        {isAlarmSet && (
-          <button onClick={handleRemoveAlarm}>Remove Alarm</button>
-        )}
+        {!isAlarmSet && <button onClick={setAlarm}>Set</button>}
+        {isAlarmSet && <button onClick={handleRemoveAlarm}>Remove</button>}
         {isSnoozeEnabled ? (
           <button className="snooze-false" disabled>
             Snooze

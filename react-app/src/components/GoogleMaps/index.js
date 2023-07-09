@@ -76,13 +76,18 @@ export default function GoogleMaps() {
   }, []);
 
   const searchNearbyRestaurants = async () => {
+    if (!window.google || !window.google.maps) {
+      return;
+    }
+
     const service = new window.google.maps.places.PlacesService(mapRef.current);
     const request = {
       location: { lat: latitude, lng: longitude },
       radius: 500,
       type: "restaurant",
-      keyword: searchQuery, // Add the keyword to the search request
+      keyword: searchQuery,
     };
+
     service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         setRestaurants(results);
@@ -106,73 +111,75 @@ export default function GoogleMaps() {
 
   return (
     <div id="google-map">
-      <LoadScript
-        googleMapsApiKey={googleMapApiKey}
-        onLoad={handleLoad}
-        libraries={["places"]}
-      >
-        <GoogleMap
-          zoom={15}
-          center={{ lat: latitude, lng: longitude }}
-          mapContainerClassName="map-container"
-          options={options}
-          onClick={handleMapClick}
-          onLoad={(map) => {
-            mapRef.current = map;
-          }}
+      {latitude && longitude && (
+        <LoadScript
+          googleMapsApiKey={googleMapApiKey}
+          onLoad={handleLoad}
+          libraries={["places"]}
         >
-          {latitude && longitude && (
-            <Marker
-              position={{ lat: latitude, lng: longitude }}
-              onClick={() =>
-                handleMarkerClick({
-                  position: { lat: latitude, lng: longitude },
-                })
-              }
-            />
-          )}
-          {filteredRestaurants.map((restaurant) => (
-            <Marker
-              key={restaurant.place_id}
-              position={{
-                lat: restaurant.geometry.location.lat(),
-                lng: restaurant.geometry.location.lng(),
-              }}
-              onClick={() =>
-                handleMarkerClick({
-                  position: {
-                    lat: restaurant.geometry.location.lat(),
-                    lng: restaurant.geometry.location.lng(),
-                  },
-                  name: restaurant.name,
-                })
-              }
-            />
-          ))}
-          {selectedMarker && (
-            <InfoWindow
-              position={selectedMarker.position}
-              onCloseClick={handleInfoWindowClose}
-            >
-              <div>
-                <h3>{selectedMarker.name}</h3>
-                <p>Latitude: {selectedMarker.position.lat()}</p>
-                <p>Longitude: {selectedMarker.position.lng()}</p>
-                <p>
-                  Distance:{" "}
-                  {calculateDistance(
-                    latitude,
-                    longitude,
-                    selectedMarker.position.lat(),
-                    selectedMarker.position.lng()
-                  )}{" "}
-                  km
-                </p>
-              </div>
-            </InfoWindow>
-          )}
-        </GoogleMap>
-      </LoadScript>
+          <GoogleMap
+            zoom={15}
+            center={{ lat: latitude, lng: longitude }}
+            mapContainerClassName="map-container"
+            options={options}
+            onClick={handleMapClick}
+            onLoad={(map) => {
+              mapRef.current = map;
+            }}
+          >
+            {latitude && longitude && (
+              <Marker
+                position={{ lat: latitude, lng: longitude }}
+                onClick={() =>
+                  handleMarkerClick({
+                    position: { lat: latitude, lng: longitude },
+                  })
+                }
+              />
+            )}
+            {filteredRestaurants.map((restaurant) => (
+              <Marker
+                key={restaurant.place_id}
+                position={{
+                  lat: restaurant.geometry.location.lat(),
+                  lng: restaurant.geometry.location.lng(),
+                }}
+                onClick={() =>
+                  handleMarkerClick({
+                    position: {
+                      lat: restaurant.geometry.location.lat(),
+                      lng: restaurant.geometry.location.lng(),
+                    },
+                    name: restaurant.name,
+                  })
+                }
+              />
+            ))}
+            {selectedMarker && (
+              <InfoWindow
+                position={selectedMarker.position}
+                onCloseClick={handleInfoWindowClose}
+              >
+                <div>
+                  <h3>{selectedMarker.name}</h3>
+                  <p>Latitude: {selectedMarker.position.lat()}</p>
+                  <p>Longitude: {selectedMarker.position.lng()}</p>
+                  <p>
+                    Distance:{" "}
+                    {calculateDistance(
+                      latitude,
+                      longitude,
+                      selectedMarker.position.lat(),
+                      selectedMarker.position.lng()
+                    )}{" "}
+                    km
+                  </p>
+                </div>
+              </InfoWindow>
+            )}
+          </GoogleMap>
+        </LoadScript>
+      )}
       <div className="search-container">
         <input
           type="text"
@@ -180,8 +187,7 @@ export default function GoogleMaps() {
           value={searchQuery}
           onChange={handleSearchQueryChange}
         />
-        <button onClick={handleSearch}>Search</button>{" "}
-        {/* Add the search button */}
+        <button onClick={handleSearch}>Search</button>
       </div>
       {filteredRestaurants.length > 0 && (
         <div className="restaurant-list">

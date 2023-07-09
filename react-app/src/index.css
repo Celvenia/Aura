@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .glass-container {
@@ -24,6 +25,13 @@
   align-items: center;
 }
 
+.flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 button {
   color: #7397cc;
   cursor: pointer;
@@ -36,7 +44,8 @@ button {
 }
 
 button:hover {
-  color: #888888;
+  background-color: #3e86ef;
+  color: #fff;
 }
 
 ul {
@@ -44,13 +53,22 @@ ul {
 }
 
 a {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   font-weight: 600;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  color: #7397cc;
+  text-decoration: none;
+  padding: 5%;
+  margin: 2%;
+  width: 100%;
 }
 
 a:hover {
-  color: #7397cc;
+  background-color: #7397cc;
+  color: #fff;
 }
 
 input,
@@ -74,7 +92,7 @@ textarea:focus {
   display: grid;
   grid-template-columns: 1fr;
   overflow: hidden;
-  height: 100%;
+  height: 100vh;
 }
 
 .main-content {
@@ -85,9 +103,9 @@ textarea:focus {
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 2%;
+  grid-template-rows: 1fr;
   height: 80vh;
+  grid-gap: 1%;
 }
 
 .grid-item-double {
@@ -96,12 +114,12 @@ textarea:focus {
   border: 1px solid #d1d5db;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-height: 44vh;
+  height: 44vh;
   overflow: auto;
+  padding: 1%;
 }
 
 .grid-item {
-  padding: 20px;
   background-color: #f8f8ff;
   border: 1px solid #d1d5db;
   border-radius: 20px;
@@ -109,4 +127,5 @@ textarea:focus {
   height: 44vh;
   max-width: 33vw;
   overflow: auto;
+  padding: 1%;
 }
