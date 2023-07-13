@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Notes.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes } from "../../store/note";
-import Note from "../Note";
 import NoteCreate from "../NoteCreate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import Note from "../Note";
 
 export default function Notes() {
   const currentUser = useSelector((state) => state.session.user);
@@ -74,7 +76,7 @@ export default function Notes() {
           title="Create new note"
           onClick={(e) => setSelectedNote(null)}
         >
-          New Note Form
+          <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
         </button>
       </div>
       {selectedNote ? <Note note={selectedNote} /> : <NoteCreate />}

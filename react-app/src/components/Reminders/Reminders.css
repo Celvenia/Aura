@@ -3,19 +3,19 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #F8F8FF;
-  border-bottom: 1px solid #D1D5DB;
+  background-color: #f8f8ff;
+  border-bottom: 1px solid #d1d5db;
+  background: transparent;
 }
 
 .reminder-info {
-  background-color: #1a1a1a;
   border-radius: 5px;
   padding: 1%;
 }
 
 .no-reminders {
   font-style: italic;
-  color: #D1D5DB;
+  color: #d1d5db;
 }
 
 .reminders-list {
@@ -28,7 +28,7 @@
   font-size: 20px;
   margin-bottom: 1%;
   display: flex;
-  color: #FFF;
+  color: #fff;
   justify-content: center;
   background-color: #565a75;
 }
@@ -39,15 +39,85 @@
 }
 
 .reminder-button-container > *:hover {
-  color: #FFA500;
+  color: #ffa500;
 }
 
 .reminders-heading {
   font-size: 20px;
   margin-bottom: 1%;
   display: flex;
-  color: #FFF;
+  color: #fff;
   justify-content: center;
-  background-color: #FFF;
-  color: #1A1A1A;
+  background-color: #fff;
+  color: #1a1a1a;
 }
+
+/* .reminders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2%;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.reminder-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 2%;
+  background-color: #f8f8ff;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reminders-heading {
+  color: #1a1a1a;
+  margin-bottom: 2%;
+}
+
+.form-label {
+  font-weight: bold;
+  margin-bottom: 1%;
+}
+
+.form-input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 2%;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+}
+
+textarea.form-input {
+  resize: vertical;
+}
+
+.form-button {
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 2% 5%;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #7397cc;
+}
+
+.form-button:hover {
+  background-color: #3e86ef;
+} */

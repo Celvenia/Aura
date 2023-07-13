@@ -52,23 +52,25 @@
 
 .title-active-edit {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 .title-active-edit input {
   background-color: transparent;
-  border: none;
-  outline: none;
   color: #7397cc;
+  font-weight: 700;
 }
 
 .title-inactive-edit {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 100%;
 }
 
 .edit-icon {
@@ -84,7 +86,7 @@
   top: 40;
   border-radius: 5px;
   border: 1px solid #fafbf6;
-  padding: 1%;
+  padding: 5px;
   z-index: 10;
   color: #fafbf6;
   background: transparent;
@@ -93,15 +95,19 @@
 }
 
 .conversation-title {
-  border-bottom: 1px solid #d1d5db;
+  /* border-bottom: 1px solid #d1d5db; */
   width: 100%;
   padding: 5px;
   cursor: pointer;
+  color: #7397cc;
+  font-weight: 600;
 }
 
 .conversation-title:hover {
-  background-color: #d1d5db;
-  font-weight: 700;
+  background-color: #7397cc;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 5px;
 }
 
 .messages-container {
@@ -201,6 +207,31 @@
   transform-origin: center;
   padding: 0;
   border: 0;
+}
+
+.conversation-instruction-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 3%;
+}
+
+.conversation-instruction-grid > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #d5e1ef;
+  cursor: pointer;
+  color: #7397cc;
+}
+
+.svg-inline--fa.fa-magnifying-glass {
+  background-color: transparent;
+  color: #fff;
 }
 
 @keyframes rotate {

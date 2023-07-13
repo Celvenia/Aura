@@ -54,6 +54,7 @@ function LoginFormModal() {
               type="text"
               id="email"
               value={email}
+              placeholder="email"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -64,6 +65,7 @@ function LoginFormModal() {
               type="password"
               id="password"
               value={password}
+              placeholder="password"
               onChange={(e) => setPassword(e.target.value)}
               required
             />

@@ -89,7 +89,7 @@ export default function ReminderForm({ selectedDate }) {
           placeholder="location"
           title="location"
         />
-        <span>
+        <span className="form-recurring">
           <label className="form-label">Recurring:</label>
           <input
             type="checkbox"

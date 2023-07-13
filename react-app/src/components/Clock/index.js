@@ -10,10 +10,24 @@ export default function Clock() {
     new Date().toLocaleTimeString()
   );
   const [alarmTime, setAlarmTime] = useState("");
+  const [formattedTime, setFormattedTime] = useState(null);
   const [isAlarmSet, setIsAlarmSet] = useState(false);
   const [isSnoozeEnabled, setIsSnoozeEnabled] = useState(false);
   const [timeToAlarm, setTimeToAlarm] = useState(false);
   const dispatch = useDispatch();
+
+  function convertTo12Hour(time24) {
+    const [hours, minutes] = time24.split(":");
+
+    const hour = parseInt(hours);
+    const minute = parseInt(minutes);
+
+    const period = hour >= 12 ? "PM" : "AM";
+    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+    const time12 = `${hour12}:${minutes} ${period}`;
+
+    return time12;
+  }
 
   useEffect(() => {
     const now = new Date();
@@ -53,6 +67,7 @@ export default function Clock() {
 
   const setAlarm = () => {
     if (alarmTime) {
+      setFormattedTime(convertTo12Hour(alarmTime));
       console.log("Set alarm for", alarmTime);
       setIsAlarmSet(true);
     }
@@ -60,17 +75,21 @@ export default function Clock() {
 
   const handleSnooze = () => {
     setIsSnoozeEnabled(true);
+
     setTimeout(() => {
       setIsSnoozeEnabled(false);
-    }, 60000);
+    }, 300000);
   };
 
   return (
     <div className="clock flex-column-center">
       {isAlarmSet && (
-        <p>
-          Alarm is set for: <strong>{alarmTime}</strong>
-        </p>
+        <>
+          {isSnoozeEnabled && <p>Snoozing for 5 minutes</p>}
+          <p>
+            Alarm is set for: <strong>{formattedTime}</strong>
+          </p>
+        </>
       )}
       <h1>{currentTime}</h1>
       <div className="clock-buttons">

@@ -1,48 +1,92 @@
-.reminder-form {
+.reminders {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 2%;
-  padding: 2%;
-  width: 40vw;
-  color: #1A1A1A;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 100%;
+  padding: 10%;
+  min-width: 350px;
+}
+
+.reminder-form {
+  padding: 30px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+}
+
+.reminder-form h1.reminders-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
   background: transparent;
-  opacity: 100%;
+  color: #212121;
 }
 
 .form-label {
-  margin-bottom: 10px;
-  color: #1A1A1A;
-  font-weight: 700;
-  margin: 1%;
+  display: block;
+  margin-bottom: 5px;
+  color: #212121;
+  font-weight: 600;
 }
 
 .form-input {
-  padding: 5px;
-  background-color: #FFF;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
 }
-
 
 #description {
   min-width: 38vw;
   resize: vertical;
   min-height: 20vh;
   max-height: 30vh;
-  background-color: #FFF;
-  border: 1px solid #D1D5DB;
+  background-color: rgba(0, 0, 0, 0.3);
   padding: 5px;
   box-sizing: border-box;
 }
 
-
 .reminder-form > button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  background-color: rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+  width: 100%;
+}
+
+.reminder-form > button:hover {
+  background-color: #7397cc;
+  color: #fff;
+}
+
+
+.reminder-form ::placeholder {
+  color: #4d4a4a;
+  font-style: italic;
+  font-weight: 550;
+}
+
+.error-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  margin: 0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.form-recurring {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 1%;
-  padding: 2%;
-  width: 100%;
-  background-color: #F8F8FF;
-  border: 1px solid #D1D5DB;
-  box-sizing: border-box;
 }

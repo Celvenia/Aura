@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Reminder
 from datetime import datetime, timedelta
+import time
 
 reminder_routes = Blueprint('reminders', __name__)
 
@@ -117,11 +118,17 @@ def delete_reminder(id):
 @login_required
 def check_and_update_reminders():
     now = datetime.now()
+    # current_time = time.localtime()
+    time_now = now.strftime("%H:%M:%S")
+    current_time = datetime.datetime.now()
 
     reminders = Reminder.query.filter_by(user_id=current_user.id).all()
 
     for reminder in reminders:
-        if(reminder.date_time <= now):
+        print(current_time, 'current time local?')
+        print(time_now, 'converted now')
+
+        if (reminder.date_time <= now):
             reminder.status = "completed"
 
     db.session.commit()

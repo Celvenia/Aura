@@ -37,9 +37,9 @@ const App = () => {
           <div className="grid-container">
             <div className="grid-item-double">{componentMap.conversation}</div>
             <div className="grid-item">{componentMap.calendar}</div>
+            <div className="grid-item">{componentMap.googleMap}</div>
             <div className="grid-item">{componentMap.notes}</div>
             <div className="grid-item">{componentMap.clock}</div>
-            <div className="grid-item">{componentMap.googleMap}</div>
           </div>
         ) : isLoaded ? (
           <LandingPage />

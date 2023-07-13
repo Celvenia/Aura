@@ -21,6 +21,7 @@ import {
   faArrowUp,
   faTrash,
   faArrowRight,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import AuraSpeechRecognition from "../AuraSpeechRecognition";
 
@@ -79,7 +80,7 @@ export default function Conversation() {
     }
   };
 
-  const handleSendQueryClick = () => {
+  const handlePostClick = () => {
     if (messageToPost === "" || id === null) {
       return;
     }
@@ -184,13 +185,10 @@ export default function Conversation() {
             </button>
           )}
         </div>
-
         <AuraSpeechRecognition />
       </div>
 
       <div className="conversation-content">
-        <div id="user-display-text"></div>
-        <div id="ai-display-text"></div>
         {showDropdown && conversationsArr && (
           <div className="conversations-dropdown" ref={dropdownRef}>
             {conversationsArr.map((conversation) => {
@@ -207,22 +205,37 @@ export default function Conversation() {
           </div>
         )}
         {id && editMode ? (
-          <input
-            type="text"
-            value={newTitle}
-            onChange={handleTitleChange}
-            onBlur={handleTitleBlur}
-            autoFocus
-          />
+          <div className="title-active-edit">
+            <input
+              type="text"
+              value={newTitle}
+              onChange={handleTitleChange}
+              onBlur={handleTitleBlur}
+              autoFocus
+            />
+            <FontAwesomeIcon icon={faCheck} onClick={handleTitleChange} />
+          </div>
         ) : (
           id && (
-            <div className="note-title">
+            <div className="title-inactive-edit">
               <h4>{title}</h4>
               <FontAwesomeIcon icon={faPen} onClick={handleEditClick} />
             </div>
           )
         )}
         <div className="messages-container" ref={topOfConversation}>
+          <div id="user-display-text"></div>
+          <div id="ai-display-text"></div>
+          {!id && (
+            <div className="conversation-instruction-grid">
+              <div>Explain quantum computing in simple terms</div>
+              <div>Set a reminder for date at time</div>
+              <div>Suggest a restaurant near me</div>
+              <div>Make a new note</div>
+              <div>5</div>
+              <div>When is my next alarm?</div>
+            </div>
+          )}
           {id && (
             <div className="message-textarea-container">
               <div>
@@ -247,7 +260,7 @@ export default function Conversation() {
           ref={bottomOfConversation}
         ></textarea>
         <button>
-          <FontAwesomeIcon icon={faArrowRight} />
+          <FontAwesomeIcon icon={faMagnifyingGlass} onClick={handlePostClick} />
         </button>
       </div>
     </div>
