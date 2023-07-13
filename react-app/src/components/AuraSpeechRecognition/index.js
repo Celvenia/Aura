@@ -62,7 +62,7 @@ export default function AuraSpeechRecognition() {
     const speechRecognitionList = new SpeechGrammarList();
     setActive(true);
 
-    const keyWords = ["stop listening", "aura", "Aura"];
+    const keyWords = ["stop listening", "hey Aura"];
 
     // Grammar - separated by semi-colons
     // 1: states the format and version used. This always needs to be included first. i.e #JSGF V1.0;
@@ -103,7 +103,7 @@ export default function AuraSpeechRecognition() {
     // };
 
     aura.start();
-    console.log(aura);
+
     setMessage("started listening");
 
     // results event returns SpeechRecognitionResultList object containing SpeechRecognitionResult objects
@@ -122,6 +122,38 @@ export default function AuraSpeechRecognition() {
       "home",
     ];
 
+    const questionStarters = [
+      "are",
+      "can",
+      "could",
+      "did",
+      "do",
+      "does",
+      "explain",
+      "has",
+      "have",
+      "how",
+      "is",
+      "may",
+      "might",
+      "must",
+      "provide",
+      "shall",
+      "should",
+      "what",
+      "when",
+      "where",
+      "which",
+      "who",
+      "will",
+      "would",
+      "why",
+    ];
+
+    // const startsWithQuestionStarter = questionStarters.some((starter) =>
+    //   userQuestion.toLowerCase().startsWith(starter)
+    // );
+
     const date = new Date();
 
     const year = date.getFullYear();
@@ -135,6 +167,8 @@ export default function AuraSpeechRecognition() {
     let speaking = document.getElementById("user-display-text");
     let aiSpeaking = document.getElementById("ai-display-text");
     const conversationIdElement = document.getElementById("set-conversation");
+    const originInput = document.getElementById("origin-input");
+    const destinationInput = document.getElementById("destination-input");
     let conversationId;
     if (conversationIdElement) {
       conversationId = conversationIdElement.getAttribute(
@@ -190,11 +224,14 @@ export default function AuraSpeechRecognition() {
         };
 
         // set rate and pitch
-        speakText.rate = 1.2;
+        speakText.rate = 1;
         speakText.pitch = 1;
 
         // speak
         synth.speak(speakText);
+        if (spoken === "Goodbye") {
+          spoken = "";
+        }
         displayText(spoken);
       }
     };
@@ -236,23 +273,30 @@ export default function AuraSpeechRecognition() {
         });
         speak(`the current date is ${formattedDate}`);
       } else if (spoken.includes("when is my next alarm")) {
-        // HH:mm
-        // alarmTime.value = "05:06";
-        // console.log(alarmTime.value);
-        // } else if (queries.some((query) => spoken.includes(query))) {
-      } else if (spoken.includes("aura")) {
+        if (alarmTime.value) {
+          speak(`your next alarm is ${alarmTime.value}`);
+        } else {
+          speak("No alarms currently set");
+        }
+        console.log(alarmTime.value);
+      } else if (
+        questionStarters.some((starter) =>
+          spoken.toLowerCase().startsWith(starter)
+        )
+      ) {
         if (!conversationId) {
           speak("Please choose a conversation to send a message");
-          displayText("Please choose a conversation to send a message");
         } else if (conversationId) {
-          let spokenAfter = spoken.split("aura")[1];
-          conversation.message = spokenAfter.toString();
-          dispatch(postMessage(conversation)).then((result) => {
-            if (result) {
-              speak(result.ai_response);
-              displayText(result.ai_response);
-            }
-          });
+          // let spokenAfter = spoken.split("aura")[1];
+          // conversation.message = spokenAfter.toString();
+          conversation.message = spoken;
+          // dispatch(postMessage(conversation)).then((result) => {
+          //   if (result) {
+          //     speak(result.ai_response);
+          //     displayText(result.ai_response);
+          //   }
+          // });
+          console.log(true);
         }
       } else if (spoken.includes("navigate to".toLowerCase())) {
         let page = spoken.split("navigate to ")[1];
@@ -276,9 +320,9 @@ export default function AuraSpeechRecognition() {
     // We also use the speechend event to stop the speech recognition service from running
     // (using SpeechRecognition.stop()) after delay and it has finished being spoken:
     aura.onspeechend = () => {
-      // clearTimeout(timeout);
-      // setActive(false);
-      // speak("Goodbye");
+      clearTimeout(timeout);
+      setActive(false);
+      speak("Goodbye");
       let speaking = document.getElementById("user-display-text");
       if (speaking) {
         speaking.innerText = "";

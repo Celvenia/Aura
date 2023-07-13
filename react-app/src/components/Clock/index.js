@@ -51,7 +51,7 @@ export default function Clock() {
   }, [currentTime]);
 
   useEffect(() => {
-    dispatch(checkAndUpdateReminders());
+    // dispatch(checkAndUpdateReminders());
   }, [dispatch]);
 
   const handleRemoveAlarm = () => {
@@ -87,7 +87,8 @@ export default function Clock() {
         <>
           {isSnoozeEnabled && <p>Snoozing for 5 minutes</p>}
           <p>
-            Alarm is set for: <strong>{formattedTime}</strong>
+            Alarm is set for:{" "}
+            <strong id="formatted-alarm-time">{formattedTime}</strong>
           </p>
         </>
       )}

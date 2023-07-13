@@ -2,14 +2,21 @@ import React, { useEffect, useState, useRef } from "react";
 import {
   GoogleMap,
   LoadScript,
-  Marker,
-  InfoWindow,
+  Marker, // to display marker
+  InfoWindow, // to showcase info on marker
   useJsApiLoader, // hook to see if map is loaded
-  Autocomplete,
+  Autocomplete, // enables improved autocompletion
+  DirectionsRenderer, // shows route
+  Geocoder, // converts lat/lng to address
 } from "@react-google-maps/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faX,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 import "./GoogleMaps.css";
+const libraries = ["places"];
 
 export default function GoogleMaps() {
   const [latitude, setLatitude] = useState(null);
@@ -32,7 +39,7 @@ export default function GoogleMaps() {
   const googleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_API;
 
   const options = {
-    disableDefaultUI: true,
+    disableDefaultUI: true, // allows map full screen
     zoomControl: true,
     streetViewControl: true,
     mapTypeControl: true,
@@ -41,8 +48,10 @@ export default function GoogleMaps() {
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: googleMapApiKey,
-    libraries: ["places"],
+    libraries: libraries,
   });
+
+  const geocoder = isLoaded ? new window.google.maps.Geocoder() : null;
 
   const handleMarkerClick = (marker) => {
     setSelectedMarker(marker);
@@ -51,16 +60,6 @@ export default function GoogleMaps() {
   const handleInfoWindowClose = () => {
     setSelectedMarker(null);
   };
-
-  // const handleSearchQueryChange = (event) => {
-  //   setSearchQuery(event.target.value);
-  // };
-
-  // const filterRestaurants = () => {
-  //   return restaurants.filter((restaurant) =>
-  //     restaurant.name.toLowerCase().includes(searchQuery.toLowerCase())
-  //   );
-  // };
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // Radius of the earth in km
@@ -85,11 +84,11 @@ export default function GoogleMaps() {
     if (originRef.current.value === "" || destinationRef.current.value === "") {
       return;
     }
-    const directionsService = new window.google.maps.directionsService();
+    const directionsService = new window.google.maps.DirectionsService();
     const results = await directionsService.route({
       origin: originRef.current.value,
       destination: destinationRef.current.value,
-      travelNode: window.google.maps.TravelMode.DRIVING,
+      travelMode: window.google.maps.TravelMode.DRIVING,
     });
     setDirectionsResponse(results);
     setDistance(results.routes[0].legs[0].distance.text); // use first direction
@@ -100,61 +99,52 @@ export default function GoogleMaps() {
     setDirectionsResponse(null);
     setDistance("");
     setDuration("");
-    originRef.current.value = "";
+    // originRef.current.value = "";
     destinationRef.current.value = "";
   };
-  // const filteredRestaurants = filterRestaurants();
+
+  const getAddressFromLatLng = (latLng) => {
+    return new Promise((resolve, reject) => {
+      geocoder.geocode({ location: latLng }, (results, status) => {
+        if (status === "OK" && results.length > 0) {
+          resolve(results[0].formatted_address);
+        } else {
+          reject(new Error("Reverse geocoding failed"));
+        }
+      });
+    });
+  };
 
   useEffect(() => {
-    // Request the user's location with improved accuracy
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log(position);
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        setLatitude(latitude);
+        setLongitude(longitude);
+
+        if (originRef.current) {
+          const latLng = {
+            lat: latitude,
+            lng: longitude,
+          };
+          try {
+            const address = await getAddressFromLatLng(latLng);
+            originRef.current.value = address;
+          } catch (error) {
+            console.log("Reverse geocoding failed:", error);
+          }
+        }
+
+        if (map) {
+          map.panTo({ lat: latitude, lng: longitude });
+        }
       },
       (error) => {
         console.log("Error retrieving location:", error);
       },
       { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
     );
-  }, []);
-
-  // const searchNearbyRestaurants = async () => {
-  //   if (!window.google || !window.google.maps) {
-  //     return;
-  //   }
-
-  // const service = new window.google.maps.places.PlacesService(mapRef.current);
-
-  // useEffect obtained lat/lng through geolocation api
-  // const request = {
-  //   location: { lat: latitude, lng: longitude },
-  //   radius: 500,
-  //   type: "restaurant",
-  //   keyword: searchQuery,
-  // };
-
-  // service.nearbySearch(request, (results, status) => {
-  //   if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-  //     setRestaurants(results);
-  //   } else {
-  //     console.log("Error fetching nearby restaurants:", status);
-  //   }
-  // });
-  // };
-
-  // const handleLoad = () => {
-  //   searchNearbyRestaurants();
-  // };
-
-  // const handleMapClick = () => {
-  //   setSelectedMarker(null);
-  // };
-
-  // const handleSearch = () => {
-  //   searchNearbyRestaurants();
-  // };
+  }, [map]);
 
   if (!isLoaded) {
     return <div>Loading...</div>;
@@ -164,26 +154,34 @@ export default function GoogleMaps() {
     <div id="google-map">
       <div className="search-container">
         <Autocomplete>
-          <input type="text" placeholder="Origin" ref={originRef}></input>
+          <input
+            type="text"
+            id="origin-input"
+            placeholder="Origin"
+            ref={originRef}
+          ></input>
         </Autocomplete>
         <Autocomplete>
           <input
             type="text"
+            id="destination-input"
             placeholder="Destination"
             ref={destinationRef}
-            // value={searchQuery}
-            // onChange={handleSearchQueryChange}
           />
         </Autocomplete>
-
-        {/* <button onClick={handleSearch}>Search</button> */}
-        <button>
+        <button onClick={calculateRoute} title="find route">
           {" "}
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
+        <button onClick={clearRoute} title="clear route">
+          <FontAwesomeIcon icon={faX} />
+        </button>
         {latitude && longitude && (
-          <button onClick={() => map.panTo({ lat: latitude, lng: longitude })}>
-            Center
+          <button
+            title="center"
+            onClick={() => map.panTo({ lat: latitude, lng: longitude })}
+          >
+            <FontAwesomeIcon icon={faLocationDot} />
           </button>
         )}
       </div>
@@ -228,112 +226,10 @@ export default function GoogleMaps() {
             </div>
           </InfoWindow>
         )}
+        {directionsResponse && (
+          <DirectionsRenderer directions={directionsResponse} />
+        )}
       </GoogleMap>
     </div>
   );
 }
-
-// return (
-//   <div id="google-map">
-//     {latitude && longitude && (
-//       <LoadScript
-//         googleMapsApiKey={googleMapApiKey}
-//         onLoad={handleLoad}
-//         libraries={["places"]}
-//       >
-//         <GoogleMap
-//           zoom={15}
-//           center={{ lat: latitude, lng: longitude }}
-//           mapContainerClassName="map-container"
-//           options={options}
-//           onClick={handleMapClick}
-//           onLoad={(map) => {
-//             mapRef.current = map;
-//           }}
-//         >
-//           {latitude && longitude && (
-//             <Marker
-//               position={{ lat: latitude, lng: longitude }}
-//               onClick={() =>
-//                 handleMarkerClick({
-//                   position: { lat: latitude, lng: longitude },
-//                 })
-//               }
-//             />
-//           )}
-//           {filteredRestaurants.map((restaurant) => (
-//             <Marker
-//               key={restaurant.place_id}
-//               position={{
-//                 lat: restaurant.geometry.location.lat(),
-//                 lng: restaurant.geometry.location.lng(),
-//               }}
-//               onClick={() =>
-//                 handleMarkerClick({
-//                   position: {
-//                     lat: restaurant.geometry.location.lat(),
-//                     lng: restaurant.geometry.location.lng(),
-//                   },
-//                   name: restaurant.name,
-//                 })
-//               }
-//             />
-//           ))}
-//           {selectedMarker && (
-//             <InfoWindow
-//               position={selectedMarker.position}
-//               onCloseClick={handleInfoWindowClose}
-//             >
-//               <div>
-//                 <h3>{selectedMarker.name}</h3>
-//                 <p>Latitude: {selectedMarker.position.lat()}</p>
-//                 <p>Longitude: {selectedMarker.position.lng()}</p>
-//                 <p>
-//                   Distance:{" "}
-//                   {calculateDistance(
-//                     latitude,
-//                     longitude,
-//                     selectedMarker.position.lat(),
-//                     selectedMarker.position.lng()
-//                   )}{" "}
-//                   km
-//                 </p>
-//               </div>
-//             </InfoWindow>
-//           )}
-//         </GoogleMap>
-//       </LoadScript>
-//     )}
-//     <div className="search-container">
-//       <input
-//         type="text"
-//         placeholder="Search for restaurants..."
-//         value={searchQuery}
-//         onChange={handleSearchQueryChange}
-//       />
-//       <button onClick={handleSearch}>Search</button>
-//     </div>
-//     {filteredRestaurants.length > 0 && (
-//       <div className="restaurant-list">
-//         <h2>Nearby Restaurants</h2>
-//         <ul>
-//           {filteredRestaurants.map((restaurant) => (
-//             <li key={restaurant.place_id}>
-//               <p>{restaurant.name}</p>
-//               <p>
-//                 Distance:{" "}
-//                 {calculateDistance(
-//                   latitude,
-//                   longitude,
-//                   restaurant.geometry.location.lat(),
-//                   restaurant.geometry.location.lng()
-//                 )}{" "}
-//                 km
-//               </p>
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-//     )}
-//   </div>
-// );

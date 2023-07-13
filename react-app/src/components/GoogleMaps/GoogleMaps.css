@@ -20,6 +20,7 @@
 
 .search-container input[type="text"] {
   flex: 1;
+  max-width: 10vw;
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;

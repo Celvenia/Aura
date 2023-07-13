@@ -103,3 +103,7 @@
   color: #d1d5db;
   cursor: pointer;
 }
+
+.svg-inline--fa.fa-bell:hover {
+  color: #3e86ef;
+}

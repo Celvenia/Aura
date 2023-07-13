@@ -80,7 +80,7 @@ export default function Conversation() {
     }
   };
 
-  const handlePostClick = () => {
+  const handlePostClick = (e) => {
     if (messageToPost === "" || id === null) {
       return;
     }
@@ -90,6 +90,8 @@ export default function Conversation() {
     };
     dispatch(postMessage(conversation));
     setMessageToPost("");
+    let message = document.getElementById("message-textarea");
+    message.value = "";
   };
 
   const handleMessageToPost = (e) => {
@@ -224,16 +226,28 @@ export default function Conversation() {
           )
         )}
         <div className="messages-container" ref={topOfConversation}>
-          <div id="user-display-text"></div>
-          <div id="ai-display-text"></div>
+          {id ? (
+            <>
+              <div id="user-display-text">User</div>
+              <div id="ai-display-text">Aura</div>
+            </>
+          ) : (
+            <h4>
+              Choose conversation <FontAwesomeIcon icon={faComments} /> to begin
+              voice interaction
+            </h4>
+          )}
           {!id && (
             <div className="conversation-instruction-grid">
+              <div className="instruction-grid-description"> Examples </div>
+              <div className="instruction-grid-description"> Capabilities </div>
+              <div className="instruction-grid-description"> Limitations </div>
               <div>Explain quantum computing in simple terms</div>
-              <div>Set a reminder for date at time</div>
+              <div>Remembers what user said earlier in the conversation</div>
               <div>Suggest a restaurant near me</div>
-              <div>Make a new note</div>
-              <div>5</div>
-              <div>When is my next alarm?</div>
+              <div>Provide me mock interview questions for SWE</div>
+              <div>Declines inappropriate requests</div>
+              <div>Provide me mock interview questions for SWE</div>
             </div>
           )}
           {id && (
@@ -253,15 +267,19 @@ export default function Conversation() {
         </div>
       </div>
       <div className="conversation-input-container">
-        <textarea
-          id="message-textarea"
-          onChange={handleMessageToPost}
-          placeholder="Send a message"
-          ref={bottomOfConversation}
-        ></textarea>
-        <button>
-          <FontAwesomeIcon icon={faMagnifyingGlass} onClick={handlePostClick} />
-        </button>
+        {id && (
+          <>
+            <textarea
+              id="message-textarea"
+              onChange={handleMessageToPost}
+              placeholder="Send a message"
+              ref={bottomOfConversation}
+            ></textarea>
+            <button onClick={handlePostClick}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

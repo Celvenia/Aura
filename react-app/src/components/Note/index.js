@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteNote, getNote, updateNote } from "../../store/note";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faFile } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faCheck } from "@fortawesome/free-solid-svg-icons";
 import NoteCreate from "../NoteCreate";
 
 export default function Note({ note }) {
@@ -71,17 +71,19 @@ export default function Note({ note }) {
     display && (
       <div className="note-page">
         <section className="note-container">
-          <div className="error-container">
-            {errors.map((error, index) => (
-              <p
-                key={index}
-                className="error-message"
-                onClick={(e) => setErrors([])}
-              >
-                {error}
-              </p>
-            ))}
-          </div>
+          {errors.length > 0 && (
+            <div className="error-container">
+              {errors.map((error, index) => (
+                <p
+                  key={index}
+                  className="error-message"
+                  onClick={(e) => setErrors([])}
+                >
+                  {error}
+                </p>
+              ))}
+            </div>
+          )}
           {!note ? (
             ""
           ) : editMode ? (
@@ -113,8 +115,8 @@ export default function Note({ note }) {
           {note && (
             <div className="note-buttons">
               <button onClick={handleUpdateClick} className="note-file-button">
-                <FontAwesomeIcon icon={faFile} />
-                Save Note
+                Save
+                <FontAwesomeIcon icon={faCheck} />
               </button>
               <button onClick={handleDeleteClick}>Delete</button>
             </div>

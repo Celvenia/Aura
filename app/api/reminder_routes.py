@@ -1,3 +1,4 @@
+from app.models import Reminder
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Reminder
@@ -6,9 +7,8 @@ import time
 
 reminder_routes = Blueprint('reminders', __name__)
 
+
 # Get all reminders
-
-
 @reminder_routes.route('', methods=['GET'])
 @login_required
 def get_reminders():
@@ -114,23 +114,24 @@ def delete_reminder(id):
 
 
 # check and update reminders that have passed current date/time
+
+
 @reminder_routes.route('/check-and-update', methods=['POST'])
 @login_required
 def check_and_update_reminders():
-    now = datetime.now()
-    # current_time = time.localtime()
-    time_now = now.strftime("%H:%M:%S")
-    current_time = datetime.datetime.now()
+    data = request.json
+    filtered_reminders = data['filteredRemindersArr']
 
-    reminders = Reminder.query.filter_by(user_id=current_user.id).all()
-
-    for reminder in reminders:
-        print(current_time, 'current time local?')
-        print(time_now, 'converted now')
-
-        if (reminder.date_time <= now):
-            reminder.status = "completed"
+    for reminder in filtered_reminders:
+        if reminder['status'] == 'active':
+            reminder_obj = Reminder.query.get(reminder['id'])
+            if reminder_obj.user_id == current_user.id:
+                reminder_obj.status = 'completed'
 
     db.session.commit()
-    reminders = Reminder.query.filter_by(user_id=current_user.id).all()
-    return {'reminders': [reminder.to_dict() for reminder in reminders]}
+
+    active_reminders = Reminder.query.filter_by(status='active').all()
+    active_reminders_data = [reminder.to_dict()
+                             for reminder in active_reminders]
+
+    return {'reminders': active_reminders_data}

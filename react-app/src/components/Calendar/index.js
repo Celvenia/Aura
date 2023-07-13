@@ -146,6 +146,10 @@ export default function Calendar() {
                       icon={faBell}
                       onClick={() => handleOpenModal()}
                     />
+                    // <OpenModalButton
+                    //   buttonText={<FontAwesomeIcon icon={faBell} />}
+                    //   modalComponent={<Reminders />}
+                    // />
                   )}
                 </div>
               ))}

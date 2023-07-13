@@ -8,7 +8,6 @@
   background-color: #f8f8ff;
   border-radius: 20px;
   padding: 2%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .clock h1 {
@@ -16,10 +15,10 @@
   font-weight: bold;
   margin: 0;
   padding: 1rem;
-  background-color: #f8f8ff;
   border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: #212121;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+  color: #f8f8ff;
+  background-color: #7397cc;
 }
 
 .clock-buttons {

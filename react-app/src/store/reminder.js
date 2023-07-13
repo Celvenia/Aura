@@ -1,17 +1,16 @@
 // constant variables for action creator
-const GET_REMINDER = "reminder/GET_REMINDER"
+const GET_REMINDER = "reminder/GET_REMINDER";
 const GET_REMINDERS = "reminder/GET_REMINDERS";
-const UPDATE_REMINDER = "reminder/UPDATE_REMINDER"
+const UPDATE_REMINDER = "reminder/UPDATE_REMINDER";
 const POST_REMINDER = "reminder/POST_REMINDER";
-const DELETE_REMINDER = "reminder/DELETE_REMINDER"
-const CHECK_UPDATE_REMINDER = "reminder/CHECK_UPDATE_REMINDER"
-
+const DELETE_REMINDER = "reminder/DELETE_REMINDER";
+const CHECK_UPDATE_REMINDER = "reminder/CHECK_UPDATE_REMINDER";
 
 // action creators - define actions (objects with type/data)
 const getReminderAC = (data) => ({
   type: GET_REMINDER,
-  data
-})
+  data,
+});
 
 const getRemindersAC = (data) => ({
   type: GET_REMINDERS,
@@ -25,23 +24,23 @@ const postReminderAC = (data) => ({
 
 const updateReminderAC = (data) => ({
   type: UPDATE_REMINDER,
-  data
-})
+  data,
+});
 
 const deleteReminderAC = (data) => ({
   type: DELETE_REMINDER,
-  data
-})
+  data,
+});
 
 const checkUpdateReminderAC = (data) => ({
   type: CHECK_UPDATE_REMINDER,
-  data
-})
+  data,
+});
 
 // thunk action creators - for asynchronous code, i.e., fetch calls prior to dispatching action creators
 // read reminder
 export const getReminder = (id) => async (dispatch) => {
-  const response = await fetch(`/api/reminders/${id}`)
+  const response = await fetch(`/api/reminders/${id}`);
 
   if (response.ok) {
     const data = await response.json();
@@ -56,7 +55,6 @@ export const getReminder = (id) => async (dispatch) => {
     return ["An error occurred. Please try again."];
   }
 };
-
 
 // read reminders
 export const getReminders = () => async (dispatch) => {
@@ -102,7 +100,6 @@ export const postReminder = (reminder) => async (dispatch) => {
 
 // update reminder
 export const updateReminder = (reminder) => async (dispatch) => {
-
   const response = await fetch(`/api/reminders/${reminder.id}`, {
     method: "PUT",
     headers: {
@@ -127,9 +124,8 @@ export const updateReminder = (reminder) => async (dispatch) => {
 };
 
 export const deleteReminder = (id) => async (dispatch) => {
-
   const response = await fetch(`/api/reminders/${id}`, {
-    method: "DELETE"
+    method: "DELETE",
   });
 
   if (response.ok) {
@@ -148,24 +144,28 @@ export const deleteReminder = (id) => async (dispatch) => {
 };
 
 // check and update reminders
-export const checkAndUpdateReminders = () => async (dispatch) => {
-  const response = await fetch("/api/reminders/check-and-update", {
-    method: "POST",
-  });
+export const checkAndUpdateReminders =
+  (filteredRemindersArr) => async (dispatch) => {
+    const response = await fetch("/api/reminders/check-and-update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filteredRemindersArr }),
+    });
 
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(checkUpdateReminderAC(data))
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(checkUpdateReminderAC(data));
+    } else if (response.status < 500) {
+      const data = await response.json();
+      if (data.errors) {
+        return data.errors;
+      }
+    } else {
+      return ["An error occurred. Please try again."];
     }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
-};
-
+  };
 
 // state
 const initialState = {};
@@ -175,31 +175,31 @@ export default function reminderReducer(state = initialState, action) {
   const newState = { ...state };
   switch (action.type) {
     case GET_REMINDER: {
-      newState[action.data.id] = action.data
-      return newState
+      newState[action.data.id] = action.data;
+      return newState;
     }
     case GET_REMINDERS: {
-      action.data.reminders.forEach(reminder => {
-        newState[reminder.id] = reminder
-      })
+      action.data.reminders.forEach((reminder) => {
+        newState[reminder.id] = reminder;
+      });
       return newState;
     }
     case POST_REMINDER: {
-      newState[action.data.id] = action.data
+      newState[action.data.id] = action.data;
       return newState;
     }
     case UPDATE_REMINDER: {
-      newState[action.data.id] = action.data
-      return newState
+      newState[action.data.id] = action.data;
+      return newState;
     }
     case DELETE_REMINDER: {
-      delete newState[action.data.deleted.id]
-      return newState
+      delete newState[action.data.deleted.id];
+      return newState;
     }
     case CHECK_UPDATE_REMINDER: {
-      action.data.reminders.forEach(reminder => {
-        newState[reminder.id] = reminder
-      })
+      // action.data.reminders.forEach((reminder) => {
+      //   newState[reminder.id] = reminder;
+      // });
       return newState;
     }
     default:

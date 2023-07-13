@@ -3,8 +3,6 @@
   background-color: #f8f8ff;
   width: 100%;
   height: 100%;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .note-container {
@@ -17,19 +15,25 @@
   height: auto;
   padding: 2%;
   margin-top: 2%;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.note-buttons > button {
+  background-color: #7397cc;
+  color: #fff;
 }
 
 .note-textarea {
   width: 100%;
-  min-height: 22.5vh;
+  min-height: 27vh;
+  min-width: 30vw;
   height: 18vh;
   padding: 2%;
   font-size: 16px;
   margin-top: 2%;
   border: 1px solid #d1d5db;
   border-radius: 5px;
+  resize: vertical;
+  overflow: hidden;
 }
 
 .svg-inline--fa.fa-pen {

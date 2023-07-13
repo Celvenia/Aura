@@ -26,11 +26,11 @@
 
 .reminders-title {
   font-size: 20px;
-  margin-bottom: 1%;
+  margin-bottom: 2%;
   display: flex;
   color: #fff;
   justify-content: center;
-  background-color: #565a75;
+  /* background-color: #565a75; */
 }
 
 .reminder-button-container > * {
@@ -39,7 +39,8 @@
 }
 
 .reminder-button-container > *:hover {
-  color: #ffa500;
+  color: #3e86ef;
+  background-color: transparent;
 }
 
 .reminders-heading {
@@ -48,7 +49,7 @@
   display: flex;
   color: #fff;
   justify-content: center;
-  background-color: #fff;
+  /* background-color: #fff; */
   color: #1a1a1a;
 }
 
