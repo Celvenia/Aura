@@ -4,20 +4,6 @@
   justify-content: flex-end;
 }
 
-.aura-container button {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  color: #7397cc;
-  box-sizing: border-box;
-  height: 100%;
-}
-
-.aura-container button:hover {
-  background-color: #3e86ef;
-}
-
 .aura-container button:disabled {
   background-color: #7397cc;
   color: #fff;
@@ -32,9 +18,6 @@
   color: #fff;
   max-width: 150px;
   cursor: pointer;
-}
-
-.voice-select-default {
 }
 
 .diagnostic-text {

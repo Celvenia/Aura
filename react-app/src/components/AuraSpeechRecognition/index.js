@@ -33,7 +33,8 @@ export default function AuraSpeechRecognition() {
       const availableVoices = synth.getVoices();
       setVoices(availableVoices);
       const defaultVoice = availableVoices.find(
-        (voice) => voice.name === "Google UK English Female"
+        // (voice) => voice.name === "Google UK English Female"
+        (voice) => voice.name.includes("Microsoft Zira")
       );
       setSelectedVoice(defaultVoice);
     };
@@ -241,6 +242,13 @@ export default function AuraSpeechRecognition() {
         conversation_id: conversationId,
         message: "",
       };
+      
+      let firstWord;
+      if (spoken.startsWith(" ")) {
+        firstWord = spoken.split(" ")[1];
+      } else {
+        firstWord = spoken.split(" ")[0];
+      }
 
       speaking.innerText = spoken;
       clearTimeout(timeout);
@@ -278,25 +286,36 @@ export default function AuraSpeechRecognition() {
         } else {
           speak("No alarms currently set");
         }
-        console.log(alarmTime.value);
-      } else if (
-        questionStarters.some((starter) =>
-          spoken.toLowerCase().startsWith(starter)
-        )
-      ) {
+      } else if (spoken.includes("set origin to")) {
+        let newOrigin = spoken.split("origin to")[1];
+        originInput.value = newOrigin;
+        speak(`origin set to ${originInput.value}`);
+      } else if (spoken.includes("set destination to")) {
+        let newDestination = spoken.split("destination to")[1];
+        destinationInput.value = newDestination;
+        speak(`destination set to ${destinationInput.value}`);
+      } else if (questionStarters.includes(spoken.split(" ")[0])) {
+        let modifiedSpoken;
+        console.log(originInput.value);
         if (!conversationId) {
           speak("Please choose a conversation to send a message");
-        } else if (conversationId) {
-          // let spokenAfter = spoken.split("aura")[1];
-          // conversation.message = spokenAfter.toString();
-          conversation.message = spoken;
-          // dispatch(postMessage(conversation)).then((result) => {
-          //   if (result) {
-          //     speak(result.ai_response);
-          //     displayText(result.ai_response);
-          //   }
-          // });
-          console.log(true);
+        } else {
+          if (spoken.includes("origin")) {
+            modifiedSpoken = spoken.replace("origin", originInput.value);
+          } else if (spoken.includes("destination")) {
+            modifiedSpoken = spoken.replace(
+              "destination",
+              destinationInput.value
+            );
+          } else {
+            modifiedSpoken = spoken;
+          }
+          conversation.message = modifiedSpoken;
+          dispatch(postMessage(conversation)).then((result) => {
+            if (result) {
+              speak(result.ai_response);
+            }
+          });
         }
       } else if (spoken.includes("navigate to".toLowerCase())) {
         let page = spoken.split("navigate to ")[1];
@@ -325,11 +344,11 @@ export default function AuraSpeechRecognition() {
       speak("Goodbye");
       let speaking = document.getElementById("user-display-text");
       if (speaking) {
-        speaking.innerText = "";
+        speaking.innerText = "User";
       }
       let aiSpeaking = document.getElementById("ai-display-text");
       if (aiSpeaking) {
-        speaking.innerText = "";
+        aiSpeaking.innerText = "Aura";
       }
     };
 
@@ -348,7 +367,7 @@ export default function AuraSpeechRecognition() {
     //     aura.abort();
     //   };
     // };
-
+    let firstWord;
     aura.onresult = (event) => {
       for (let i = 0; i < event.results.length; i++) {
         let spoken = event.results[i][0].transcript;
@@ -357,7 +376,7 @@ export default function AuraSpeechRecognition() {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
           processResult(spoken);
-        }, 1000);
+        }, 2000);
       }
     };
 

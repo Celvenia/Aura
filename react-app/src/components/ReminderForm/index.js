@@ -68,8 +68,8 @@ export default function ReminderForm({ selectedDate }) {
           type="text"
           id="title"
           className="form-input"
-          placeholder="title"
           title="title"
+          placeholder="title"
         />
 
         <label className="form-label">Description:</label>
@@ -77,8 +77,9 @@ export default function ReminderForm({ selectedDate }) {
           type="text"
           id="description"
           className="form-input"
-          placeholder="description"
+          placeholder="description - max length 200 characters"
           title="description"
+          maxLength={200}
         />
 
         <label className="form-label">Location:</label>

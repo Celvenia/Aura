@@ -6,7 +6,7 @@ import {
   deleteConversation,
   postConversation,
 } from "../../store/conversation";
-import { getMessages, deleteMessages, postMessage } from "../../store/message";
+import { getMessages, postMessage } from "../../store/message";
 import "./Conversation.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,6 +24,7 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import AuraSpeechRecognition from "../AuraSpeechRecognition";
+import ProgressBar from "../ProgressBar";
 
 export default function Conversation() {
   const conversationsObj = useSelector((state) => state.conversationReducer);
@@ -39,6 +40,8 @@ export default function Conversation() {
   const [newTitle, setNewTitle] = useState("");
   const [messageToPost, setMessageToPost] = useState("");
   const [id, setId] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
   const bottomOfConversation = useRef(null);
   const topOfConversation = useRef(null);
   const dropdownRef = useRef();
@@ -82,13 +85,22 @@ export default function Conversation() {
 
   const handlePostClick = (e) => {
     if (messageToPost === "" || id === null) {
+      setErrors(["Cannot send empty message"]);
       return;
     }
     const conversation = {
       conversation_id: id,
       message: messageToPost,
     };
-    dispatch(postMessage(conversation));
+    const postMessagePromise = dispatch(postMessage(conversation));
+    setLoading(true);
+    postMessagePromise
+      .then((data) => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setErrors(error);
+      });
     setMessageToPost("");
     let message = document.getElementById("message-textarea");
     message.value = "";
@@ -187,7 +199,7 @@ export default function Conversation() {
             </button>
           )}
         </div>
-        <AuraSpeechRecognition />
+        {id && <AuraSpeechRecognition />}
       </div>
 
       <div className="conversation-content">
@@ -220,7 +232,9 @@ export default function Conversation() {
         ) : (
           id && (
             <div className="title-inactive-edit">
-              <h4>{title}</h4>
+              <h4 id="set-conversation" data-conversation-id={id}>
+                {title}
+              </h4>
               <FontAwesomeIcon icon={faPen} onClick={handleEditClick} />
             </div>
           )
@@ -230,6 +244,15 @@ export default function Conversation() {
             <>
               <div id="user-display-text">User</div>
               <div id="ai-display-text">Aura</div>
+              {errors.length > 0 && (
+                <ul className="errors">
+                  {errors.map((error, idx) => (
+                    <li key={idx} onClick={(e) => setErrors([])}>
+                      {error}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </>
           ) : (
             <h4>
@@ -244,10 +267,10 @@ export default function Conversation() {
               <div className="instruction-grid-description"> Limitations </div>
               <div>Explain quantum computing in simple terms</div>
               <div>Remembers what user said earlier in the conversation</div>
-              <div>Suggest a restaurant near me</div>
+              <div>Limited knowledge of world and events after 2021</div>
               <div>Provide me mock interview questions for SWE</div>
               <div>Declines inappropriate requests</div>
-              <div>Provide me mock interview questions for SWE</div>
+              <div>May occasionally generate incorrect information</div>
             </div>
           )}
           {id && (
@@ -267,19 +290,22 @@ export default function Conversation() {
         </div>
       </div>
       <div className="conversation-input-container">
-        {id && (
-          <>
-            <textarea
-              id="message-textarea"
-              onChange={handleMessageToPost}
-              placeholder="Send a message"
-              ref={bottomOfConversation}
-            ></textarea>
-            <button onClick={handlePostClick}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-          </>
-        )}
+        {id &&
+          (!loading ? (
+            <>
+              <textarea
+                id="message-textarea"
+                onChange={handleMessageToPost}
+                placeholder="Send a message"
+                ref={bottomOfConversation}
+              ></textarea>
+              <button onClick={handlePostClick}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </button>
+            </>
+          ) : (
+            <ProgressBar />
+          ))}
       </div>
     </div>
   );

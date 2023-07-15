@@ -27,7 +27,7 @@
 
 .header-container > img {
   max-height: 8vh;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .header-icon {

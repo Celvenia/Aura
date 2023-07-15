@@ -10,6 +10,10 @@
   padding: 2%;
 }
 
+.note-create-container label {
+  margin-top: 2%;
+}
+
 .note-create-h4 {
   display: flex;
   justify-content: center;
@@ -29,14 +33,14 @@
   height: 100%;
   padding: 2%;
   font-size: 16px;
-  margin-top: 2%;
   box-sizing: border-box;
-  border: 1px solid #d1d5db;
+  border: 1px solid #7397cc;
   border-radius: 5px;
   resize: vertical;
 }
+
 .note-create-textarea {
-  min-height: 13.5vh;
+  min-height: 19vh;
 }
 
 .note-create-form-element {

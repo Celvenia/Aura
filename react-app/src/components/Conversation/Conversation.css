@@ -270,6 +270,19 @@
   color: #fff;
 }
 
+.svg-inline--fa.fa-pen {
+  margin-left: 10px;
+  color: #7397cc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.svg-inline--fa.fa-check {
+  color: #fff;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
 .conversation-content h4 {
   align-self: center;
 }

@@ -9,7 +9,7 @@ import { deleteReminder } from "../../store/reminder";
 import { useDispatch } from "react-redux";
 import ReminderEditForm from "../ReminderEditForm";
 import OpenModalButton from "../OpenModalButton";
-
+import "./Reminder.css";
 
 export default function Reminder({ reminder }) {
   const [show, setShow] = useState(false);
@@ -26,24 +26,50 @@ export default function Reminder({ reminder }) {
   return (
     <div className="reminder-item">
       <div className="reminder-info">
-        <div>{reminder.title}</div>
-        {reminder.date_time}
-        <div>{reminder.description}</div>
+        <div>
+          <strong>Title: </strong>
+          {reminder.title}
+        </div>
+        <div>
+          {" "}
+          <strong>Date/Time: </strong>
+          {reminder.date_time}
+        </div>
+        <div>
+          {" "}
+          <strong>Description: </strong>
+          {reminder.description}
+        </div>
         {show && (
           <div>
-            <div>Status: {reminder.status}</div>
-            <div>Location: {reminder.location}</div>
-            <div>Recurring: {`${reminder.recurring}`}</div>
+            <div>
+              {" "}
+              <strong>Status: </strong> {reminder.status}
+            </div>
+            <div>
+              {" "}
+              <strong>Location: </strong>
+              {reminder.location}
+            </div>
+            <div>
+              {" "}
+              <strong>Recurring: </strong>
+              {`${reminder.recurring}`}
+            </div>
           </div>
         )}
       </div>
       <div className="reminder-button-container">
         <OpenModalButton
           buttonText={<FontAwesomeIcon icon={faPenToSquare} />}
-          modalComponent={<ReminderEditForm id={reminder.id}/>}
+          modalComponent={<ReminderEditForm id={reminder.id} />}
         />
-        <FontAwesomeIcon onClick={handleDeleteClick} icon={faXmark} />
-        <FontAwesomeIcon onClick={handleShowClick} icon={faEye} />
+        <button onClick={handleDeleteClick}>
+          <FontAwesomeIcon icon={faXmark} />
+        </button>
+        <button onClick={handleShowClick}>
+          <FontAwesomeIcon icon={faEye} />
+        </button>
       </div>
     </div>
   );

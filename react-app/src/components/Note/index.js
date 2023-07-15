@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import "./Note.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteNote, getNote, updateNote } from "../../store/note";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faCheck } from "@fortawesome/free-solid-svg-icons";
 import NoteCreate from "../NoteCreate";
+import "./Note.css";
 
 export default function Note({ note }) {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(note.title || "");
   const [editMode, setEditMode] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [display, setDisplay] = useState(false);
@@ -62,10 +62,10 @@ export default function Note({ note }) {
     }
   };
 
-  const handleDeleteClick = () => {
-    dispatch(deleteNote(note.id));
-    setDisplay(false);
-  };
+  // const handleDeleteClick = () => {
+  //   dispatch(deleteNote(note.id));
+  //   setDisplay(false);
+  // };
 
   return (
     display && (
@@ -88,6 +88,7 @@ export default function Note({ note }) {
             ""
           ) : editMode ? (
             <input
+              className="note-title-input"
               type="text"
               value={newTitle}
               onChange={handleTitleChange}
@@ -118,7 +119,6 @@ export default function Note({ note }) {
                 Save
                 <FontAwesomeIcon icon={faCheck} />
               </button>
-              <button onClick={handleDeleteClick}>Delete</button>
             </div>
           )}
         </section>

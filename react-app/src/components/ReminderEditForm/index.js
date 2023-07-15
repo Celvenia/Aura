@@ -8,8 +8,8 @@ import { useModal } from "../../context/Modal";
 export default function ReminderEditForm({ id }) {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState([]);
-  const reminderObj = useSelector(state => state.reminderReducer)
-  const reminder = reminderObj[id]
+  const reminderObj = useSelector((state) => state.reminderReducer);
+  const reminder = reminderObj[id];
   const { closeModal } = useModal();
 
   const handleUpdateReminder = (e) => {
@@ -27,12 +27,10 @@ export default function ReminderEditForm({ id }) {
       recurring: recurring.checked,
       status: status.value,
     };
-  
 
     dispatch(updateReminder(updatedReminder));
     closeModal();
   };
-
 
   return (
     <div className="reminders">
@@ -63,6 +61,7 @@ export default function ReminderEditForm({ id }) {
           type="text"
           id="title"
           className="form-input"
+          placeholder="title"
           defaultValue={reminder.title}
         />
 
@@ -70,7 +69,9 @@ export default function ReminderEditForm({ id }) {
         <textarea
           type="text"
           id="description"
+          placeholder="description - max length 200 characters"
           className="form-input"
+          maxLength={200}
           defaultValue={reminder.description}
         />
 
@@ -79,6 +80,7 @@ export default function ReminderEditForm({ id }) {
           type="text"
           id="location"
           className="form-input"
+          placeholder="location"
           defaultValue={reminder.location}
         />
 
@@ -87,6 +89,7 @@ export default function ReminderEditForm({ id }) {
           type="text"
           id="status"
           className="form-input"
+          placeholder="status"
           defaultValue={reminder.status}
         />
         <span>

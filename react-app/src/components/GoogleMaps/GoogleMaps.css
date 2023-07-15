@@ -61,3 +61,11 @@
   margin-bottom: 10px;
   font-size: 14px;
 }
+
+#distance {
+  width: 50%;
+}
+
+#duration {
+  width: 50%;
+}

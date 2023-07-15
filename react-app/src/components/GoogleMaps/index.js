@@ -46,6 +46,16 @@ export default function GoogleMaps() {
     fullScreenControl: true,
   };
 
+  const markerOptions = {
+    icon: {
+      path: "M9.5,0C4.26,0,0,4.26,0,9.5C0,18,9.5,30,9.5,30S19,18,19,9.5C19,4.26,14.74,0,9.5,0z M9.5,13.3c-1.83,0-3.3-1.47-3.3-3.3c0-1.83,1.47-3.3,3.3-3.3s3.3,1.47,3.3,3.3C12.8,11.83,11.33,13.3,9.5,13.3z",
+      fillColor: "#7397cc",
+      fillOpacity: 1,
+      strokeWeight: 1.5,
+      scale: 1.5,
+    },
+  };
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: googleMapApiKey,
     libraries: libraries,
@@ -185,6 +195,10 @@ export default function GoogleMaps() {
           </button>
         )}
       </div>
+      <div className="flex-row-end">
+        <p id="distance">Distance: {distance}</p>
+        <p id="duration">Duration: {duration}</p>
+      </div>
       <GoogleMap
         zoom={15}
         center={{ lat: latitude, lng: longitude }}
@@ -202,6 +216,7 @@ export default function GoogleMaps() {
                 position: { lat: latitude, lng: longitude },
               })
             }
+            options={markerOptions}
           />
         )}
         {selectedMarker && (

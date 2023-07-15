@@ -36,6 +36,7 @@
   margin-bottom: 5px;
   color: #212121;
   font-weight: 600;
+  margin-top: 1%;
 }
 
 .form-input {
@@ -73,11 +74,6 @@
   color: #fff;
 }
 
-.reminder-form ::placeholder {
-  color: #4d4a4a;
-  font-style: italic;
-  font-weight: 550;
-}
 
 .error-container {
   background-color: rgba(0, 0, 0, 0.3);

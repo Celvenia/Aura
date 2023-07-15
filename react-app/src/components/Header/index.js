@@ -40,7 +40,7 @@ function Header({ isLoaded }) {
         className="header-logo"
       />
 
-      {show && (
+      {/* {show && (
         <ul className="header-links" ref={dropdownRef}>
           <NavLink exact to="/" onClick={() => setShow(false)}>
             Home
@@ -54,7 +54,7 @@ function Header({ isLoaded }) {
             Reminders
           </NavLink>
         </ul>
-      )}
+      )} */}
 
       {isLoaded && (
         <div>

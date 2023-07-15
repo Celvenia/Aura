@@ -31,6 +31,7 @@ export default function NoteCreate() {
     <div className="note-create-container">
       <h4 className="note-create-h4">New Note</h4>
       <form onSubmit={handleSubmit}>
+        {/* <form> */}
         <div className="note-create-form-element">
           <label>Title</label>
           <input
@@ -52,7 +53,9 @@ export default function NoteCreate() {
             required
           ></textarea>
         </div>
-        <button type="submit">Create</button>
+        <button className="note-create-button" type="submit">
+          Create
+        </button>
       </form>
     </div>
   );
