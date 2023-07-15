@@ -37,21 +37,21 @@ export default function ReminderForm({ selectedDate }) {
 
   return (
     <div className="reminders">
-      {errors.length > 0 && (
-        <div className="error-container">
-          {errors.map((error, index) => (
-            <p
-              key={index}
-              className="error-message"
-              onClick={(e) => setErrors([])}
-            >
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
       <form className="reminder-form" onSubmit={handleAddReminder}>
         <h1 className="reminders-heading">Set Reminder</h1>
+        {errors.length > 0 && (
+          <div className="error-container">
+            {errors.map((error, index) => (
+              <p
+                key={index}
+                className="error-message"
+                onClick={(e) => setErrors([])}
+              >
+                {error}
+              </p>
+            ))}
+          </div>
+        )}
         <label className="form-label">Date:</label>
         <input
           type="datetime-local"

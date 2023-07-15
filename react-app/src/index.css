@@ -134,6 +134,7 @@ textarea:focus {
   background: #e8e8e8;
   box-shadow: inset 20px 20px 60px #b7b7b7, inset -20px -20px 60px #ffffff;
   transition: 0.3s;
+  color: #212121;
 }
 
 .errors {

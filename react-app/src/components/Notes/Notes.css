@@ -113,7 +113,6 @@
   box-shadow: 0 0 5px #f8f8ff;
 }
 
-
 .note-buttons {
   width: 100%;
   display: flex;
@@ -139,16 +138,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   margin-bottom: 2%;
 }
 
 .error-message {
+  background-color: #fff;
   color: #f44336;
   font-size: 14px;
-  margin: 0;
-  padding: 0;
   cursor: pointer;
+  font-weight: bolder;
 }
 
 .note-create-container {

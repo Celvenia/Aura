@@ -102,14 +102,16 @@ export default function Clock() {
         />
         {!isAlarmSet && <button onClick={setAlarm}>Set</button>}
         {isAlarmSet && <button onClick={handleRemoveAlarm}>Remove</button>}
-        {isSnoozeEnabled ? (
+        {isAlarmSet && isSnoozeEnabled ? (
           <button className="snooze-false" disabled>
             Snooze
           </button>
-        ) : (
+        ) : isAlarmSet ? (
           <button className="snooze-true" onClick={handleSnooze}>
             Snooze
           </button>
+        ) : (
+          <button disabled> Snooze </button>
         )}
       </div>
       {timeToAlarm && !isSnoozeEnabled && (
