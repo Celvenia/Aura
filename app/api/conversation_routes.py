@@ -38,19 +38,19 @@ def get_conversations():
     # Query for the conversations associated with the current user
     conversations = Conversation.query.filter_by(user_id=current_user.id).all()
 
-    if not conversations:
-        # If no conversations exist for the user, create a new one
-        conversation = Conversation(user_id=current_user.id, title="New Conversation")
-        db.session.add(conversation)
-        db.session.commit()
+    # if not conversations:
+    #     # If no conversations exist for the user, create a new one
+    #     conversation = Conversation(user_id=current_user.id, title="New Conversation")
+    #     db.session.add(conversation)
+    #     db.session.commit()
 
-        conversations = [conversation]
+    #     conversations = [conversation]
 
     # Convert conversations to dictionaries
-    conversations_data = [conversation.to_dict() for conversation in conversations]
+    conversations_data = [conversation.to_dict()
+                          for conversation in conversations]
 
     return {'conversations': conversations_data}
-
 
 
 # Update conversation by id
@@ -116,4 +116,3 @@ def delete_conversation(id):
     db.session.commit()
 
     return {"deleted": conversation.to_dict()}
-

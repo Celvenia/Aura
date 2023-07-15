@@ -203,7 +203,7 @@ export default function Conversation() {
       </div>
 
       <div className="conversation-content">
-        {showDropdown && conversationsArr && (
+        {showDropdown && conversationsArr.length > 0 && (
           <div className="conversations-dropdown" ref={dropdownRef}>
             {conversationsArr.map((conversation) => {
               return (
@@ -216,6 +216,11 @@ export default function Conversation() {
                 </div>
               );
             })}
+          </div>
+        )}
+        {showDropdown && conversationsArr.length === 0 && (
+          <div className="conversations-dropdown" ref={dropdownRef}>
+            No Conversations Available
           </div>
         )}
         {id && editMode ? (

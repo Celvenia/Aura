@@ -39,6 +39,11 @@ label {
   color: #fff;
 }
 
+.form-group > input:focus,
+.form-group > textarea:focus {
+  color: #212121;
+}
+
 .form-button {
   padding: 10px 20px;
   border-radius: 5px;
