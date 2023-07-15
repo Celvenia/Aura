@@ -215,6 +215,10 @@
   display: flex;
 }
 
+#message-textarea::placeholder {
+  color: #212121;
+}
+
 .conversation-input-container button {
   padding: 2%;
   position: relative;

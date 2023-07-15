@@ -60,3 +60,9 @@ label {
   margin-top: 10px;
   color: #888;
 }
+
+.check-account > button {
+  padding: 1%;
+  margin: 0;
+  display: inline-block;
+}

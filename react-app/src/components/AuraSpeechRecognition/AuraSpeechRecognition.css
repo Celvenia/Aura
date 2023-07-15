@@ -13,9 +13,10 @@
 
 .aura-container select {
   border-radius: 7px;
-  border: 1px solid #d1d5db;
-  background-image: linear-gradient(30deg, #576886, #7397cc);
-  color: #fff;
+  border: 1px solid linear-gradient(30deg, #576886, #7397cc);
+  /* background-image: linear-gradient(30deg, #576886, #7397cc); */
+  /* background-color: linear-gradient(30deg, #576886, #7397cc); */
+  color: #212121;
   max-width: 150px;
   cursor: pointer;
 }
