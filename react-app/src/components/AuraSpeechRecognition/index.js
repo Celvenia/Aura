@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { postMessage } from "../../store/message";
 import { getConversations } from "../../store/conversation";
 import "./AuraSpeechRecognition.css";
+import ProgressBar from "../ProgressBar";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function AuraSpeechRecognition() {
@@ -20,6 +21,8 @@ export default function AuraSpeechRecognition() {
   const [voices, setVoices] = useState([]);
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [active, setActive] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const synth = window.speechSynthesis;
 
@@ -63,7 +66,7 @@ export default function AuraSpeechRecognition() {
     const speechRecognitionList = new SpeechGrammarList();
     setActive(true);
 
-    const keyWords = ["stop listening", "hey Aura"];
+    const keyWords = ["stop listening", "Aura", "aura", "ignore"];
 
     // Grammar - separated by semi-colons
     // 1: states the format and version used. This always needs to be included first. i.e #JSGF V1.0;
@@ -225,7 +228,7 @@ export default function AuraSpeechRecognition() {
         };
 
         // set rate and pitch
-        speakText.rate = 1;
+        speakText.rate = 1.2;
         speakText.pitch = 1;
 
         // speak
@@ -242,20 +245,22 @@ export default function AuraSpeechRecognition() {
         conversation_id: conversationId,
         message: "",
       };
-      
-      let firstWord;
-      if (spoken.startsWith(" ")) {
-        firstWord = spoken.split(" ")[1];
-      } else {
-        firstWord = spoken.split(" ")[0];
-      }
 
-      speaking.innerText = spoken;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        speaking.innerText = "";
-        aiSpeaking.innerText = "";
-      }, 15000);
+      // let firstWord;
+      // if (spoken.startsWith(" ")) {
+      //   firstWord = spoken.split(" ")[1];
+      // } else {
+      //   firstWord = spoken.split(" ")[0];
+      // }
+      // if (spoken.includes("hey Aura")) {
+      //   speaking.innerText = spoken;
+      // }
+
+      // clearTimeout(timeout);
+      // timeout = setTimeout(() => {
+      //   speaking.innerText = "";
+      //   aiSpeaking.innerText = "";
+      // }, 15000);
       if (!currentUser) {
         speak("Please log in to get started");
       } else if (spoken.includes("hello")) {
@@ -294,29 +299,64 @@ export default function AuraSpeechRecognition() {
         let newDestination = spoken.split("destination to")[1];
         destinationInput.value = newDestination;
         speak(`destination set to ${destinationInput.value}`);
-      } else if (questionStarters.includes(spoken.split(" ")[0])) {
+      } else if (spoken.includes("hey Aura") || spoken.includes("hey Ora")) {
         let modifiedSpoken;
-        console.log(originInput.value);
+        let newMessage;
         if (!conversationId) {
           speak("Please choose a conversation to send a message");
-        } else {
-          if (spoken.includes("origin")) {
+        }
+
+        if (spoken.includes("origin")) {
+          if (originInput.value === "undefined" || !originInput.value) {
+            speak("No origin set");
+            return;
+          } else {
             modifiedSpoken = spoken.replace("origin", originInput.value);
-          } else if (spoken.includes("destination")) {
+          }
+        } else if (spoken.includes("destination")) {
+          if (
+            destinationInput.value === "undefined" ||
+            !destinationInput?.value
+          ) {
+            speak("No destination set");
+            return;
+          } else {
             modifiedSpoken = spoken.replace(
               "destination",
               destinationInput.value
             );
-          } else {
-            modifiedSpoken = spoken;
           }
-          conversation.message = modifiedSpoken;
-          dispatch(postMessage(conversation)).then((result) => {
-            if (result) {
-              speak(result.ai_response);
-            }
-          });
+        } else {
+          modifiedSpoken = spoken;
         }
+
+        if (modifiedSpoken.includes("Ora")) {
+          modifiedSpoken = modifiedSpoken.split("Ora")[1];
+          console.log(modifiedSpoken);
+        } else if (modifiedSpoken.includes("Aura")) {
+          modifiedSpoken = modifiedSpoken.split("Aura")[1];
+          console.log(modifiedSpoken);
+        }
+
+        conversation.message = modifiedSpoken;
+        console.log(modifiedSpoken);
+        // dispatch(postMessage(conversation)).then((result) => {
+        //   if (result) {
+        //     speak(result.ai_response);
+        //   }
+        // });
+        const postMessagePromise = dispatch(postMessage(conversation));
+
+        setLoading(true);
+        postMessagePromise
+          .then((data) => {
+            setLoading(false);
+            speak(data.ai_response);
+          })
+          .catch((error) => {
+            setErrors(error);
+            setLoading(false);
+          });
       } else if (spoken.includes("navigate to".toLowerCase())) {
         let page = spoken.split("navigate to ")[1];
         if (tabs.includes(page)) {
@@ -352,22 +392,25 @@ export default function AuraSpeechRecognition() {
       }
     };
 
-    // aura.onnomatch = (event) => {
-    //   setDiagnosticText("I didn't recognize that.");
-    //   setActive(false);
-    //   return () => {
-    //     aura.abort();
-    //   };
-    // };
+    aura.onnomatch = (event) => {
+      setDiagnosticText("I didn't recognize that.");
+      setActive(false);
+      setLoading(false);
+      return () => {
+        aura.abort();
+      };
+    };
 
-    // aura.onerror = (event) => {
-    //   setDiagnosticText(`Error occurred in recognition: ${event.error}`);
-    //   setActive(false);
-    //   return () => {
-    //     aura.abort();
-    //   };
-    // };
-    let firstWord;
+    aura.onerror = (event) => {
+      setDiagnosticText(`Error occurred in recognition: ${event.error}`);
+      setActive(false);
+      setLoading(false);
+      return () => {
+        aura.abort();
+      };
+    };
+
+    // let firstWord;
     aura.onresult = (event) => {
       for (let i = 0; i < event.results.length; i++) {
         let spoken = event.results[i][0].transcript;
@@ -376,58 +419,66 @@ export default function AuraSpeechRecognition() {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
           processResult(spoken);
-        }, 2000);
+        }, 1500);
       }
     };
 
-    // return () => {
-    //   aura.abort();
-    // };
+    return () => {
+      aura.abort();
+      let speaking = document.getElementById("user-display-text");
+      if (speaking) {
+        speaking.innerText = "User";
+      }
+      let aiSpeaking = document.getElementById("ai-display-text");
+      if (aiSpeaking) {
+        aiSpeaking.innerText = "Aura";
+      }
+    };
   };
 
   useEffect(() => {}, [dispatch]);
 
-  return (
-    currentUser && (
-      <div className="aura-container">
-        <button
-          disabled={active}
-          title="start aura"
-          className="conversation-button"
-          id={`aura-button-${active}`}
-          onClick={auraStart}
-        >
-          Voice
-        </button>
+  return currentUser && !loading ? (
+    <div className="aura-container">
+      <button
+        disabled={active}
+        title="start aura"
+        className="conversation-button"
+        id={`aura-button-${active}`}
+        onClick={auraStart}
+      >
+        Voice
+      </button>
 
-        <select
-          id="voice-select"
-          title="choose voice"
-          className="conversation-button"
-          onChange={(e) => handleVoiceChange(e.target.value)}
-        >
-          <option className="voice-select-default" value="default">
-            Select Voice
+      <select
+        id="voice-select"
+        title="choose voice"
+        className="conversation-button"
+        onChange={(e) => handleVoiceChange(e.target.value)}
+      >
+        <option className="voice-select-default" value="default">
+          Select Voice
+        </option>
+        {voices.map((voice, index) => (
+          <option
+            key={index}
+            value={voice.name}
+            className="voice-select-options"
+          >
+            {voice.name} / {voice.lang}
           </option>
-          {voices.map((voice, index) => (
-            <option
-              key={index}
-              value={voice.name}
-              className="voice-select-options"
-            >
-              {voice.name} / {voice.lang}
-            </option>
-          ))}
-        </select>
+        ))}
+      </select>
 
-        <p
-          id="diagnostic"
-          className="diagnostic-text"
-          onClick={(e) => setDiagnosticText((e.target.value = ""))}
-        >
-          {diagnosticText}
-        </p>
-      </div>
-    )
+      <p
+        id="diagnostic"
+        className="diagnostic-text"
+        onClick={(e) => setDiagnosticText((e.target.value = ""))}
+      >
+        {diagnosticText}
+      </p>
+    </div>
+  ) : (
+    currentUser && loading && <ProgressBar />
   );
 }

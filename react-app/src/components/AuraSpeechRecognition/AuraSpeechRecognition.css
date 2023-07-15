@@ -14,7 +14,7 @@
 .aura-container select {
   border-radius: 7px;
   border: 1px solid #d1d5db;
-  background-color: #7397cc;
+  background-image: linear-gradient(30deg, #576886, #7397cc);
   color: #fff;
   max-width: 150px;
   cursor: pointer;
