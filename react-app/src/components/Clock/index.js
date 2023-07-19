@@ -68,7 +68,6 @@ export default function Clock() {
   const setAlarm = () => {
     if (alarmTime) {
       setFormattedTime(convertTo12Hour(alarmTime));
-      console.log("Set alarm for", alarmTime);
       setIsAlarmSet(true);
     }
   };

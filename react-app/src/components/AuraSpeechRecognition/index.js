@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { postMessage } from "../../store/message";
 import { getConversations } from "../../store/conversation";
 import "./AuraSpeechRecognition.css";
@@ -13,8 +12,6 @@ export default function AuraSpeechRecognition() {
   const SpeechGrammarList =
     window.SpeechGrammarList || window.webkitSpeechGrammarList;
 
-  const [message, setMessage] = useState("");
-  const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
   const [diagnosticText, setDiagnosticText] = useState("");
@@ -90,25 +87,8 @@ export default function AuraSpeechRecognition() {
     aura.maxAlternatives = 1;
 
     let timeout;
-    // let silenceTimeout;
-
-    // const startListening = () => {
-    //   aura.start();
-    //   setMessage("started listening");
-    //   clearTimeout(timeout);
-    //   clearTimeout(silenceTimeout);
-    // };
-
-    // const stopListening = () => {
-    //   aura.stop();
-    //   setMessage("stopped listening");
-    //   clearTimeout(timeout);
-    //   clearTimeout(silenceTimeout);
-    // };
 
     aura.start();
-
-    setMessage("started listening");
 
     // results event returns SpeechRecognitionResultList object containing SpeechRecognitionResult objects
     // it has a getter enabling list/array access
@@ -117,55 +97,7 @@ export default function AuraSpeechRecognition() {
 
     // const result = event.results;
 
-    const tabs = [
-      "notes",
-      "messages",
-      "reminders",
-      "alarms",
-      "testing",
-      "home",
-    ];
-
-    const questionStarters = [
-      "are",
-      "can",
-      "could",
-      "did",
-      "do",
-      "does",
-      "explain",
-      "has",
-      "have",
-      "how",
-      "is",
-      "may",
-      "might",
-      "must",
-      "provide",
-      "shall",
-      "should",
-      "what",
-      "when",
-      "where",
-      "which",
-      "who",
-      "will",
-      "would",
-      "why",
-    ];
-
-    // const startsWithQuestionStarter = questionStarters.some((starter) =>
-    //   userQuestion.toLowerCase().startsWith(starter)
-    // );
-
     const date = new Date();
-
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
 
     let alarmTime = document.getElementById("alarm-time");
     let speaking = document.getElementById("user-display-text");
@@ -173,6 +105,10 @@ export default function AuraSpeechRecognition() {
     const conversationIdElement = document.getElementById("set-conversation");
     const originInput = document.getElementById("origin-input");
     const destinationInput = document.getElementById("destination-input");
+    const findRouteButton = document.getElementById("find-route-button");
+    const distance = document.getElementById("distance");
+    const duration = document.getElementById("duration");
+
     let conversationId;
     if (conversationIdElement) {
       conversationId = conversationIdElement.getAttribute(
@@ -246,21 +182,6 @@ export default function AuraSpeechRecognition() {
         message: "",
       };
 
-      // let firstWord;
-      // if (spoken.startsWith(" ")) {
-      //   firstWord = spoken.split(" ")[1];
-      // } else {
-      //   firstWord = spoken.split(" ")[0];
-      // }
-      // if (spoken.includes("hey Aura")) {
-      //   speaking.innerText = spoken;
-      // }
-
-      // clearTimeout(timeout);
-      // timeout = setTimeout(() => {
-      //   speaking.innerText = "";
-      //   aiSpeaking.innerText = "";
-      // }, 15000);
       if (!currentUser) {
         speak("Please log in to get started");
       } else if (spoken.includes("hello")) {
@@ -270,7 +191,7 @@ export default function AuraSpeechRecognition() {
         aura.stop();
       } else if (spoken.includes("ignore")) {
         clearTimeout(timeout);
-        speak("Ignored");
+        speak("Ok will do");
         spoken = "";
       } else if (spoken.includes("what can you do")) {
         speak(
@@ -295,10 +216,41 @@ export default function AuraSpeechRecognition() {
         let newOrigin = spoken.split("origin to")[1];
         originInput.value = newOrigin;
         speak(`origin set to ${originInput.value}`);
+      } else if (spoken.includes("where is origin")) {
+        speak(
+          `Origin is ${
+            originInput.value === "" ? "no origin set" : originInput.value
+          }`
+        );
+      } else if (spoken.includes("where is destination")) {
+        speak(
+          `Destination is ${
+            destinationInput.value === ""
+              ? "no destination set"
+              : destinationInput.value
+          }`
+        );
       } else if (spoken.includes("set destination to")) {
         let newDestination = spoken.split("destination to")[1];
         destinationInput.value = newDestination;
         speak(`destination set to ${destinationInput.value}`);
+      } else if (spoken.includes("find route")) {
+        findRouteButton.click();
+        speak(`Route determined`);
+      } else if (spoken.includes("route duration")) {
+        let routeDuration = duration.innerText.split("Duration: ")[1];
+        if (routeDuration === undefined) {
+          speak("No route found");
+        } else {
+          speak(`It will take ${routeDuration}`);
+        }
+      } else if (spoken.includes("route distance")) {
+        let distanceAway = distance.innerText.split("Distance: ")[1];
+        if (distanceAway === undefined) {
+          speak("No route found");
+        } else {
+          speak(`The destination is ${distanceAway} away`);
+        }
       } else if (spoken.includes("hey Aura") || spoken.includes("hey Ora")) {
         let modifiedSpoken;
         let newMessage;
@@ -332,10 +284,8 @@ export default function AuraSpeechRecognition() {
 
         if (modifiedSpoken.includes("Ora")) {
           modifiedSpoken = modifiedSpoken.split("Ora")[1];
-          console.log(modifiedSpoken);
         } else if (modifiedSpoken.includes("Aura")) {
           modifiedSpoken = modifiedSpoken.split("Aura")[1];
-          console.log(modifiedSpoken);
         }
 
         conversation.message = modifiedSpoken;
@@ -357,22 +307,6 @@ export default function AuraSpeechRecognition() {
             setErrors(error);
             setLoading(false);
           });
-      } else if (spoken.includes("navigate to".toLowerCase())) {
-        let page = spoken.split("navigate to ")[1];
-        if (tabs.includes(page)) {
-          if (page === "home") {
-            page = "";
-            speak(`navigating to home`);
-            displayText(`navigating to home`);
-          } else if (page !== "home") {
-            speak(`navigating to ${page}`);
-            displayText(`navigating to ${page}`);
-          }
-          history.push(`/${page}`);
-        } else {
-          speak("4 oh 4 page not found");
-          displayText("404 page not found");
-        }
       }
     };
 

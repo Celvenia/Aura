@@ -148,7 +148,7 @@ export default function Notes() {
           onClick={() => setIsOpen(!isOpen)}
         >
           {selectedNote
-            ? `${notesObj[selectedNote.id]?.title.slice(0, 10)}⇩`
+            ? `${notesObj[selectedNote.id]?.title.slice(0, 9)}⇩`
             : `Notes⇩`}
         </div>
         {isOpen && (

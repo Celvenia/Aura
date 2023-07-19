@@ -295,22 +295,28 @@ export default function Conversation() {
         </div>
       </div>
       <div className="conversation-input-container">
-        {id &&
-          (!loading ? (
-            <>
-              <textarea
-                id="message-textarea"
-                onChange={handleMessageToPost}
-                placeholder="Send a message"
-                ref={bottomOfConversation}
-              ></textarea>
-              <button onClick={handlePostClick}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button>
-            </>
-          ) : (
-            <ProgressBar />
-          ))}
+        {id && (
+          <div className="input-wrapper">
+            {!loading ? (
+              <>
+                <textarea
+                  id="message-textarea"
+                  onChange={handleMessageToPost}
+                  placeholder="Send a message"
+                  ref={bottomOfConversation}
+                ></textarea>
+                <button
+                  className="message-send-button"
+                  onClick={handlePostClick}
+                >
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </button>
+              </>
+            ) : (
+              <ProgressBar />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

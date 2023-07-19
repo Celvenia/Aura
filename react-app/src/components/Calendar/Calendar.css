@@ -35,7 +35,10 @@
   flex: 1;
   box-sizing: border-box;
   border: 1px solid #d1d5db;
-  background-image: linear-gradient(30deg, #576886, #7397cc);
+  /* background-image: linear-gradient(30deg, #576886, #7397cc); */
+  background-color: #d5e1ef;
+  color: #7397cc;
+  background: #e8e8e8;
 }
 
 .weekday {
@@ -59,10 +62,42 @@
   border: 1px solid #d1d5db;
   background-color: #d5e1ef;
   color: #000;
+  box-shadow: inset 20px 20px 60px #b7b7b7, inset -20px -20px 60px #ffffff;
 }
 
-.current-day > button,
+/* .current-day > button,
 .not-current-day > button {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  height: 100%;
+  width: 100%;
+  padding: 1%;
+  box-shadow: none;
+} */
+
+.not-current-day > button {
+  background: #a1a0a0;
+  color: #212121;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  height: 100%;
+  width: 100%;
+  padding: 1%;
+  box-shadow: inset 20px 20px 60px #b7b7b7, inset -20px -20px 60px #ffffff;
+}
+
+.current-day > button {
+  background-image: none;
+  background: #e8e8e8;
+  color: #212121;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -75,8 +110,7 @@
   box-shadow: none;
 }
 
-.not-current-day > button {
-  background: #d5e1ef;
+.current-day:hover {
   color: #7397cc;
 }
 
@@ -100,10 +134,10 @@
 }
 
 .svg-inline--fa.fa-bell {
-  color: #fff;
+  color: #7397cc;
   cursor: pointer;
 }
 
 .svg-inline--fa.fa-bell:hover {
-  filter: brightness(80%);
+  color: #0066ff;
 }

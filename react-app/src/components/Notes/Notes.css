@@ -36,6 +36,7 @@
   max-width: 10vw;
   min-width: 10vw;
   max-height: 2.5vh;
+  overflow: hidden;
 }
 
 .note-dropdown-header:hover {

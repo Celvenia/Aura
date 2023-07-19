@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "./store/session";
-import AuraSpeechRecognition from "./components/AuraSpeechRecognition";
 import Header from "./components/Header";
 import Conversation from "./components/Conversation";
 import Calendar from "./components/Calendar";
@@ -12,7 +11,7 @@ import GoogleMaps from "./components/GoogleMaps";
 import LandingPage from "./components/LandingPage";
 
 const App = () => {
-  const [selectedComponent, setSelectedComponent] = useState("conversation");
+  // const [selectedComponent, setSelectedComponent] = useState("conversation");
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);

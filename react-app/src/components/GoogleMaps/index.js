@@ -23,8 +23,6 @@ export default function GoogleMaps() {
   const [longitude, setLongitude] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [map, setMap] = useState(/** @type google.maps.Map*/ (null));
-  const [restaurants, setRestaurants] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
@@ -179,11 +177,19 @@ export default function GoogleMaps() {
             ref={destinationRef}
           />
         </Autocomplete>
-        <button onClick={calculateRoute} title="find route">
+        <button
+          id="find-route-button"
+          onClick={calculateRoute}
+          title="find route"
+        >
           {" "}
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
-        <button onClick={clearRoute} title="clear route">
+        <button
+          id="clear-route-button"
+          onClick={clearRoute}
+          title="clear route"
+        >
           <FontAwesomeIcon icon={faX} />
         </button>
         {latitude && longitude && (

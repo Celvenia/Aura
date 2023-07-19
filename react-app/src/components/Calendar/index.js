@@ -78,9 +78,6 @@ export default function Calendar() {
     dispatch(getReminders());
   }, [calendar, currentMonth]);
 
-  if (filteredReminders) {
-    console.log(filteredReminders);
-  }
   return (
     <>
       <div className="calendar-container">

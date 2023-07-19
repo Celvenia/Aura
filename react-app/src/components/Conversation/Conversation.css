@@ -178,7 +178,7 @@
 .message-textarea-container textarea {
   width: 100%;
   border-radius: 5px;
-  border: 1px solid #d1d5db;
+  /* border: 1px solid #d1d5db; */
   padding: 10px;
   resize: none;
 }
@@ -201,18 +201,20 @@
 }
 
 .conversation-input-container {
-  display: flex;
+  /* display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px;
+  padding: 10px; */
+  position: relative;
 }
 
 #message-textarea {
-  flex: 1;
+  /* flex: 1; */
   height: 100%;
   width: 100%;
   resize: none;
-  display: flex;
+  /* display: flex; */
+  /* padding-right: 50px; */
 }
 
 #message-textarea::placeholder {
@@ -256,14 +258,15 @@
   padding-right: 5px;
   padding-top: 8px;
   padding-bottom: 8px;
-  background-color: #d5e1ef;
+  background: #e8e8e8;
+  /* background-color: #d5e1ef; */
   /* cursor: pointer; */
-  color: #7397cc;
+  /* color: #7397cc; */
 }
 
 .instruction-grid-description {
   color: #212121;
-  background-color: #d1d5db;
+  box-shadow: inset 20px 20px 60px #b7b7b7, inset -20px -20px 60px #ffffff;
   font-weight: 500;
   padding: 0;
   font-style: italic;
@@ -289,6 +292,17 @@
 
 .conversation-content h4 {
   align-self: center;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.message-send-button {
+  position: absolute;
+  z-index: 2;
 }
 
 @keyframes rotate {
