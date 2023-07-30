@@ -32,7 +32,8 @@
   background-color: rgba(0, 0, 0, 0.8);
   padding: 0.5rem;
   border-radius: 5px;
-  width: 14.6vw;
+  width: 150%;
+  /* width: 14.6vw; */
   color: #fff;
   z-index: 50;
 }
@@ -116,4 +117,10 @@
 .secondary-dropdown-prompt {
   color: #7397cc;
   margin-top: 5px;
+}
+
+.header-dropdown-block {
+  background-color: #7397cc;
+  color: #fff;
+  margin-top: 2%;
 }

@@ -34,7 +34,7 @@ const Header = ({ isLoaded }) => {
         >
           <h2>Voice Commands</h2>
           {showDropdown && (
-            <div className="dropdown-content">
+            <div className="dropdown-content" style={{ width: "100%" }}>
               <p
                 onMouseEnter={() =>
                   handleSecondaryDropdownShow([
@@ -70,7 +70,7 @@ const Header = ({ isLoaded }) => {
                     "Check Destination: 'Where is destination' : 'Destination is (value)'",
                     "Find Route From Origin To Destination: 'Find route' : 'Route determined'",
                     "Time To Drive To Destination: 'Route duration' : 'It will take (duration)'",
-                    "Distance To Drive To Destination: 'Route distance' : 'The destination is (distanceAway) away'",
+                    "Distance To Drive To Destination: 'Route distance' : 'The destination is (distance) away'",
                   ])
                 }
               >
@@ -115,11 +115,47 @@ const Header = ({ isLoaded }) => {
         <div className="header-dropdown" onClick={handleDropdownToggle}>
           <h2>Get Inspiration</h2>
           {showDropdown && (
-            <div className="dropdown-content">
-              <p>Testing</p>
-              <p>Testing</p>
-              <p>Testing</p>
-              <p>Testing</p>
+            <div className="dropdown-content" style={{ width: "200%" }}>
+              <div className="header-dropdown-block">
+                <h4>Language Translation</h4>
+                <p>
+                  Initial Prompt: I want you to act as a japanese translator
+                  that only responds back the english translation
+                </p>
+                <p>User: Ohayo gozaimasu </p>
+                <p>Aura: Good morning.</p>
+              </div>
+              <div className="header-dropdown-block">
+                <h4>StoryTelling Companion</h4>
+                <p>
+                  Initial Prompt: I want you to help me write a story. I'll
+                  share the beginning of a story, and you will help develop it
+                  further by adding details, characters, or plot twists.
+                </p>
+                <p>
+                  User: A boy is playing a new monster collecting game and he
+                  witnessed a new undiscovered evolution path
+                </p>
+                <p>
+                  Aura: Exciting! Let's build on that beginning. Here's the next
+                  part of the story: As the boy immersed himself in the world of
+                  the monster collecting game, his eyes widened with
+                  astonishment. He had been playing the game for weeks,
+                  capturing and training various creatures, but nothing could
+                  have prepared him for what he was about to witness.
+                </p>
+              </div>
+              <div className="header-dropdown-block">
+                <h4>Hiring Manager</h4>
+                <p>
+                  Initial Prompt: I want you to act as a hiring manager and ask
+                  me 1 mock interview question for SWE everytime i say
+                  "question", otherwise i want you to give me feedback on the
+                  response to the question you asked and how to improve
+                </p>
+                <p>User: Question</p>
+                <p>Aura: Certainly! Here's a question for you: Question</p>
+              </div>
             </div>
           )}
         </div>
@@ -128,11 +164,38 @@ const Header = ({ isLoaded }) => {
         <div className="header-dropdown" onClick={handleDropdownToggle}>
           <h2>Limitations</h2>
           {showDropdown && (
-            <div className="dropdown-content">
-              <p>Testing</p>
-              <p>Testing</p>
-              <p>Testing</p>
-              <p>Testing</p>
+            <div
+              className="dropdown-content"
+              style={{
+                width: "200%",
+              }}
+            >
+              <div className="header-dropdown-block">
+                <p>
+                  As an AI chatbot, I have a few limitations. These include:
+                  <p>
+                    1. I rely solely on text communication and cannot process or
+                    understand complex visual or audio inputs.
+                  </p>
+                  2. I am only as reliable as the information I have been
+                  programmed with and may not always have access to up-to-date
+                  or accurate data.
+                  <p>
+                    3. I cannot experience emotions or understand the full
+                    context or nuances of human interactions.
+                  </p>
+                  <p>
+                    4. I may not be able to understand or respond appropriately
+                    to ambiguous or multi-layered questions.
+                  </p>
+                  <p>
+                    5. I do not have true consciousness or self-awareness and
+                    can only execute predetermined tasks based on predefined
+                    algorithms. Please note that these limitations may vary
+                    depending on the specific chatbot implementation.
+                  </p>
+                </p>
+              </div>
             </div>
           )}
         </div>

@@ -14,6 +14,7 @@ export default function ReminderForm({ selectedDate }) {
   );
 
   const handleAddReminder = async (e) => {
+
     e.preventDefault();
     setErrors([]);
     const { title, description, location, recurring } = e.target.elements;

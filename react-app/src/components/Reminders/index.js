@@ -15,11 +15,21 @@ export default function Reminders() {
   const activeRemindersArr = remindersArr.filter(
     (reminder) => reminder.status === "active"
   );
+
   const filteredRemindersArr = remindersArr.filter((reminder) => {
     const reminderDateTime = dayjs(reminder.date_time, "YYYY-MM-DD HH:mm:ss");
     const currentDateTime = dayjs();
+    const reminderUtcDateTime = dayjs(reminderDateTime, "YYYY-MM-DD HH:mm:ss", {
+      utc: true,
+    });
+
+    const currentUtcDateTime = dayjs(currentDateTime, "YYYY-MM-DD HH:mm:ss", {
+      utc: true,
+    });
+
     return (
-      reminderDateTime.isBefore(currentDateTime) && reminder.status === "active"
+      reminderUtcDateTime.isBefore(currentUtcDateTime) &&
+      reminder.status === "active"
     );
   });
 

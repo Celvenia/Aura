@@ -123,6 +123,13 @@
   background-color: #7397cc;
 }
 
+.current-month-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 .svg-inline--fa.fa-arrow-right,
 .svg-inline--fa.fa-arrow-left {
   cursor: pointer;

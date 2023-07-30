@@ -47,8 +47,6 @@ export default function Calendar() {
     setCurrentMonth(dayjs());
   };
 
-  const handleClickedNotification = () => {};
-
   const handleOpenModal = () => {
     const modalContent = <Reminders />;
     setModalContent(modalContent);
@@ -90,6 +88,12 @@ export default function Calendar() {
             />
             <div className="calendar-selected">
               {currentMonth.format("MMM YYYY")}
+              <button
+                className="current-month-button"
+                onClick={handleCurrentMonth}
+              >
+                Current
+              </button>
             </div>
             <FontAwesomeIcon
               className="arrow"
@@ -143,10 +147,6 @@ export default function Calendar() {
                       icon={faBell}
                       onClick={() => handleOpenModal()}
                     />
-                    // <OpenModalButton
-                    //   buttonText={<FontAwesomeIcon icon={faBell} />}
-                    //   modalComponent={<Reminders />}
-                    // />
                   )}
                 </div>
               ))}

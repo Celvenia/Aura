@@ -9,6 +9,7 @@ import Notes from "./components/Notes";
 import Clock from "./components/Clock";
 import GoogleMaps from "./components/GoogleMaps";
 import LandingPage from "./components/LandingPage";
+import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 
 const App = () => {
   // const [selectedComponent, setSelectedComponent] = useState("conversation");
@@ -33,13 +34,20 @@ const App = () => {
       <div className="main-content">
         <Header isLoaded={isLoaded} />
         {currentUser ? (
-          <div className="grid-container">
-            <div className="grid-item-double">{componentMap.conversation}</div>
-            <div className="grid-item">{componentMap.calendar}</div>
-            <div className="grid-item">{componentMap.googleMap}</div>
-            <div className="grid-item">{componentMap.notes}</div>
-            <div className="grid-item">{componentMap.clock}</div>
-          </div>
+          <Switch>
+            <Route exact path="/">
+              <div className="grid-container">
+                <div className="grid-item-double">
+                  {componentMap.conversation}
+                </div>
+                <div className="grid-item">{componentMap.calendar}</div>
+                <div className="grid-item">{componentMap.googleMap}</div>
+                <div className="grid-item">{componentMap.notes}</div>
+                <div className="grid-item">{componentMap.clock}</div>
+              </div>
+            </Route>
+            <h1 className="flex-column-center">404 Page Not Found</h1>
+          </Switch>
         ) : isLoaded ? (
           <LandingPage />
         ) : (
