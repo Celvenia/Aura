@@ -14,7 +14,6 @@ export default function ReminderForm({ selectedDate }) {
   );
 
   const handleAddReminder = async (e) => {
-
     e.preventDefault();
     setErrors([]);
     const { title, description, location, recurring } = e.target.elements;
@@ -32,6 +31,7 @@ export default function ReminderForm({ selectedDate }) {
       recurring: recurring.checked,
       status: "active",
     };
+    
     dispatch(postReminder(newReminder));
     closeModal();
   };

@@ -32,13 +32,13 @@ def get_reminder(id):
 @reminder_routes.route('', methods=['POST'])
 @login_required
 def create_reminder():
-    now = datetime.now()
+    # now = datetime.now()
 
     datetime_str = request.json.get('date_time')
     date_time = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
-    print(date_time)
-    if date_time < now:
-        return jsonify(error=["Unable to set reminder in the past"])
+    # print(date_time)
+    # if date_time < now:
+    #     return jsonify(error=["Unable to set reminder in the past"])
     title = request.json.get('title')
     description = request.json.get('description')
     recurring = request.json.get('recurring')
