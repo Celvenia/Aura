@@ -99,9 +99,10 @@ export default function AuraSpeechRecognition() {
 
     const date = new Date();
 
-    let alarmTime = document.getElementById("alarm-time");
-    let speaking = document.getElementById("user-display-text");
     let aiSpeaking = document.getElementById("ai-display-text");
+    // let speaking = document.getElementById("user-display-text");
+    let alarmTime = document.getElementById("alarm-time");
+    let alarmSetButton = document.getElementById("alarm-set");
     const conversationIdElement = document.getElementById("set-conversation");
     const originInput = document.getElementById("origin-input");
     const destinationInput = document.getElementById("destination-input");
@@ -212,6 +213,26 @@ export default function AuraSpeechRecognition() {
         } else {
           speak("No alarms currently set");
         }
+      } else if (spoken.includes("set alarm to")) {
+        let newTime = spoken.split("set alarm to ")[1];
+        console.log(newTime);
+        // alarmTime.value = newTime;
+        // console.log(typeof alarmTime.value);
+        // console.log(alarmTime.value);
+        // alarmTime.value = "04:41 AM";
+        // console.log(alarmTime.value);
+        // if (newTime[0] === " ") {
+        //   let newAlarmTime = newTime.replace(" ", "0");
+        // alarmTime.value = newTime;
+        // alarmTime.value = "07:29 PM";
+        console.log(alarmTime.value);
+        //   // alarmSetButton.click();
+        // } else if (newTime[0] == "1") {
+        //   alarmTime.value = newTime;
+        // if (alarmTime.value) {
+        //   alarmSetButton.click();
+        // }
+        // }
       } else if (spoken.includes("set origin to")) {
         let newOrigin = spoken.split("origin to")[1];
         originInput.value = newOrigin;

@@ -82,10 +82,9 @@ const Header = ({ isLoaded }) => {
               <p
                 onMouseEnter={() =>
                   handleSecondaryDropdownShow([
-                    "Ask a question: 'Aura, (...question)' : 'Response'",
-                    "Ignore a question: 'Ignore' : 'OK will do'",
-                    "Stop Voice: 'Stop listening' : 'Goodbye'",
-                    "Brief Summary: 'What can you do' : 'Summary'",
+                    "Current Time: 'The current time' : 'The current time is (Time)'",
+                    "Current Date: 'The current date' : 'The current date is (Date)'",
+                    "Next Alarm: 'When is my next alarm?' : 'You next alarm is (alarm time)'",
                   ])
                 }
               >
@@ -95,10 +94,8 @@ const Header = ({ isLoaded }) => {
           )}
           {showDropdown && secondaryDropdownContent.length > 0 && (
             <div className="secondary-dropdown">
-              <p className="secondary-dropdown-header">
-                <p className="secondary-dropdown-header">Action:</p>
-                Prompt → Response
-              </p>
+              <p className="secondary-dropdown-header">Action:</p>
+              Prompt → Response
               {secondaryDropdownContent.map((option, index) => (
                 <div key={index}>
                   <p className="secondary-dropdown-prompt">
@@ -172,24 +169,25 @@ const Header = ({ isLoaded }) => {
             >
               <div className="header-dropdown-block">
                 <p>
-                  As an AI chatbot, I have a few limitations. These include:
+                  With an AI chatbot, There are a few limitations. These
+                  include:
                   <p>
-                    1. I rely solely on text communication and cannot process or
+                    1. Relies solely on text communication and cannot process or
                     understand complex visual or audio inputs.
                   </p>
-                  2. I am only as reliable as the information I have been
-                  programmed with and may not always have access to up-to-date
-                  or accurate data.
+                  2. Only as reliable as the information I have been programmed
+                  with and may not always have access to up-to-date or accurate
+                  data.
                   <p>
-                    3. I cannot experience emotions or understand the full
-                    context or nuances of human interactions.
+                    3. Cannot experience emotions or understand the full context
+                    or nuances of human interactions.
                   </p>
                   <p>
-                    4. I may not be able to understand or respond appropriately
-                    to ambiguous or multi-layered questions.
+                    4. May not be able to understand or respond appropriately to
+                    ambiguous or multi-layered questions.
                   </p>
                   <p>
-                    5. I do not have true consciousness or self-awareness and
+                    5. Does not have true consciousness or self-awareness and
                     can only execute predetermined tasks based on predefined
                     algorithms. Please note that these limitations may vary
                     depending on the specific chatbot implementation.

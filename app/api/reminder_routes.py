@@ -114,8 +114,6 @@ def delete_reminder(id):
 
 
 # check and update reminders that have passed current date/time
-
-
 @reminder_routes.route('/check-and-update', methods=['POST'])
 @login_required
 def check_and_update_reminders():

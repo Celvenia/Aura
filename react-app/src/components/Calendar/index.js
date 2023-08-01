@@ -9,7 +9,7 @@ import {
 import OpenModalButton from "../OpenModalButton";
 import ReminderForm from "../ReminderForm";
 import Reminders from "../Reminders";
-import { getReminders } from "../../store/reminder";
+import { checkAndUpdateReminders, getReminders } from "../../store/reminder";
 import { useModal } from "../../context/Modal";
 import dayjs from "dayjs";
 import "./Calendar.css";
@@ -18,12 +18,24 @@ export default function Calendar() {
   const { setModalContent } = useModal();
   const remindersObj = useSelector((state) => state.reminderReducer);
   const remindersArr = Object.values(remindersObj);
+  const activeRemindersArr = remindersArr.filter(
+    (reminder) => reminder.status === "active"
+  );
 
-  const filteredReminders = remindersArr.filter((reminder) => {
+  const filteredRemindersArr = remindersArr.filter((reminder) => {
     const reminderDateTime = dayjs(reminder.date_time, "YYYY-MM-DD HH:mm:ss");
     const currentDateTime = dayjs();
+    const reminderUtcDateTime = dayjs(reminderDateTime, "YYYY-MM-DD HH:mm:ss", {
+      utc: true,
+    });
+
+    const currentUtcDateTime = dayjs(currentDateTime, "YYYY-MM-DD HH:mm:ss", {
+      utc: true,
+    });
+
     return (
-      reminderDateTime.isAfter(currentDateTime) && reminder.status === "active"
+      reminderUtcDateTime.isBefore(currentUtcDateTime) &&
+      reminder.status === "active"
     );
   });
 
@@ -74,6 +86,9 @@ export default function Calendar() {
       getMonth(currentMonth.month());
     }
     dispatch(getReminders());
+    if (filteredRemindersArr.length) {
+      dispatch(checkAndUpdateReminders(filteredRemindersArr));
+    }
   }, [calendar, currentMonth]);
 
   return (
@@ -115,40 +130,42 @@ export default function Calendar() {
           {monthDays.map((week, index) => (
             <div className="week" key={index}>
               {week.map((day) => (
-                <div
-                  className={
-                    currentDate <= day.format("YYYY-MM-DD")
-                      ? "current-day"
-                      : "not-current-day"
-                  }
-                  title={day.format("YYYY-MM-DD")}
-                  key={day.format("dddd")}
-                >
-                  <OpenModalButton
+                <>
+                  <div
                     className={
                       currentDate <= day.format("YYYY-MM-DD")
                         ? "current-day"
                         : "not-current-day"
                     }
-                    buttonText={day.format("D")}
-                    modalComponent={
-                      <ReminderForm
-                        selectedDate={day.format("YYYY-MM-DD HH:mm:ss")}
-                      />
-                    }
-                  />
-                  {filteredReminders.some((reminder) => {
-                    return (
-                      reminder.status === "active" &&
-                      reminder.date_time.includes(day.format("YYYY-MM-DD"))
-                    );
-                  }) && (
-                    <FontAwesomeIcon
-                      icon={faBell}
-                      onClick={() => handleOpenModal()}
+                    title={day.format("YYYY-MM-DD")}
+                    key={day.format("dddd")}
+                  >
+                    <OpenModalButton
+                      className={
+                        currentDate <= day.format("YYYY-MM-DD")
+                          ? "current-day"
+                          : "not-current-day"
+                      }
+                      buttonText={day.format("D")}
+                      modalComponent={
+                        <ReminderForm
+                          selectedDate={day.format("YYYY-MM-DD HH:mm:ss")}
+                        />
+                      }
                     />
-                  )}
-                </div>
+                    {activeRemindersArr.some((reminder) => {
+                      return (
+                        reminder.status === "active" &&
+                        reminder.date_time.includes(day.format("YYYY-MM-DD"))
+                      );
+                    }) && (
+                      <FontAwesomeIcon
+                        icon={faBell}
+                        onClick={() => handleOpenModal()}
+                      />
+                    )}
+                  </div>
+                </>
               ))}
             </div>
           ))}

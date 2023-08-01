@@ -65,20 +65,6 @@
   box-shadow: inset 20px 20px 60px #b7b7b7, inset -20px -20px 60px #ffffff;
 }
 
-/* .current-day > button,
-.not-current-day > button {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  cursor: pointer;
-  border: none;
-  border-radius: 0;
-  height: 100%;
-  width: 100%;
-  padding: 1%;
-  box-shadow: none;
-} */
-
 .not-current-day > button {
   background: #a1a0a0;
   color: #212121;
@@ -92,6 +78,13 @@
   width: 100%;
   padding: 1%;
   box-shadow: inset 20px 20px 60px #b7b7b7, inset -20px -20px 60px #ffffff;
+  cursor: not-allowed;
+}
+
+.not-current-day button:hover,
+.current-day > button:hover {
+  background-color: #7397cc;
+  filter: brightness(90%);
 }
 
 .current-day > button {

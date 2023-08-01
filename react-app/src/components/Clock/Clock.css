@@ -61,3 +61,7 @@
 .snooze-false {
   filter: brightness(50%);
 }
+
+#alarm-set {
+  display: hidden;
+}

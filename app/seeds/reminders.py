@@ -10,7 +10,7 @@ from datetime import datetime
 # %M: 2-digit minute
 # %S: 2-digit second
 
-# Adds a demo reminder, you can add other reminders here if you want
+# Adds a demo reminder
 def seed_reminders():
     reminder1 = Reminder(
         date_time=datetime.strptime("2023-06-10 05:00 AM", "%Y-%m-%d %I:%M %p"),
