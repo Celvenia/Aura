@@ -138,7 +138,7 @@ textarea:focus {
 }
 
 .errors {
-  color: red;
+  color: rgba(255, 0, 0);
   margin-bottom: 1%;
 }
 

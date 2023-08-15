@@ -7,6 +7,8 @@ import {
   getReminders,
 } from "../../store/reminder";
 import dayjs from "dayjs";
+import Reminder from "../Reminder";
+import OpenModalButton from "../OpenModalButton";
 import "./Clock.css";
 
 export default function Clock() {
@@ -15,7 +17,6 @@ export default function Clock() {
     new Date().toLocaleTimeString()
   );
   const [alarmTime, setAlarmTime] = useState("");
-  // const [formattedTime, setFormattedTime] = useState(null);
   const [isAlarmSet, setIsAlarmSet] = useState(false);
   const [isSnoozeEnabled, setIsSnoozeEnabled] = useState(false);
   const [timeToAlarm, setTimeToAlarm] = useState(false);
@@ -55,11 +56,6 @@ export default function Clock() {
     // return reminderDateTime;
   });
 
-  console.log(indexToRemove);
-  console.log(activeRemindersArr);
-  console.log("alarm time", alarmTime);
-  console.log(remindersObj[23]);
-
   function convertTo12Hour(time24) {
     const [hours, minutes] = time24.split(":");
 
@@ -93,7 +89,7 @@ export default function Clock() {
   }, [currentTime]);
 
   useEffect(() => {
-    dispatch(getReminders());
+    // dispatch(getReminders());
     if (!activeRemindersArr.length) {
       setAlarmTime("");
       setIndexToRemove(null);
@@ -119,14 +115,11 @@ export default function Clock() {
   };
 
   const handleAlarmChange = (e) => {
-    // setAlarmTime("");
-    // setFormattedTime("");
     setAlarmTime(e.target.value);
   };
 
   const setAlarm = () => {
     if (alarmTime !== "") {
-      // setFormattedTime(convertTo12Hour(alarmTime));
       setIsAlarmSet(!isAlarmSet);
     }
   };
@@ -139,77 +132,101 @@ export default function Clock() {
     }, 300000);
   };
 
-
   return (
-    <div className="clock flex-column-center">
-      {/* {activeRemindersArr &&
-        activeRemindersArr.map((reminder) =>
-          reminder.status === "active" ? (
+    <div className="clock">
+      <div className="clock-header-container">
+        {/* <button className="clock-header-button">Active </button> */}
+        <h4>Incoming Reminder/Alarm</h4>
+        {/* <button className="clock-header-button">Completed </button> */}
+      </div>
+      <div className="alarm-details">
+        {indexToRemove && alarmTime && (
+          <div>
             <p>
-              Active: {reminder.title} - {reminder.date_time}
+              Title: {remindersObj[indexToRemove]?.title || "no title given"}
             </p>
-          ) : null
-        )} */}
+            <p>
+              Description:{" "}
+              {remindersObj[indexToRemove]?.description.slice(0, 100) ||
+                "no description given"}
+            </p>
+            <p>
+              Location:{" "}
+              {remindersObj[indexToRemove]?.location || "no location given"}
+            </p>
+          </div>
+        )}
+        {!indexToRemove && !alarmTime && <h5> No Alarms Currently Set</h5>}
+      </div>
+      <div className="clock-col-container">
+        <div className="clock-col-1">
+          <h4 className="flex-center">Your Tasks For Today</h4>
+          {!alarmTime && (
+            <div className="flex-center">
+              {!remindersArr.length && <p>No Tasks Set</p>}
+            </div>
+          )}
 
-      {/* {remindersArr &&
-          remindersArr.map((reminder) =>
-            reminder.status !== "active" ? (
-              <p style={{ color: "orange" }}>
-                Inactive: {reminder.title} - {reminder.date_time}
-              </p>
-            ) : null
-          )} */}
-      {indexToRemove && alarmTime && (
-        <div>
-          <p>Title: {remindersObj[indexToRemove]?.title || "undefined"}</p>
-          <p>
-            Description:{" "}
-            {remindersObj[indexToRemove]?.description || "undefined"}
-          </p>
-          <p>Location: {remindersObj[indexToRemove]?.location}</p>
+          <div className="todays-tasklist">
+            {activeRemindersArr &&
+              activeRemindersArr.map((reminder) =>
+                reminder.status === "active" ? (
+                  <div className="todays-task">
+                    {reminder.title.slice(0, 13) || "no title"}-
+                    {/* <OpenModalButton
+                      buttonText={reminder.title || "no title"}
+                      modalComponent={<Reminder reminder={reminder} />}
+                    /> */}
+                    {convertTo12Hour(dayjs(reminder.date_time).format("HH:mm"))}
+                  </div>
+                ) : null
+              )}
+          </div>
         </div>
-      )}
-      {alarmTime ? (
-        <>
-          {isSnoozeEnabled && <p>Snoozing for 5 minutes</p>}
-          <p>
-            Alarm is set for:{" "}
-            <strong id="formatted-alarm-time">
-              {convertTo12Hour(alarmTime)}
-            </strong>
-          </p>
-        </>
-      ) : null}
-      <h1>{currentTime}</h1>
-      <div className="clock-buttons">
-        {!isInputHidden && (
-          <input
-            id="alarm-time"
-            type="time"
-            value={alarmTime}
-            onChange={handleAlarmChange}
-          />
-        )}
-        {!isAlarmSet && (
-          <button id="alarm-set" onClick={setAlarm}>
-            Set
-          </button>
-        )}
-        {isAlarmSet && alarmTime && (
-          <button id="alarm-remove" onClick={handleRemoveAlarm}>
-            Remove
-          </button>
-        )}
-        {isAlarmSet && isSnoozeEnabled ? (
-          <button className="snooze-false" disabled>
-            Snooze
-          </button>
-        ) : isAlarmSet && alarmTime ? (
-          <button className="snooze-true" onClick={handleSnooze}>
-            Snooze
-          </button>
-        ) : // <button disabled> Snooze </button>
-        null}
+        <div className="clock-col-2">
+          {alarmTime ? (
+            <>
+              <p>
+                Next Alarm:{" "}
+                <strong id="formatted-alarm-time">
+                  {convertTo12Hour(alarmTime)}
+                </strong>
+              </p>
+              {isSnoozeEnabled && <p>Snoozing for 5 minutes</p>}
+            </>
+          ) : null}
+          <h1>{currentTime}</h1>
+          <div className="clock-buttons">
+            {!isInputHidden && (
+              <input
+                id="alarm-time"
+                type="time"
+                value={alarmTime}
+                onChange={handleAlarmChange}
+              />
+            )}
+            {!isAlarmSet && alarmTime && (
+              <button id="alarm-set" onClick={setAlarm}>
+                Loading
+              </button>
+            )}
+            {isAlarmSet && alarmTime && (
+              <button id="alarm-remove" onClick={handleRemoveAlarm}>
+                Remove
+              </button>
+            )}
+            {isAlarmSet && isSnoozeEnabled ? (
+              <button className="snooze-false" disabled>
+                Snooze
+              </button>
+            ) : isAlarmSet && alarmTime ? (
+              <button className="snooze-true" onClick={handleSnooze}>
+                Snooze
+              </button>
+            ) : // <button disabled> Snooze </button>
+            null}
+          </div>
+        </div>
       </div>
       {timeToAlarm && !isSnoozeEnabled && (
         <audio autoPlay loop>

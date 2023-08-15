@@ -14,9 +14,8 @@ class Reminder(db.Model, UserMixin):
     date_time = db.Column(db.DateTime, nullable=False)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
-    recurring = db.Column(db.Boolean, default=False)
     location = db.Column(db.String(100))
-    # active, completed, cancelled
+    # active, completed
     status = db.Column(db.String(10), default='active')
     user_id = db.Column(db.Integer, db.ForeignKey(
         add_prefix_for_prod('users.id')), nullable=False)
@@ -30,7 +29,6 @@ class Reminder(db.Model, UserMixin):
             'date_time': self.date_time.strftime('%Y-%m-%d %H:%M:%S'),
             'title': self.title,
             'description': self.description,
-            'recurring': self.recurring,
             'location': self.location,
             'status': self.status,
             'user_id': self.user_id,

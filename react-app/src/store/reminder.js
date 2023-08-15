@@ -76,6 +76,7 @@ export const getReminders = () => async (dispatch) => {
 
 // create reminder
 export const postReminder = (reminder) => async (dispatch) => {
+  console.log(reminder);
   const response = await fetch("/api/reminders", {
     method: "POST",
     headers: {

@@ -15,8 +15,7 @@ export default function ReminderEditForm({ id }) {
   const handleUpdateReminder = (e) => {
     e.preventDefault();
     setErrors([]);
-    const { date, title, description, location, recurring, status } =
-      e.target.elements;
+    const { date, title, description, location, status } = e.target.elements;
 
     const updatedReminder = {
       ...reminder,
@@ -24,7 +23,6 @@ export default function ReminderEditForm({ id }) {
       title: title.value,
       description: description.value,
       location: location.value,
-      recurring: recurring.checked,
       status: status.value,
     };
 
@@ -89,10 +87,14 @@ export default function ReminderEditForm({ id }) {
           type="text"
           id="status"
           className="form-input"
-          placeholder="status"
+          placeholder="active or completed"
           defaultValue={reminder.status}
+          pattern="^(active|completed)$"
+          title="Please enter 'active' or 'completed'"
+          required
         />
-        <span>
+
+        {/* <span>
           <label className="form-label">Recurring:</label>
           <input
             type="checkbox"
@@ -100,7 +102,7 @@ export default function ReminderEditForm({ id }) {
             className="form-input"
             defaultValue={reminder.recurring}
           />
-        </span>
+        </span> */}
 
         <button type="submit" className="form-button">
           Update Reminder

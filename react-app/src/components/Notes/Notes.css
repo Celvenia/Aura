@@ -143,11 +143,12 @@
 }
 
 .error-message {
-  background-color: #fff;
-  color: #f44336;
-  font-size: 14px;
+  color: rgb(255, 0, 0);
+  font-size: 18px;
   cursor: pointer;
   font-weight: bolder;
+  background-color: #fff;
+  padding: 1%;
 }
 
 .note-create-container {
@@ -201,4 +202,23 @@
 .note-create-form-element > label {
   margin-bottom: 1%;
   font-weight: bold;
+}
+
+button:disabled {
+  background-color: #7397cc;
+  color: #fff;
+  cursor: not-allowed;
+  animation: blue-light 1.5s infinite;
+}
+
+@keyframes blue-light {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
 }

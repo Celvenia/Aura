@@ -1,13 +1,15 @@
 .clock {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
+  position: relative;
   width: 100%;
   height: 100%;
   background-color: #f8f8ff;
   border-radius: 20px;
   padding: 2%;
+  overflow: hidden;
 }
 
 .clock h1 {
@@ -18,18 +20,41 @@
   box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
   color: #212121;
   box-shadow: inset 20px 20px 60px #b7b7b7, inset -20px -20px 60px #ffffff;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.clock-col-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 32vw;
+}
+
+.clock-col-1 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 16vw;
+}
+
+.clock-col-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+  max-width: 16vw;
+  margin-top: 2%;
 }
 
 .clock-buttons {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   border: none;
   border-radius: 5px;
   padding: 1rem;
-  margin-top: 1rem;
-  background-color: #f8f8ff;
 }
 
 .clock-buttons > button {
@@ -64,4 +89,64 @@
 
 #alarm-set {
   display: hidden;
+}
+
+.alarm-details {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  min-height: 15vh;
+  margin-top: 3vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alarm-details p {
+  margin: 2px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.alarm-details h5 {
+  align-self: center;
+}
+
+.clock-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 98%;
+  background: transparent;
+  padding: 1%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 5vh;
+}
+
+button.clock-header-button {
+  max-height: 2.5vh;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.todays-task {
+  margin-bottom: 3px;
+}
+
+.todays-tasklist {
+  max-height: 20vh;
+  overflow-y: scroll;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

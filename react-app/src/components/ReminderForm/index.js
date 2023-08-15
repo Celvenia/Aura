@@ -16,7 +16,7 @@ export default function ReminderForm({ selectedDate }) {
   const handleAddReminder = async (e) => {
     e.preventDefault();
     setErrors([]);
-    const { title, description, location, recurring } = e.target.elements;
+    const { title, description, location } = e.target.elements;
 
     if (dayjs().isAfter(date)) {
       setErrors(["Cannot set reminder in the past"]);
@@ -28,10 +28,9 @@ export default function ReminderForm({ selectedDate }) {
       title: title.value,
       description: description.value,
       location: location.value || "undefined",
-      recurring: recurring.checked,
-      status: "active",
+      // status: "active",
     };
-    
+
     dispatch(postReminder(newReminder));
     closeModal();
   };
@@ -91,15 +90,6 @@ export default function ReminderForm({ selectedDate }) {
           placeholder="location"
           title="location"
         />
-        <span className="form-recurring">
-          <label className="form-label">Recurring:</label>
-          <input
-            type="checkbox"
-            id="recurring"
-            className="form-input"
-            title="recurring"
-          />
-        </span>
 
         <button type="submit" className="form-button">
           Add Reminder

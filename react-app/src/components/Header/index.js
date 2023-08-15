@@ -52,10 +52,7 @@ const Header = ({ isLoaded }) => {
               <p
                 onMouseEnter={() =>
                   handleSecondaryDropdownShow([
-                    "Ask a question: 'Aura, (...question)' : 'Response'",
-                    "Ignore a question: 'Ignore' : 'OK will do'",
-                    "Stop Voice: 'Stop listening' : 'Goodbye'",
-                    "Brief Summary: 'What can you do' : 'Summary'",
+                    "Set New Reminder/Alarm(Limited to today): 'Set reminder to (description) at (time) from (location)' : 'Reminder set to (description) at (time) from (location)'",
                   ])
                 }
               >
@@ -76,7 +73,13 @@ const Header = ({ isLoaded }) => {
               >
                 Google Map
               </p>
-              <p onMouseEnter={() => handleSecondaryDropdownShow(["testing"])}>
+              <p
+                onMouseEnter={() =>
+                  handleSecondaryDropdownShow([
+                    "Voice interaction with notes: '(Content dictation through mic button only)' : '(No response)'",
+                  ])
+                }
+              >
                 Note
               </p>
               <p

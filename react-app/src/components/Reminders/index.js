@@ -44,7 +44,7 @@ export default function Reminders() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="reminders">
       <h4 className="reminders-title">Reminders</h4>
 
       {activeRemindersArr && activeRemindersArr.length === 0 ? (

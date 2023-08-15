@@ -32,25 +32,18 @@ def get_reminder(id):
 @reminder_routes.route('', methods=['POST'])
 @login_required
 def create_reminder():
-    # now = datetime.now()
 
     datetime_str = request.json.get('date_time')
     date_time = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
-    # print(date_time)
-    # if date_time < now:
-    #     return jsonify(error=["Unable to set reminder in the past"])
     title = request.json.get('title')
     description = request.json.get('description')
-    recurring = request.json.get('recurring')
     location = request.json.get('location')
-    # status = request.json.get('status')
     user_id = current_user.id
 
     new_reminder = Reminder(
         date_time=date_time,
         title=title,
         description=description,
-        recurring=recurring,
         location=location,
         status="active",
         user_id=user_id
@@ -74,20 +67,17 @@ def update_reminder(id):
     if reminder.user_id != current_user.id:
         return jsonify(error=["You don't have permission to update this reminder"]), 401
 
-    now = datetime.now()
-
     datetime_str = request.json.get('date_time')
     parsed_date_time = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
     title = request.json.get('title')
     description = request.json.get('description')
-    recurring = request.json.get('recurring')
     location = request.json.get('location')
-    # status = request.json.get('status')
+    status = request.json.get('status')
     reminder.date_time = parsed_date_time or reminder.date_time
     reminder.title = title or reminder.title
     reminder.description = description or reminder.description
-    reminder.recurring = recurring or reminder.recurring
     reminder.location = location or reminder.location
+    reminder.status = status or reminder.status
     reminder.updated_at = datetime.utcnow()
 
     db.session.commit()

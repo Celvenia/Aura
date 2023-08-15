@@ -57,7 +57,6 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE conversations SET SCHEMA {SCHEMA};")
 
-
     op.create_table(
         'messages',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -67,7 +66,8 @@ def upgrade():
         sa.Column('created_at', sa.DateTime(), default=datetime.now),
         sa.Column('updated_at', sa.DateTime(),
                   default=datetime.now, onupdate=datetime.now),
-        sa.ForeignKeyConstraint(['conversation_id'], ['conversations.id'], ondelete='CASCADE'),
+        sa.ForeignKeyConstraint(['conversation_id'], [
+                                'conversations.id'], ondelete='CASCADE'),
         sa.PrimaryKeyConstraint('id')
     )
     if environment == "production":
@@ -88,7 +88,6 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE notes SET SCHEMA {SCHEMA};")
 
-        
     op.create_table(
         'reminders',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -96,7 +95,6 @@ def upgrade():
         sa.Column('date_time', sa.DateTime(), nullable=False),
         sa.Column('title', sa.String(length=100), nullable=False),
         sa.Column('description', sa.Text()),
-        sa.Column('recurring', sa.Boolean(), nullable=False),
         sa.Column('location', sa.String(length=100)),
         sa.Column('status', sa.String(length=10)),
         sa.Column('created_at', sa.DateTime(), default=datetime.now),

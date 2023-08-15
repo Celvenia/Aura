@@ -9,6 +9,7 @@ import {
   faTrash,
   faStickyNote,
   faPen,
+  faMicrophone,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Notes.css";
 
@@ -30,6 +31,30 @@ export default function Notes() {
   const [newTitle, setNewTitle] = useState("");
   const [display, setDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [active, setActive] = useState(false);
+
+  const startDictation = async (e) => {
+    if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+      setActive(true);
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+
+      recognition.addEventListener("result", (event) => {
+        const transcript = event.results[0][0].transcript;
+        setContent(content + " " + transcript);
+        setActive(false);
+      });
+
+      recognition.addEventListener("end", () => {
+        setActive(false);
+      });
+
+      recognition.start();
+    } else {
+      alert("Web Speech API is not supported in this browser.");
+    }
+  };
 
   const handleNoteSelect = (note) => {
     setSelectedNote(note);
@@ -175,24 +200,37 @@ export default function Notes() {
           <small>
             <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
           </small>
-          <FontAwesomeIcon icon={faStickyNote}></FontAwesomeIcon>
+          {/* <FontAwesomeIcon icon={faStickyNote}></FontAwesomeIcon> */}
         </button>
         {selectedNote ? (
-          <button onClick={handleUpdateClick} className="note-file-button">
-            Save
+          <button
+            onClick={handleUpdateClick}
+            className="note-file-button"
+            title="save"
+          >
             <FontAwesomeIcon icon={faCheck} />
           </button>
         ) : (
-          <button onClick={handleSubmit} className="note-file-button">
-            Save
+          <button
+            onClick={handleSubmit}
+            className="note-file-button"
+            title="save"
+          >
             <FontAwesomeIcon icon={faCheck} />
           </button>
         )}
         {selectedNote && (
-          <button onClick={handleDeleteClick}>
+          <button onClick={handleDeleteClick} title="delete">
             <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
           </button>
         )}
+        <button
+          title="start content dictation"
+          onClick={startDictation}
+          disabled={active}
+        >
+          <FontAwesomeIcon icon={faMicrophone} />
+        </button>
       </div>
       {selectedNote ? (
         <div className="note-page">

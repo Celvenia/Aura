@@ -4,6 +4,8 @@ import { postMessage } from "../../store/message";
 import { getConversations } from "../../store/conversation";
 import "./AuraSpeechRecognition.css";
 import ProgressBar from "../ProgressBar";
+import { postReminder } from "../../store/reminder";
+import dayjs from "dayjs";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function AuraSpeechRecognition() {
@@ -27,6 +29,47 @@ export default function AuraSpeechRecognition() {
     const selected = voices.find((voice) => voice.name === value);
     setSelectedVoice(selected);
   };
+
+  function extractReminderDetails(phrase) {
+    const descriptionStartIndex =
+      phrase.indexOf("set reminder to ") + "set reminder to ".length;
+    const descriptionEndIndex = phrase.indexOf(" at ");
+
+    const timeStartIndex = descriptionEndIndex + " at ".length;
+    const timeEndIndex = phrase.lastIndexOf(" from ");
+
+    const locationStartIndex = timeEndIndex + " from ".length;
+
+    const description = phrase.substring(
+      descriptionStartIndex,
+      descriptionEndIndex
+    );
+    const time = phrase.substring(timeStartIndex, timeEndIndex);
+    const location = phrase.substring(locationStartIndex);
+
+    const currentDate = dayjs().format("YYYY-MM-DD");
+    const dateTimeFormatted = `${currentDate} ${time}`;
+
+    const [datePart, timePart, amOrPm] = dateTimeFormatted.split(" ");
+    const [year, month, day] = datePart.split("-");
+    let [hours, minutes] = timePart.split(":");
+
+    if (amOrPm === "p.m.") {
+      hours = parseInt(hours) === 12 ? 12 : parseInt(hours) + 12;
+    } else if (amOrPm === "a.m." && hours === "12") {
+      hours = 0;
+    }
+
+    const dateTimeObject = new Date(year, month - 1, day, hours, minutes);
+
+    let dateTime = dayjs(dateTimeObject).format("YYYY-MM-DD HH:mm:ss");
+
+    return {
+      description,
+      date_time: dateTime,
+      location,
+    };
+  }
 
   useEffect(() => {
     const populateVoices = () => {
@@ -213,26 +256,18 @@ export default function AuraSpeechRecognition() {
         } else {
           speak("No alarms currently set");
         }
-      } else if (spoken.includes("set alarm to")) {
-        let newTime = spoken.split("set alarm to ")[1];
-        console.log(newTime);
-        // alarmTime.value = newTime;
-        // console.log(typeof alarmTime.value);
-        // console.log(alarmTime.value);
-        // alarmTime.value = "04:41 AM";
-        // console.log(alarmTime.value);
-        // if (newTime[0] === " ") {
-        //   let newAlarmTime = newTime.replace(" ", "0");
-        // alarmTime.value = newTime;
-        // alarmTime.value = "07:29 PM";
-        console.log(alarmTime.value);
-        //   // alarmSetButton.click();
-        // } else if (newTime[0] == "1") {
-        //   alarmTime.value = newTime;
-        // if (alarmTime.value) {
-        //   alarmSetButton.click();
-        // }
-        // }
+      } else if (spoken.includes("set reminder to ")) {
+        const { description, date_time, location } =
+          extractReminderDetails(spoken);
+
+        dispatch(
+          postReminder({
+            description: description,
+            date_time: date_time,
+            location: location,
+            title: "Voice Reminder",
+          })
+        );
       } else if (spoken.includes("set origin to")) {
         let newOrigin = spoken.split("origin to")[1];
         originInput.value = newOrigin;

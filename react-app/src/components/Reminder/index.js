@@ -20,7 +20,11 @@ export default function Reminder({ reminder }) {
   };
 
   const handleDeleteClick = () => {
-    dispatch(deleteReminder(reminder.id));
+    // let deleteAlarm = document.getElementById("alarm-remove");
+    dispatch(deleteReminder(reminder.id));  
+    // if (deleteAlarm) {
+    //   deleteAlarm.click();
+    // }
   };
 
   return (
@@ -50,11 +54,6 @@ export default function Reminder({ reminder }) {
               {" "}
               <strong>Location: </strong>
               {reminder.location}
-            </div>
-            <div>
-              {" "}
-              <strong>Recurring: </strong>
-              {`${reminder.recurring}`}
             </div>
           </div>
         )}
