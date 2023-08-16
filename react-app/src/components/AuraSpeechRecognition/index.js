@@ -144,7 +144,7 @@ export default function AuraSpeechRecognition() {
 
     let aiSpeaking = document.getElementById("ai-display-text");
     // let speaking = document.getElementById("user-display-text");
-    let alarmTime = document.getElementById("alarm-time");
+    let alarmTime = document.getElementById("formatted-alarm-time");
     let alarmSetButton = document.getElementById("alarm-set");
     const conversationIdElement = document.getElementById("set-conversation");
     const originInput = document.getElementById("origin-input");
@@ -251,8 +251,8 @@ export default function AuraSpeechRecognition() {
         });
         speak(`the current date is ${formattedDate}`);
       } else if (spoken.includes("when is my next alarm")) {
-        if (alarmTime.value) {
-          speak(`your next alarm is ${alarmTime.value}`);
+        if (alarmTime.innerText) {
+          speak(`your next alarm is ${alarmTime.innerText}`);
         } else {
           speak("No alarms currently set");
         }

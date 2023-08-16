@@ -128,7 +128,7 @@ export default function Calendar() {
           </div>
 
           {monthDays.map((week, index) => (
-            <div className="week" key={index}>
+            <div className="week" key={week + index}>
               {week.map((day) => (
                 <>
                   <div

@@ -171,12 +171,11 @@ export default function Clock() {
             {activeRemindersArr &&
               activeRemindersArr.map((reminder) =>
                 reminder.status === "active" ? (
-                  <div className="todays-task">
+                  <div
+                    className="todays-task"
+                    key={dayjs(reminder.date_time).format("HH:mm")}
+                  >
                     {reminder.title.slice(0, 13) || "no title"}-
-                    {/* <OpenModalButton
-                      buttonText={reminder.title || "no title"}
-                      modalComponent={<Reminder reminder={reminder} />}
-                    /> */}
                     {convertTo12Hour(dayjs(reminder.date_time).format("HH:mm"))}
                   </div>
                 ) : null
