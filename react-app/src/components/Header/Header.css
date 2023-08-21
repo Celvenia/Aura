@@ -78,7 +78,7 @@
   background-color: rgba(0, 0, 0, 0.8);
   padding: 0.5rem;
   border-radius: 5px;
-  width: 10vw;
+  width: 12vw;
   color: #fff;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .user-profile-img {
-  height: 30px;
+  height: 20px;
   width: 30px;
   border-radius: 50%;
   cursor: pointer;

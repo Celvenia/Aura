@@ -136,7 +136,7 @@ export default function Clock() {
     <div className="clock">
       <div className="clock-header-container">
         {/* <button className="clock-header-button">Active </button> */}
-        <h4>Incoming Reminder/Alarm</h4>
+        <h4>Todays Reminders/Alarms</h4>
         {/* <button className="clock-header-button">Completed </button> */}
       </div>
       <div className="alarm-details">
@@ -193,7 +193,9 @@ export default function Clock() {
               </p>
               {isSnoozeEnabled && <p>Snoozing for 5 minutes</p>}
             </>
-          ) : null}
+          ) : (
+            <strong id="formatted-alarm-time"></strong>
+          )}
           <h1>{currentTime}</h1>
           <div className="clock-buttons">
             {!isInputHidden && (

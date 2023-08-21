@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postMessage } from "../../store/message";
 import { getConversations } from "../../store/conversation";
-import "./AuraSpeechRecognition.css";
-import ProgressBar from "../ProgressBar";
 import { postReminder } from "../../store/reminder";
+import ProgressBar from "../ProgressBar";
 import dayjs from "dayjs";
+import "./AuraSpeechRecognition.css";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function AuraSpeechRecognition() {
@@ -22,6 +22,7 @@ export default function AuraSpeechRecognition() {
   const [active, setActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [play, setPlay] = useState(false);
 
   const synth = window.speechSynthesis;
 
@@ -220,6 +221,8 @@ export default function AuraSpeechRecognition() {
       }
     };
 
+    speak("Hi! How can I assist you?");
+
     const processResult = (spoken) => {
       const conversation = {
         conversation_id: conversationId,
@@ -268,6 +271,9 @@ export default function AuraSpeechRecognition() {
             title: "Voice Reminder",
           })
         );
+        speak(
+          `Reminder set to ${description} at ${date_time} from ${location}`
+        );
       } else if (spoken.includes("set origin to")) {
         let newOrigin = spoken.split("origin to")[1];
         originInput.value = newOrigin;
@@ -280,11 +286,9 @@ export default function AuraSpeechRecognition() {
         );
       } else if (spoken.includes("where is destination")) {
         speak(
-          `Destination is ${
-            destinationInput.value === ""
-              ? "no destination set"
-              : destinationInput.value
-          }`
+          destinationInput.value === ""
+            ? "no destination set"
+            : `Destination is ${destinationInput.value}`
         );
       } else if (spoken.includes("set destination to")) {
         let newDestination = spoken.split("destination to")[1];
@@ -292,13 +296,13 @@ export default function AuraSpeechRecognition() {
         speak(`destination set to ${destinationInput.value}`);
       } else if (spoken.includes("find route")) {
         findRouteButton.click();
-        speak(`Route determined`);
+        speak(`If valid address, Route determined`);
       } else if (spoken.includes("route duration")) {
         let routeDuration = duration.innerText.split("Duration: ")[1];
         if (routeDuration === undefined) {
           speak("No route found");
         } else {
-          speak(`It will take ${routeDuration}`);
+          speak(`It will take ${routeDuration} to drive there`);
         }
       } else if (spoken.includes("route distance")) {
         let distanceAway = distance.innerText.split("Distance: ")[1];
@@ -433,7 +437,7 @@ export default function AuraSpeechRecognition() {
       <button
         disabled={active}
         title="start aura"
-        className="conversation-button"
+        // className="conversation-button"
         id={`aura-button-${active}`}
         onClick={auraStart}
       >

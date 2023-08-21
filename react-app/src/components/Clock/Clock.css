@@ -150,3 +150,14 @@ button.clock-header-button {
   align-items: center;
   justify-content: center;
 }
+
+.clock-header-container h4 {
+  background-color: #7397cc;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  padding: 1%;
+}

@@ -50,7 +50,7 @@ function ProfileButton({ user }) {
         {user ? (
           <div className="user-info">
             <li>{user.username}</li>
-            <li>{user.email}</li>
+            <li>{user.email.slice(0, 20)}</li>
             <button onClick={handleLogout}>Log Out</button>
           </div>
         ) : (

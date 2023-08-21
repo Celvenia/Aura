@@ -20,11 +20,11 @@ export default function Reminder({ reminder }) {
   };
 
   const handleDeleteClick = () => {
-    // let deleteAlarm = document.getElementById("alarm-remove");
-    dispatch(deleteReminder(reminder.id));  
-    // if (deleteAlarm) {
-    //   deleteAlarm.click();
-    // }
+    let deleteAlarm = document.getElementById("alarm-remove");
+    dispatch(deleteReminder(reminder.id));
+    if (deleteAlarm) {
+      deleteAlarm.click();
+    }
   };
 
   return (
