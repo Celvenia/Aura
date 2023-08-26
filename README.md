@@ -28,11 +28,11 @@ Aura is an ai personal assistant utilizing openai's api for questions. The answe
 
 ### Landing Page
 
-![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592608/Personal%20Assistant/Screenshot_2023-06-11_235947_zagr7j.png)
+![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1693041676/LpPage82623_inmonv.png)
 
 ### Home Page (Once User logged in)
 
-![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592595/Personal%20Assistant/Screenshot_2023-06-11_235841_uodsov.png)
+![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1693041688/AuraUpdated82623_yf3vua.png)
 
 <br>
 
@@ -53,24 +53,23 @@ https://aura-e23a.onrender.com
 
 **<h3>Notes</h3>**
 
-- <p>Users can create, read, update, and delete only their own Notes while logged in</p>
-- <p>Pending** Create note through voice recognition </p>
-  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593718/Personal%20Assistant/CreateNote.png"/>
+- <p> Users can create, read, update, and delete only their own Notes while logged in </p>
+- <p> Add note content through voice recognition </p>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042706/Aura/Note82623_hirjtp.png"/>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042679/Aura/NoteActive82623_c55olu.png"/>
 
 **<h3>Reminders</h3>**
 
 - <p>Users can create reminders through calendar.</p>
 - <p>Users can view reminders created in short and long form </p>
 - <p>Users can update and delete reminders. If reminder time has passed, will automatically be removed from view (currently linked to mountain time)</p>
-- <p>Pending** Reminder times will be linked to alarm clock</p>
-- <p>Pending** Create reminder through voice recognition </p>
-  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593643/Personal%20Assistant/ReminderInput.png"/>
+- <p>Reminder times will be linked to alarm clock</p>
+- <p>Create reminder through voice integration </p>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042290/Aura/ReminderCreate82623_llqgqd.png"/>
   <br>
-  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593718/Personal%20Assistant/ReminderQuickView.png"/>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042396/Aura/ReminderCalendar82623_kbalr7.png"/>
   <br>
-  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/Screenshot_2023-06-12_120906_c8dhss.png"/>
-  <br>
-  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/Screenshot_2023-06-12_120939_w9sft2.png"/>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042524/Aura/Reminders82623_o9mpkf.png"/>
   <br>
 
 **<h3>Conversations</h3>**
@@ -79,15 +78,28 @@ https://aura-e23a.onrender.com
 - <p>Users can create new conversations, view conversations, update the title of each conversation, delete conversations</p>
 - <p>Only messages sent to open ai's api will be stored, voice interaction for time, date, navigation are not </p>
   <br>
-  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/ActiveShadow.png"/>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042157/Aura/ConversationInactive82623_agkolm.png"/>
   <br>
-  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/ConversationHistory.png"/>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042144/Aura/ConversationActive82623_aume1k.png"/>
 
+
+**<h3>GoogleMaps</h3>**
+- <p>Logged in users can interact with google map with and without voice interaction</p>
+- <p>Users can set the origin, set the destination, find a route between origin and destination, get route duration, get route distance </p>
+ <br>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693043010/Aura/GoogleMap82623_idwqyt.png"/>
+
+**<h3>AlarmClock<h3>**
+- <p>Logged in users can set reminders that'll autopopulate set an alarm if it's within the current day's timeframe</p>
+- <p>Logged in users can remove or snooze that alarm </p>
+- <p> Logged in users can see a summary of that alarm to include it's alarm time, title, description, and location </p>
+ <br>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693125248/AlarmClock82723_a7jn7e.png"/>
+
+  
 ## Future Feature Ideas
 
-- Search
 - Image Generation
-- Google maps Integration
 - Voice Initiation
 
 ## Getting Started
@@ -256,7 +268,7 @@ Add the following keys and values:
 
 - DATABASE_URL (copy value from Internal Database URL field)
 
-\_Note: Add any other keys and values that may be present in your local .env file. As you work to further develop your project, you may need to add more environment variables to your local .env file. Make sure you add these environment variables to the Render GUI as well for the next deployment.
+Note: Add any other keys and values that may be present in your local .env file. As you work to further develop your project, you may need to add more environment variables to your local .env file. Make sure you add these environment variables to the Render GUI as well for the next deployment.
 
 Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your application every time you push to main.
 
@@ -275,12 +287,24 @@ When deployment is complete, open your deployed site and check to see if you suc
 
 ## Verbal commands
 
-- Preface command with "Aura" when interacting with voice and openai's api. I.e. "Aura what is 2+2?"
-- Navigate to pages, currently only home, notes, and reminders available "Navigate to home"
-- Stop active listening "Stop listening"
-- Stop request "ignore"
-- Current time "What is the current time"
-- Current date "What is the current date"
+- Questions: Preface command with "hey Aura" when interacting with voice and openai's api. I.e. "hey Aura what is 2+2?"
+- Stop voice interaction: "Stop listening"
+- Stop request: "ignore"
+- Current time: "What is the current time"
+- Current date: "What is the current date"
+- Summary of what Aura can do: "What can you do"
+- Set New Reminder/Alarm(Limited to today): "Set reminder to (description) at (time) from (location)"
+- Replaces origin with current address in google map
+- Replaces destination with current destination in google map
+- Set Starting Location: "Set origin to (...address)"
+- Set Destination: "Set destination to (...address)"
+- Check Origin: "Where is origin"
+- Check Destination: "Where is destination"
+- Find Route From Origin To Destination: "Find route"
+- Time To Drive To Destination: "Route duration"
+- Distance To Drive To Destination: "Route distance'
+- Voice interaction with notes: (Content dictation through mic button only)
+- Next Alarm: "When is my next alarm?"
 
 ## Help
 
@@ -299,5 +323,6 @@ Christopher Elvenia
 ## Reach Me
 
 chriselvenia@gmail.com
+https://www.linkedin.com/in/christopher-elvenia/
 
 # Aura
