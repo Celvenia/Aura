@@ -38,7 +38,7 @@ const Header = ({ isLoaded }) => {
               <p
                 onMouseEnter={() =>
                   handleSecondaryDropdownShow([
-                    "Ask a question: 'Aura, (...question)' : 'Answer'",
+                    "Ask a question: 'hey Aura, (...question)' : 'Answer'",
                     "Ignore a question: 'Ignore' : 'OK will do'",
                     "Stop Voice: 'Stop listening' : 'Goodbye'",
                     "Brief Summary: 'What can you do' : 'Summary'",
