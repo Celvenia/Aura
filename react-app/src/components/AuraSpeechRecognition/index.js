@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import "./AuraSpeechRecognition.css";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
-export default function AuraSpeechRecognition() {
+export default function AuraSpeechRecognition({ id }) {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const SpeechGrammarList =
@@ -154,12 +154,10 @@ export default function AuraSpeechRecognition() {
     const distance = document.getElementById("distance");
     const duration = document.getElementById("duration");
 
-    let conversationId;
-    if (conversationIdElement) {
-      conversationId = conversationIdElement.getAttribute(
-        "data-conversation-id"
-      );
-    }
+    // let conversationId;
+    // if (conversationIdElement) {
+
+    // }
 
     function displayText(text) {
       let index = 0;
@@ -200,9 +198,7 @@ export default function AuraSpeechRecognition() {
         speakText.voice = selectedVoice;
 
         // speak end
-        speakText.onend = (e) => {
-          console.log("Done Speaking");
-        };
+        speakText.onend = (e) => {};
         // speak error
         speakText.onerror = (e) => {
           console.error("Something went wrong");
@@ -224,6 +220,10 @@ export default function AuraSpeechRecognition() {
     speak("Hi! How can I assist you?");
 
     const processResult = (spoken) => {
+      let conversationId = conversationIdElement.getAttribute(
+        "data-conversation-id"
+      );
+
       const conversation = {
         conversation_id: conversationId,
         message: "",
@@ -231,6 +231,9 @@ export default function AuraSpeechRecognition() {
 
       if (!currentUser) {
         speak("Please log in to get started");
+      } else if (id != conversationId) {
+        alert("Detected conversation change, voice stopped");
+        aura.stop();
       } else if (spoken.includes("hello")) {
         speak("Hi! How can I assist you?");
       } else if (spoken.includes("stop listening")) {
@@ -349,7 +352,7 @@ export default function AuraSpeechRecognition() {
         }
 
         conversation.message = modifiedSpoken;
-        console.log(modifiedSpoken);
+
         // dispatch(postMessage(conversation)).then((result) => {
         //   if (result) {
         //     speak(result.ai_response);
@@ -430,7 +433,7 @@ export default function AuraSpeechRecognition() {
     };
   };
 
-  useEffect(() => {}, [dispatch]);
+  // useEffect(() => {}, [dispatch]);
 
   return currentUser && !loading ? (
     <div className="aura-container">

@@ -34,18 +34,29 @@ function ProfileButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    closeMenu();
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
+
+
   return (
     <>
-      <FontAwesomeIcon
-        icon={faUser}
-        onClick={openMenu}
-        className="user-profile-img"
-      />
+      {user ? (
+        <FontAwesomeIcon
+          icon={faUser}
+          onClick={openMenu}
+          className="user-profile-img"
+        />
+      ) : (
+        <OpenModalButton
+          buttonText="Log In"
+          onItemClick={closeMenu}
+          modalComponent={<LoginFormModal />}
+        />
+      )}
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="user-info">

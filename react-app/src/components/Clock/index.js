@@ -135,9 +135,7 @@ export default function Clock() {
   return (
     <div className="clock">
       <div className="clock-header-container">
-        {/* <button className="clock-header-button">Active </button> */}
         <h4>Todays Reminders/Alarms</h4>
-        {/* <button className="clock-header-button">Completed </button> */}
       </div>
       <div className="alarm-details">
         {indexToRemove && alarmTime && (
@@ -183,7 +181,7 @@ export default function Clock() {
           </div>
         </div>
         <div className="clock-col-2">
-          {alarmTime ? (
+          {alarmTime && remindersArr.length > 0 ? (
             <>
               <p>
                 Next Alarm:{" "}

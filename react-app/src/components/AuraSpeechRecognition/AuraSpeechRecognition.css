@@ -6,7 +6,7 @@
 
 .aura-container button:disabled {
   background-color: #7397cc;
-  color: #fff;
+  color: #000;
   cursor: not-allowed;
   animation: blue-light 1s infinite;
 }
@@ -29,7 +29,6 @@
 .diagnostic-text:hover {
   font-weight: bold;
 }
-
 
 @keyframes blue-light {
   0% {

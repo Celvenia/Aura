@@ -130,14 +130,14 @@ export default function Calendar() {
           {monthDays.map((week, index) => (
             <div className="week" key={week + index}>
               {week.map((day) => (
-                <>
+                <div key={day}>
                   <div
                     className={
                       currentDate <= day.format("YYYY-MM-DD")
                         ? "current-day"
                         : "not-current-day"
                     }
-                    title={day.format("YYYY-MM-DD")}
+                    title={`set reminder for ${day.format("YYYY-MM-DD")}`}
                     key={day.format("dddd")}
                   >
                     <OpenModalButton
@@ -165,7 +165,7 @@ export default function Calendar() {
                       />
                     )}
                   </div>
-                </>
+                </div>
               ))}
             </div>
           ))}

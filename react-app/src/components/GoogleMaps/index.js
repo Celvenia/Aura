@@ -139,7 +139,7 @@ export default function GoogleMaps() {
             const address = await getAddressFromLatLng(latLng);
             originRef.current.value = address;
           } catch (error) {
-            console.log("Reverse geocoding failed:", error);
+            // alert("Reverse geocoding failed:", error);
           }
         }
 
@@ -148,7 +148,7 @@ export default function GoogleMaps() {
         }
       },
       (error) => {
-        console.log("Error retrieving location:", error);
+        // alert("Error retrieving location:", error);
       },
       { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
     );

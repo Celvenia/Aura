@@ -12,15 +12,10 @@ import "./Conversation.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPen,
-  faEye,
-  faEyeSlash,
   faComments,
   faPlus,
   faCheck,
-  faArrowDown,
-  faArrowUp,
   faTrash,
-  faArrowRight,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import AuraSpeechRecognition from "../AuraSpeechRecognition";
@@ -199,7 +194,7 @@ export default function Conversation() {
             </button>
           )}
         </div>
-        {id && <AuraSpeechRecognition />}
+        {id && <AuraSpeechRecognition id={id} />}
       </div>
 
       <div className="conversation-content">
@@ -260,10 +255,19 @@ export default function Conversation() {
               )}
             </>
           ) : (
-            <h4>
-              Choose conversation <FontAwesomeIcon icon={faComments} /> to begin
-              voice interaction
-            </h4>
+            <>
+              <h5>
+                <FontAwesomeIcon icon={faComments} /> Switch between
+                conversations, once chosen will enable and store voice
+                interaction
+              </h5>
+              <h5>
+                <FontAwesomeIcon icon={faPlus} /> Create new conversation
+              </h5>
+              <h5>
+                <FontAwesomeIcon icon={faTrash} /> Delete conversation
+              </h5>
+            </>
           )}
           {!id && (
             <div className="conversation-instruction-grid">
