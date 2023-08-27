@@ -63,8 +63,8 @@ https://aura-e23a.onrender.com
 - <p>Users can create reminders through calendar.</p>
 - <p>Users can view reminders created in short and long form </p>
 - <p>Users can update and delete reminders. If reminder time has passed, will automatically be removed from view (currently linked to mountain time)</p>
-- <p>Pending** Reminder times will be linked to alarm clock</p>
-- <p>Pending** Create reminder through voice recognition </p>
+- <p>Reminder times will be linked to alarm clock</p>
+- <p>Create reminder through voice integration </p>
   <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042290/Aura/ReminderCreate82623_llqgqd.png"/>
   <br>
   <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693042396/Aura/ReminderCalendar82623_kbalr7.png"/>
@@ -89,10 +89,16 @@ https://aura-e23a.onrender.com
  <br>
   <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693043010/Aura/GoogleMap82623_idwqyt.png"/>
 
+**<h3>AlarmClock<h3>**
+- <p>Logged in users can set reminders that'll autopopulate set an alarm if it's within the current day's timeframe</p>
+- <p>Logged in users can remove or snooze that alarm </p>
+- <p> Logged in users can see a summary of that alarm to include it's alarm time, title, description, and location </p>
+ <br>
+  <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1693125248/AlarmClock82723_a7jn7e.png"/>
+
   
 ## Future Feature Ideas
 
-- Search
 - Image Generation
 - Voice Initiation
 
@@ -262,7 +268,7 @@ Add the following keys and values:
 
 - DATABASE_URL (copy value from Internal Database URL field)
 
-\_Note: Add any other keys and values that may be present in your local .env file. As you work to further develop your project, you may need to add more environment variables to your local .env file. Make sure you add these environment variables to the Render GUI as well for the next deployment.
+Note: Add any other keys and values that may be present in your local .env file. As you work to further develop your project, you may need to add more environment variables to your local .env file. Make sure you add these environment variables to the Render GUI as well for the next deployment.
 
 Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your application every time you push to main.
 
@@ -317,5 +323,6 @@ Christopher Elvenia
 ## Reach Me
 
 chriselvenia@gmail.com
+https://www.linkedin.com/in/christopher-elvenia/
 
 # Aura
