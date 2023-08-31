@@ -22,8 +22,9 @@ export default function Reminder({ reminder }) {
   const handleDeleteClick = () => {
     let deleteAlarm = document.getElementById("alarm-remove");
     if (deleteAlarm) {
-      // dispatch(deleteReminder(reminder.id));
       deleteAlarm.click();
+    } else if (!deleteAlarm) {
+      dispatch(deleteReminder(reminder.id));
     }
   };
 
