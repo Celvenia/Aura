@@ -109,7 +109,7 @@ export default function Clock() {
     // setFormattedTime("");
     setIsSnoozeEnabled(false);
     setTimeToAlarm(false);
-    if (indexToRemove) {
+    if (indexToRemove && remindersObj[indexToRemove]) {
       dispatch(deleteReminder(indexToRemove));
     }
   };
@@ -138,7 +138,7 @@ export default function Clock() {
         <h4>Todays Reminders/Alarms</h4>
       </div>
       <div className="alarm-details">
-        {indexToRemove && alarmTime && (
+        {indexToRemove && alarmTime && activeRemindersArr.length > 0 && (
           <div>
             <p>
               Title: {remindersObj[indexToRemove]?.title || "no title given"}
@@ -154,7 +154,9 @@ export default function Clock() {
             </p>
           </div>
         )}
-        {!indexToRemove && !alarmTime && <h5> No Alarms Currently Set</h5>}
+        {!indexToRemove && !alarmTime && !activeRemindersArr.length && (
+          <h5> No Alarms Currently Set</h5>
+        )}
       </div>
       <div className="clock-col-container">
         <div className="clock-col-1">
@@ -181,7 +183,7 @@ export default function Clock() {
           </div>
         </div>
         <div className="clock-col-2">
-          {alarmTime && remindersArr.length > 0 ? (
+          {alarmTime && activeRemindersArr.length > 0 ? (
             <>
               <p>
                 Next Alarm:{" "}
@@ -209,16 +211,16 @@ export default function Clock() {
                 Loading
               </button>
             )}
-            {isAlarmSet && alarmTime && (
+            {isAlarmSet && alarmTime && activeRemindersArr.length > 0 && (
               <button id="alarm-remove" onClick={handleRemoveAlarm}>
                 Remove
               </button>
             )}
-            {isAlarmSet && isSnoozeEnabled ? (
+            {isAlarmSet && isSnoozeEnabled && alarmTime ? (
               <button className="snooze-false" disabled>
                 Snooze
               </button>
-            ) : isAlarmSet && alarmTime ? (
+            ) : isAlarmSet && alarmTime && activeRemindersArr.length > 0 ? (
               <button className="snooze-true" onClick={handleSnooze}>
                 Snooze
               </button>
