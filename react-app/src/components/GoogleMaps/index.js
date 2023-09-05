@@ -117,7 +117,7 @@ export default function GoogleMaps() {
         if (status === "OK" && results.length > 0) {
           resolve(results[0].formatted_address);
         } else {
-          reject(new Error("Reverse geocoding failed"));
+          // reject(new Error("Reverse geocoding failed"));
         }
       });
     });
@@ -205,52 +205,54 @@ export default function GoogleMaps() {
         <p id="distance">Distance: {distance}</p>
         <p id="duration">Duration: {duration}</p>
       </div>
-      <GoogleMap
-        zoom={15}
-        center={{ lat: latitude, lng: longitude }}
-        mapContainerClassName="map-container"
-        options={options}
-        onLoad={(map) => {
-          setMap(map);
-        }}
-      >
-        {latitude && longitude && (
-          <Marker
-            position={{ lat: latitude, lng: longitude }}
-            onClick={() =>
-              handleMarkerClick({
-                position: { lat: latitude, lng: longitude },
-              })
-            }
-            options={markerOptions}
-          />
-        )}
-        {selectedMarker && (
-          <InfoWindow
-            position={selectedMarker.position}
-            onCloseClick={handleInfoWindowClose}
-          >
-            <div>
-              <h3>{selectedMarker.name}</h3>
-              <p>Latitude: {selectedMarker.position.lat}</p>
-              <p>Longitude: {selectedMarker.position.lng}</p>
-              <p>
-                Distance:{" "}
-                {calculateDistance(
-                  latitude,
-                  longitude,
-                  selectedMarker.position.lat,
-                  selectedMarker.position.lng
-                )}{" "}
-                km
-              </p>
-            </div>
-          </InfoWindow>
-        )}
-        {directionsResponse && (
-          <DirectionsRenderer directions={directionsResponse} />
-        )}
-      </GoogleMap>
+      {latitude !== null && longitude !== null && (
+        <GoogleMap
+          zoom={15}
+          center={{ lat: latitude, lng: longitude }}
+          mapContainerClassName="map-container"
+          options={options}
+          onLoad={(map) => {
+            setMap(map);
+          }}
+        >
+          {latitude && longitude && (
+            <Marker
+              position={{ lat: latitude, lng: longitude }}
+              onClick={() =>
+                handleMarkerClick({
+                  position: { lat: latitude, lng: longitude },
+                })
+              }
+              options={markerOptions}
+            />
+          )}
+          {selectedMarker && (
+            <InfoWindow
+              position={selectedMarker.position}
+              onCloseClick={handleInfoWindowClose}
+            >
+              <div>
+                <h3>{selectedMarker.name}</h3>
+                <p>Latitude: {selectedMarker.position.lat}</p>
+                <p>Longitude: {selectedMarker.position.lng}</p>
+                <p>
+                  Distance:{" "}
+                  {calculateDistance(
+                    latitude,
+                    longitude,
+                    selectedMarker.position.lat,
+                    selectedMarker.position.lng
+                  )}{" "}
+                  km
+                </p>
+              </div>
+            </InfoWindow>
+          )}
+          {directionsResponse && (
+            <DirectionsRenderer directions={directionsResponse} />
+          )}
+        </GoogleMap>
+      )}
     </div>
   );
 }
