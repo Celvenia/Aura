@@ -40,6 +40,8 @@ def create_message():
     conversation_id = data['conversation_id']
     new_message_content = data['message']
 
+    print(data, 'data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
     # Retrieve the conversation associated with the user
     conversation = Conversation.query.get(conversation_id)
     if not conversation:
@@ -79,6 +81,7 @@ def create_message():
 
         # Extract the generated message content from the response
         generated_message_content = response.choices[0].message.content
+        print(response, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
         # Update the AI response of the new message
         new_message.ai_response = generated_message_content
@@ -89,7 +92,10 @@ def create_message():
     except Exception as e:
         # Handle the exception and return an error response
         error_message = str(e)
+        print(e, 'error message!!!!!!!!!!!!!!!!!!!!')
         return {'error': error_message}, 500
+
+
 
 
 # @message_routes.route('/<int:id>', methods=['PUT'])

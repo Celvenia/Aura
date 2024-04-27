@@ -167,6 +167,10 @@ npm install
 npm install dayjs
 ```
 
+```shell
+npm install @react-google-maps/api
+```
+
 - create .env file in react-app
 
 ```shell
