@@ -92,7 +92,6 @@ def create_message():
     except Exception as e:
         # Handle the exception and return an error response
         error_message = str(e)
-        print(e, 'error message!!!!!!!!!!!!!!!!!!!!')
         return {'error': error_message}, 500
 
 
